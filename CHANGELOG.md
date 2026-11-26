@@ -6,9 +6,19 @@ Le format repose sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), e
 
 ## [Unreleased]
 
-- *Sprint 2 — Contrats PDF natifs & Dossier Salarié (en cours)*
-  - **F4.1 (`8fa6173`) — Modèles de Contrats, Variables Dynamiques & Génération PDF Native (`US-019`, `US-020`)** : Module `Sirh.Modules.Contracts` (schéma SQL `contracts`), moteur Scriban + liste blanche des variables, rendu PDF natif QuestPDF avec chiffrement AES-256-GCM à la volée, endpoints `/api/v1/contract-models/*` et `/api/v1/contracts/generate`.
-  - **F4.2 (`de192df`) — Import/Statut des Contrats & Fiches de poste (`US-021`, `US-022`)** : Import multipart PDF avec contrôle magic bytes, suivi du statut de signature + concurrence optimiste (`RowVersion`), streaming déchiffré `inline`/`attachment`, fiches de poste uniques (`JobSheet`) avec ABAC manager direct (`jobsheets:read:team`) et protection de suppression de `Position`.
+- *Sprint 3 — Santé au Travail & Notifications (en cours)*
+
+## [0.3.0] - 2026-11-26 (Sprint 2 — Contrats PDF natifs & Dossier Salarié)
+
+### Added
+
+- **F5.1 (`38b83a0`) — Dossier Salarié, RQTH & Titres de séjour** (`US-023`, `US-024`)
+  - Taxonomie structurée à 6 catégories (`PersonalFile`, `PersonalEvents`, `ContractualElements`, `Disciplinary`, `Departure`, `Integration`) et entités `EmployeeDocument`, `RqthDetail`, `ResidentPermitDetail` dans `Sirh.Modules.HumanResources` (schéma `hr`, migration `AddEmployeeDocuments`).
+  - Endpoints `/api/v1/employee-documents/*` : validation magic bytes (PDF/PNG/JPEG/WEBP), chiffrement AES-256-GCM, exclusion stricte des catégories sensibles (`Disciplinary`, `Departure`) sans `employee-docs:read:sensitive`, ABAC `Self`/`Team`/`All`, validation atomique des champs d'échéance RQTH & Titres de séjour, concurrence optimiste `RowVersion`.
+- **F4.2 (`de192df`) — Import/Statut des Contrats & Fiches de poste** (`US-021`, `US-022`)
+  - Import multipart PDF avec contrôle magic bytes, suivi du statut de signature + concurrence optimiste (`RowVersion`), streaming déchiffré `inline`/`attachment`, fiches de poste uniques (`JobSheet`, migration `AddJobSheets`) avec ABAC manager direct (`jobsheets:read:team`) et protection de suppression de `Position`.
+- **F4.1 (`8fa6173`) — Modèles de Contrats, Variables Dynamiques & Génération PDF Native** (`US-019`, `US-020`)
+  - Création du module autonome `Sirh.Modules.Contracts` (schéma `contracts`, migration `InitialContracts`), moteur Scriban + liste blanche des variables, rendu PDF natif QuestPDF avec chiffrement AES-256-GCM à la volée, endpoints `/api/v1/contract-models/*` et `/api/v1/contracts/generate`.
 
 ## [0.2.0] - 2026-11-26 (Sprint 1 — Organisation & Collaborateurs)
 

@@ -12,12 +12,12 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 | :--- | :--- | :---: | :---: | :--- |
 | **Sprint 0** | Socle & Auth (`US-001` à `US-010`) | 39 pts | 39 / 39 pts (100 %) | ✅ Done |
 | **Sprint 1** | Organisation & Collaborateurs (`US-011` à `US-018`) | 32 pts | 32 / 32 pts (100 %) | ✅ Done |
-| **Sprint 2** | Contrats PDF natifs & Dossier Salarié (`US-019` à `US-024`) | 31 pts | 21 / 31 pts (68 %) | 🚧 In Progress |
-| **Sprint 3** | Santé au Travail & Notifications (`US-025` à `US-027`) | 13 pts | 0 / 13 pts (0 %) | ⬜ To Do |
+| **Sprint 2** | Contrats PDF natifs & Dossier Salarié (`US-019` à `US-024`) | 31 pts | 31 / 31 pts (100 %) | ✅ Done |
+| **Sprint 3** | Santé au Travail & Notifications (`US-025` à `US-027`) | 13 pts | 0 / 13 pts (0 %) | 🚧 In Progress |
 | **Sprint 4** | Vie Interne — Docs, Kits, CSE, RSE (`US-028` à `US-030`) | 13 pts | 0 / 13 pts (0 %) | ⬜ To Do |
 | **Sprint 5** | QCM d'Intégration Structuré (`US-031` à `US-032`) | 10 pts | 0 / 10 pts (0 %) | ⬜ To Do |
 | **Sprint 6** | Azure Cloud Readiness & Audit Final (`US-033` à `US-034`) | 8 pts | 0 / 8 pts (0 %) | ⬜ To Do |
-| **Total** | **MVP complet + Conformité (34 US)** | **146 pts** | **92 / 146 pts (63 %)** | — |
+| **Total** | **MVP complet + Conformité (34 US)** | **146 pts** | **102 / 146 pts (70 %)** | — |
 
 ---
 
@@ -53,7 +53,7 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 
 ---
 
-## Sprint 2 — Contrats PDF natifs & Dossier Salarié (31 pts — MVP Core) — 🚧 En cours
+## Sprint 2 — Contrats PDF natifs & Dossier Salarié (31 pts — MVP Core) — ✅ Clôturé (`v0.3.0`)
 
 | Feature | US | Titre | Points | Branche | Statut | Commit / PR |
 | :--- | :--- | :--- | :---: | :--- | :--- | :--- |
@@ -61,15 +61,23 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 | **F4.1** | `US-020` | Prévisualiser et générer un contrat PDF natif (QuestPDF) | 8 | `main` | ✅ Done | `8fa6173` |
 | **F4.2** | `US-021` | Importer, suivre la signature, consulter et supprimer un contrat | 5 | `main` | ✅ Done | `de192df` |
 | **F4.2** | `US-022` | Gérer la fiche de poste PDF unique d'un poste (`JobSheet`) | 3 | `main` | ✅ Done | `de192df` |
-| **F5.1** | `US-023` | Déposer, filtrer et télécharger les documents du dossier salarié | 5 | `feat/F5.1-employee-documents` | 👀 In Review | — |
-| **F5.1** | `US-024` | Gérer les attestations RQTH et Titres de séjour | 5 | `feat/F5.1-employee-documents` | 👀 In Review | — |
+| **F5.1** | `US-023` | Déposer, filtrer et télécharger les documents du dossier salarié | 5 | `main` | ✅ Done | `38b83a0` |
+| **F5.1** | `US-024` | Gérer les attestations RQTH et Titres de séjour | 5 | `main` | ✅ Done | `38b83a0` |
+
+---
+
+## Sprint 3 — Santé au Travail & Notifications (13 pts) — 🚧 En cours
+
+| Feature | US | Titre | Points | Branche | Statut | Commit / PR |
+| :--- | :--- | :--- | :---: | :--- | :--- | :--- |
+| **F6.1** | `US-025` | Planifier, mettre à jour et consulter les visites médicales | 5 | `feat/F6.1-medical-visits` | 🚧 In Progress | — |
+| **F6.2** | `US-026` | Exécuter les jobs quotidiens de rappel (visites + RQTH/titres) | 5 | — | ⬜ To Do | — |
+| **F6.2** | `US-027` | Consulter, marquer comme lues et supprimer ses notifications | 3 | — | ⬜ To Do | — |
 
 ---
 
 ## Backlog des Sprints suivants (`⬜ To Do`)
 
-- **Sprint 2 — Contrats PDF natifs & Dossier Salarié (31 pts)** : `US-019` (5), `US-020` (8), `US-021` (5), `US-022` (3), `US-023` (5), `US-024` (5)
-- **Sprint 3 — Santé au Travail & Notifications (13 pts)** : `US-025` (5), `US-026` (5), `US-027` (3)
 - **Sprint 4 — Vie Interne (13 pts)** : `US-028` (5), `US-029` (3), `US-030` (5)
 - **Sprint 5 — QCM d'Intégration Structuré (10 pts)** : `US-031` (5), `US-032` (5)
 - **Sprint 6 — Azure Cloud Readiness & Audit Final (8 pts)** : `US-033` (5), `US-034` (3)
@@ -80,3 +88,4 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 
 - **Sprint 0 (`v0.1.0`)** : [sprint-0-review.md](sprint-0-review.md) — Clôturé le 2026-11-26 (`39 / 39 pts`, `61 / 61 tests`).
 - **Sprint 1 (`v0.2.0`)** : [sprint-1-review.md](sprint-1-review.md) — Clôturé le 2026-11-26 (`32 / 32 pts`, `118 / 118 tests`).
+- **Sprint 2 (`v0.3.0`)** : [sprint-2-review.md](sprint-2-review.md) — Clôturé le 2026-11-26 (`31 / 31 pts`, `138 / 138 tests`).
