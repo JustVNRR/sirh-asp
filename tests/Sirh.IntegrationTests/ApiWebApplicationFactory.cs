@@ -74,6 +74,7 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
                 ["HumanResources:AutoMigrate"] = "false",
                 ["Contracts:AutoMigrate"] = "false",
                 ["Health:AutoMigrate"] = "false",
+                ["Health:Reminders:Enabled"] = "false",
                 ["RateLimiting:AuthPermitLimit"] = _authPermitLimit.ToString(),
                 ["RateLimiting:AuthWindowSeconds"] = "60"
             });

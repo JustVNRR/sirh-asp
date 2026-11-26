@@ -18,6 +18,7 @@ public static class MedicalVisitEndpoints
     public static IEndpointRouteBuilder MapHealthEndpoints(this IEndpointRouteBuilder endpoints)
     {
         MapMedicalVisits(endpoints);
+        endpoints.MapNotificationEndpoints();
 
         return endpoints;
     }

@@ -140,6 +140,19 @@ public sealed class RqthDetail
         WorkplaceAccommodation = NormalizeAccommodation(workplaceAccommodation);
     }
 
+    internal void MarkExpiryReminderSent(int thresholdDays, DateTime sentAtUtc)
+    {
+        if (thresholdDays <= 7)
+        {
+            ExpiryReminder7SentAtUtc ??= sentAtUtc;
+            ExpiryReminder30SentAtUtc ??= sentAtUtc;
+        }
+        else if (thresholdDays <= 30)
+        {
+            ExpiryReminder30SentAtUtc ??= sentAtUtc;
+        }
+    }
+
     private static string? NormalizeAccommodation(string? workplaceAccommodation) =>
         string.IsNullOrWhiteSpace(workplaceAccommodation) ? null : workplaceAccommodation.Trim();
 }
@@ -175,5 +188,18 @@ public sealed class ResidentPermitDetail
 
         PermitNumber = permitNumber.Trim();
         ExpiryDate = expiryDate;
+    }
+
+    internal void MarkExpiryReminderSent(int thresholdDays, DateTime sentAtUtc)
+    {
+        if (thresholdDays <= 7)
+        {
+            ExpiryReminder7SentAtUtc ??= sentAtUtc;
+            ExpiryReminder30SentAtUtc ??= sentAtUtc;
+        }
+        else if (thresholdDays <= 30)
+        {
+            ExpiryReminder30SentAtUtc ??= sentAtUtc;
+        }
     }
 }

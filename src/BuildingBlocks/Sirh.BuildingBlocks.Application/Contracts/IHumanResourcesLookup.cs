@@ -28,6 +28,26 @@ public sealed record PositionContractContextDto(
     string? EmployeeAddressCity,
     string? EmployeeNationalId);
 
+public sealed record EmployeeContactDto(
+    Guid EmployeeId,
+    Guid UserId,
+    string FirstName,
+    string LastName,
+    string Email,
+    bool IsActive);
+
+public sealed record ExpiringDocumentAlertDto(
+    Guid DocumentId,
+    Guid EmployeeId,
+    string EmployeeFirstName,
+    string EmployeeLastName,
+    string EmployeeEmail,
+    string DocumentType,
+    DateOnly ExpiryDate,
+    string? ReferenceNumber,
+    DateTime? ExpiryReminder30SentAtUtc,
+    DateTime? ExpiryReminder7SentAtUtc);
+
 public interface IHumanResourcesLookup
 {
     Task<PositionContractContextDto?> GetPositionContractContextAsync(
@@ -41,5 +61,25 @@ public interface IHumanResourcesLookup
 
     Task<bool> EmployeeExistsAsync(
         Guid employeeId,
+        CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyDictionary<Guid, EmployeeContactDto>> GetEmployeeContactsByIdsAsync(
+        IReadOnlyCollection<Guid> employeeIds,
+        CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyList<EmployeeContactDto>> GetActiveEmployeesByUserIdsAsync(
+        IReadOnlyCollection<Guid> userIds,
+        CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyList<ExpiringDocumentAlertDto>> GetExpiringDocumentsAsync(
+        DateOnly todayUtc,
+        int maxDaysAhead,
+        CancellationToken cancellationToken = default);
+
+    Task MarkDocumentExpiryReminderSentAsync(
+        Guid documentId,
+        string documentType,
+        int thresholdDays,
+        DateTime sentAtUtc,
         CancellationToken cancellationToken = default);
 }

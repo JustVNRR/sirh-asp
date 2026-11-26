@@ -61,6 +61,19 @@ public sealed class MedicalVisitRepository(HealthDbContext dbContext) : IMedical
             pagedRequest.NormalizedPageSize);
     }
 
+    public async Task<IReadOnlyList<MedicalVisit>> GetVisitsDueForReminderAsync(
+        DateTime windowStartUtc,
+        DateTime windowEndUtc,
+        CancellationToken cancellationToken = default) =>
+        await dbContext.MedicalVisits
+            .Where(v =>
+                !v.CarriedOut &&
+                v.ReminderSentAtUtc == null &&
+                v.VisitDateTimeUtc >= windowStartUtc &&
+                v.VisitDateTimeUtc <= windowEndUtc)
+            .OrderBy(v => v.VisitDateTimeUtc)
+            .ToArrayAsync(cancellationToken);
+
     public async Task AddAsync(MedicalVisit visit, CancellationToken cancellationToken = default) =>
         await dbContext.MedicalVisits.AddAsync(visit, cancellationToken);
 

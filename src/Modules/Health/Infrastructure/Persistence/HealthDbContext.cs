@@ -12,6 +12,7 @@ public sealed class HealthDbContext : DbContext
     }
 
     public DbSet<MedicalVisit> MedicalVisits => Set<MedicalVisit>();
+    public DbSet<Notification> Notifications => Set<Notification>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -54,6 +55,30 @@ public sealed class HealthDbContext : DbContext
 
             b.HasIndex(v => new { v.EmployeeId, v.VisitDateTimeUtc });
             b.HasIndex(v => new { v.CarriedOut, v.ReminderSentAtUtc, v.VisitDateTimeUtc });
+        });
+
+        builder.Entity<Notification>(b =>
+        {
+            b.ToTable("notifications");
+            b.HasKey(n => n.Id);
+
+            b.Property(n => n.Category)
+                .HasConversion<string>()
+                .HasMaxLength(32)
+                .IsRequired();
+            b.Property(n => n.ReferenceEntity).HasMaxLength(64);
+            b.Property(n => n.Subject).HasMaxLength(200).IsRequired();
+            b.Property(n => n.Content).HasMaxLength(2000).IsRequired();
+            b.Property(n => n.CreatedBy).HasMaxLength(256);
+            b.Property(n => n.UpdatedBy).HasMaxLength(256);
+
+            if (!isInMemory)
+            {
+                b.Property(n => n.RowVersion).IsRowVersion();
+            }
+
+            b.HasIndex(n => new { n.RecipientEmployeeId, n.IsRead, n.CreatedAtUtc });
+            b.HasIndex(n => new { n.RecipientEmployeeId, n.Category });
         });
     }
 }

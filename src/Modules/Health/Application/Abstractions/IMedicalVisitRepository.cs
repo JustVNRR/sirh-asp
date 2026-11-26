@@ -17,6 +17,11 @@ public interface IMedicalVisitRepository
         PagedRequest pagedRequest,
         CancellationToken cancellationToken = default);
 
+    Task<IReadOnlyList<MedicalVisit>> GetVisitsDueForReminderAsync(
+        DateTime windowStartUtc,
+        DateTime windowEndUtc,
+        CancellationToken cancellationToken = default);
+
     Task AddAsync(MedicalVisit visit, CancellationToken cancellationToken = default);
 
     void Remove(MedicalVisit visit);

@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sirh.BuildingBlocks.Application.Contracts;
 using Sirh.BuildingBlocks.Infrastructure.Persistence;
 using Sirh.Modules.Health.Application.Abstractions;
 using Sirh.Modules.Health.Application.Services;
+using Sirh.Modules.Health.Infrastructure.Jobs;
 using Sirh.Modules.Health.Infrastructure.Persistence;
 
 namespace Sirh.Modules.Health.Infrastructure;
@@ -33,8 +35,15 @@ public static class HealthModuleExtensions
             });
         }
 
+        services.Configure<HealthRemindersOptions>(configuration.GetSection(HealthRemindersOptions.SectionName));
+
         services.AddScoped<IMedicalVisitRepository, MedicalVisitRepository>();
+        services.AddScoped<INotificationRepository, NotificationRepository>();
+        services.AddScoped<INotificationLookup, NotificationLookupService>();
         services.AddScoped<IMedicalVisitService, MedicalVisitService>();
+        services.AddScoped<INotificationService, NotificationService>();
+        services.AddScoped<IDailyHealthRemindersJob, DailyHealthRemindersJob>();
+        services.AddHostedService<DailyHealthRemindersBackgroundService>();
 
         return services;
     }

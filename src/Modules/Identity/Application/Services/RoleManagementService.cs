@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Sirh.BuildingBlocks.Application.Contracts;
 using Sirh.BuildingBlocks.Domain.Results;
 using Sirh.Modules.Identity.Application.Abstractions;
 using Sirh.Modules.Identity.Application.DTOs;
@@ -16,19 +17,22 @@ public sealed class RoleManagementService : IRoleManagementService
     private readonly IRolePermissionRepository _rolePermissionRepository;
     private readonly IValidator<UpdateRolePermissionsRequest> _updateValidator;
     private readonly ILogger<RoleManagementService> _logger;
+    private readonly INotificationLookup? _notificationLookup;
 
     public RoleManagementService(
         UserManager<ApplicationUser> userManager,
         IPermissionRepository permissionRepository,
         IRolePermissionRepository rolePermissionRepository,
         IValidator<UpdateRolePermissionsRequest> updateValidator,
-        ILogger<RoleManagementService> logger)
+        ILogger<RoleManagementService> logger,
+        INotificationLookup? notificationLookup = null)
     {
         _userManager = userManager;
         _permissionRepository = permissionRepository;
         _rolePermissionRepository = rolePermissionRepository;
         _updateValidator = updateValidator;
         _logger = logger;
+        _notificationLookup = notificationLookup;
     }
 
     public async Task<Result<CurrentUserProfileResponse>> GetCurrentUserProfileAsync(
@@ -51,6 +55,9 @@ public sealed class RoleManagementService : IRoleManagementService
             .ToArray();
 
         var maxPriority = roles.Length > 0 ? roles.Max(r => r.Priority) : 0;
+        var unreadCount = user.EmployeeId.HasValue && _notificationLookup is not null
+            ? await _notificationLookup.GetUnreadCountAsync(user.EmployeeId.Value, cancellationToken)
+            : 0;
 
         return new CurrentUserProfileResponse(
             user.Id,
@@ -60,7 +67,7 @@ public sealed class RoleManagementService : IRoleManagementService
             maxPriority,
             roles,
             permissions.ToArray(),
-            UnreadNotificationsCount: 0);
+            unreadCount);
     }
 
     public async Task<Result<IReadOnlyList<RoleSummaryDto>>> GetRolesAsync(
