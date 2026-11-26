@@ -12,12 +12,12 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 | :--- | :--- | :---: | :---: | :--- |
 | **Sprint 0** | Socle & Auth (`US-001` à `US-010`) | 39 pts | 39 / 39 pts (100 %) | ✅ Done |
 | **Sprint 1** | Organisation & Collaborateurs (`US-011` à `US-018`) | 32 pts | 32 / 32 pts (100 %) | ✅ Done |
-| **Sprint 2** | Contrats PDF natifs & Dossier Salarié (`US-019` à `US-024`) | 31 pts | 13 / 31 pts (42 %) | 🚧 In Progress |
+| **Sprint 2** | Contrats PDF natifs & Dossier Salarié (`US-019` à `US-024`) | 31 pts | 21 / 31 pts (68 %) | 🚧 In Progress |
 | **Sprint 3** | Santé au Travail & Notifications (`US-025` à `US-027`) | 13 pts | 0 / 13 pts (0 %) | ⬜ To Do |
 | **Sprint 4** | Vie Interne — Docs, Kits, CSE, RSE (`US-028` à `US-030`) | 13 pts | 0 / 13 pts (0 %) | ⬜ To Do |
 | **Sprint 5** | QCM d'Intégration Structuré (`US-031` à `US-032`) | 10 pts | 0 / 10 pts (0 %) | ⬜ To Do |
 | **Sprint 6** | Azure Cloud Readiness & Audit Final (`US-033` à `US-034`) | 8 pts | 0 / 8 pts (0 %) | ⬜ To Do |
-| **Total** | **MVP complet + Conformité (34 US)** | **146 pts** | **84 / 146 pts (58 %)** | — |
+| **Total** | **MVP complet + Conformité (34 US)** | **146 pts** | **92 / 146 pts (63 %)** | — |
 
 ---
 
@@ -59,10 +59,10 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 | :--- | :--- | :--- | :---: | :--- | :--- | :--- |
 | **F4.1** | `US-019` | Gérer les modèles Markdown/Scriban et catalogue des variables | 5 | `main` | ✅ Done | `8fa6173` |
 | **F4.1** | `US-020` | Prévisualiser et générer un contrat PDF natif (QuestPDF) | 8 | `main` | ✅ Done | `8fa6173` |
-| **F4.2** | `US-021` | Importer, suivre la signature, consulter et supprimer un contrat | 5 | `feat/F4.2-contracts-jobsheets` | 👀 In Review | — |
-| **F4.2** | `US-022` | Gérer la fiche de poste PDF unique d'un poste (`JobSheet`) | 3 | `feat/F4.2-contracts-jobsheets` | 👀 In Review | — |
-| **F5.1** | `US-023` | Déposer, filtrer et télécharger les documents du dossier salarié | 5 | — | ⬜ To Do | — |
-| **F5.1** | `US-024` | Gérer les attestations RQTH et Titres de séjour | 5 | — | ⬜ To Do | — |
+| **F4.2** | `US-021` | Importer, suivre la signature, consulter et supprimer un contrat | 5 | `main` | ✅ Done | `de192df` |
+| **F4.2** | `US-022` | Gérer la fiche de poste PDF unique d'un poste (`JobSheet`) | 3 | `main` | ✅ Done | `de192df` |
+| **F5.1** | `US-023` | Déposer, filtrer et télécharger les documents du dossier salarié | 5 | `feat/F5.1-employee-documents` | 🚧 In Progress | — |
+| **F5.1** | `US-024` | Gérer les attestations RQTH et Titres de séjour | 5 | `feat/F5.1-employee-documents` | 🚧 In Progress | — |
 
 ---
 

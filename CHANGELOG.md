@@ -8,6 +8,7 @@ Le format repose sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), e
 
 - *Sprint 2 — Contrats PDF natifs & Dossier Salarié (en cours)*
   - **F4.1 (`8fa6173`) — Modèles de Contrats, Variables Dynamiques & Génération PDF Native (`US-019`, `US-020`)** : Module `Sirh.Modules.Contracts` (schéma SQL `contracts`), moteur Scriban + liste blanche des variables, rendu PDF natif QuestPDF avec chiffrement AES-256-GCM à la volée, endpoints `/api/v1/contract-models/*` et `/api/v1/contracts/generate`.
+  - **F4.2 (`de192df`) — Import/Statut des Contrats & Fiches de poste (`US-021`, `US-022`)** : Import multipart PDF avec contrôle magic bytes, suivi du statut de signature + concurrence optimiste (`RowVersion`), streaming déchiffré `inline`/`attachment`, fiches de poste uniques (`JobSheet`) avec ABAC manager direct (`jobsheets:read:team`) et protection de suppression de `Position`.
 
 ## [0.2.0] - 2026-11-26 (Sprint 1 — Organisation & Collaborateurs)
 
