@@ -13,11 +13,11 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 | **Sprint 0** | Socle & Auth (`US-001` à `US-010`) | 39 pts | 39 / 39 pts (100 %) | ✅ Done |
 | **Sprint 1** | Organisation & Collaborateurs (`US-011` à `US-018`) | 32 pts | 32 / 32 pts (100 %) | ✅ Done |
 | **Sprint 2** | Contrats PDF natifs & Dossier Salarié (`US-019` à `US-024`) | 31 pts | 31 / 31 pts (100 %) | ✅ Done |
-| **Sprint 3** | Santé au Travail & Notifications (`US-025` à `US-027`) | 13 pts | 0 / 13 pts (0 %) | 🚧 In Progress |
+| **Sprint 3** | Santé au Travail & Notifications (`US-025` à `US-027`) | 13 pts | 5 / 13 pts (38 %) | 🚧 In Progress |
 | **Sprint 4** | Vie Interne — Docs, Kits, CSE, RSE (`US-028` à `US-030`) | 13 pts | 0 / 13 pts (0 %) | ⬜ To Do |
 | **Sprint 5** | QCM d'Intégration Structuré (`US-031` à `US-032`) | 10 pts | 0 / 10 pts (0 %) | ⬜ To Do |
 | **Sprint 6** | Azure Cloud Readiness & Audit Final (`US-033` à `US-034`) | 8 pts | 0 / 8 pts (0 %) | ⬜ To Do |
-| **Total** | **MVP complet + Conformité (34 US)** | **146 pts** | **102 / 146 pts (70 %)** | — |
+| **Total** | **MVP complet + Conformité (34 US)** | **146 pts** | **107 / 146 pts (73 %)** | — |
 
 ---
 
@@ -70,9 +70,9 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 
 | Feature | US | Titre | Points | Branche | Statut | Commit / PR |
 | :--- | :--- | :--- | :---: | :--- | :--- | :--- |
-| **F6.1** | `US-025` | Planifier, mettre à jour et consulter les visites médicales | 5 | `feat/F6.1-medical-visits` | 👀 In Review | — |
-| **F6.2** | `US-026` | Exécuter les jobs quotidiens de rappel (visites + RQTH/titres) | 5 | — | ⬜ To Do | — |
-| **F6.2** | `US-027` | Consulter, marquer comme lues et supprimer ses notifications | 3 | — | ⬜ To Do | — |
+| **F6.1** | `US-025` | Planifier, mettre à jour et consulter les visites médicales | 5 | `main` | ✅ Done | `c634302` |
+| **F6.2** | `US-026` | Exécuter les jobs quotidiens de rappel (visites + RQTH/titres) | 5 | `feat/F6.2-reminders-notifications` | 🚧 In Progress | — |
+| **F6.2** | `US-027` | Consulter, marquer comme lues et supprimer ses notifications | 3 | `feat/F6.2-reminders-notifications` | 🚧 In Progress | — |
 
 ---
 

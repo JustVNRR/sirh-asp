@@ -7,6 +7,7 @@ Le format repose sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), e
 ## [Unreleased]
 
 - *Sprint 3 — Santé au Travail & Notifications (en cours)*
+  - **F6.1 (`c634302`) — Module `Health` & Visites Médicales (`US-025`)** : Création du module autonome `Sirh.Modules.Health` (schéma SQL `health`, migration `InitialHealth`), entité `MedicalVisit`, convocation obligatoire + rapport optionnel chiffrés AES-256-GCM avec validation magic bytes, ABAC secret médical (`Self` ou `RH+`), endpoints `/api/v1/medical-visits/*` et 3 tests d'isolation `NetArchTest`.
 
 ## [0.3.0] - 2026-11-26 (Sprint 2 — Contrats PDF natifs & Dossier Salarié)
 
