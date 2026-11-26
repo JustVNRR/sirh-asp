@@ -6,8 +6,17 @@ Le format repose sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), e
 
 ## [Unreleased]
 
+- *Sprint 2 — Contrats PDF natifs & Dossier Salarié (en cours)*
+
+## [0.2.0] - 2026-11-26 (Sprint 1 — Organisation & Collaborateurs)
+
 ### Added
 
+- **F3.2 — Contacts d'urgence chiffrés & Postes** (`US-017`, `US-018`)
+  - Support HTTP `422 Unprocessable Entity` (`ErrorType.UnprocessableEntity`) et centralisation des contrats de vérification inter-modules (`ILocationReferenceChecker`, `IContractTypeReferenceChecker`, `IPositionReferenceChecker`) dans `BuildingBlocks`.
+  - Entités `EmergencyContact` et `Position` + migration EF Core `AddEmergencyContactsAndPositions` (schéma `hr`).
+  - Endpoints `/api/v1/employees/{id}/emergency-contacts` et `/api/v1/emergency-contacts/{id}` : chiffrement AES-256-GCM des champs personnels, plafond strict de 2 contacts (`422`), ABAC `Self`/`HR+`, concurrence `RowVersion`.
+  - Endpoints `/api/v1/employees/{id}/positions` et `/api/v1/positions` : slug immuable `poste-{employeeSlug}[-n]`, calcul dynamique `IsCurrent` avec synchronisation de `Employee.CurrentlyInPosition` et `DirectManagerId`, et `PositionLocationReferenceChecker` bloquant `409 Conflict` sur suppression d'un lieu référencé.
 - **F3.1 — Module `HumanResources` : Cycle de vie des Collaborateurs** (`US-014`, `US-015`, `US-016`)
   - Contrats inter-modules dans `Sirh.BuildingBlocks.Application` (`IOrganizationLookup`, `IIdentityUserProvisioningService`) avec implémentations découplées dans `Identity` et `Organization` (zéro couplage direct vers `HumanResources`).
   - Création du module `Sirh.Modules.HumanResources` (schéma SQL Server `hr`, migration `InitialHumanResources`, entité `Employee`).
