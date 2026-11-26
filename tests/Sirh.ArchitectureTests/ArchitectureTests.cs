@@ -2,6 +2,7 @@ using NetArchTest.Rules;
 using Shouldly;
 using Sirh.BuildingBlocks.Application.Abstractions;
 using Sirh.BuildingBlocks.Domain.Primitives;
+using Sirh.Modules.HumanResources.Domain.Entities;
 using Sirh.Modules.Identity.Domain.Entities;
 using Sirh.Modules.Organization.Domain.Entities;
 using Xunit;
@@ -126,5 +127,55 @@ public sealed class ArchitectureTests
 
         result.IsSuccessful.ShouldBeTrue(
             $"Organization -> Identity coupling violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
+    }
+
+    [Fact]
+    public void HumanResources_Domain_Should_Not_Depend_On_Infrastructure_Presentation_EfCore_Or_Other_Modules()
+    {
+        var result = Types.InAssembly(typeof(Employee).Assembly)
+            .That()
+            .ResideInNamespace("Sirh.Modules.HumanResources.Domain")
+            .ShouldNot()
+            .HaveDependencyOnAny(
+                "Sirh.Modules.HumanResources.Infrastructure",
+                "Sirh.Modules.HumanResources.Presentation",
+                "Sirh.Modules.Identity",
+                "Sirh.Modules.Organization",
+                "Microsoft.EntityFrameworkCore")
+            .GetResult();
+
+        result.IsSuccessful.ShouldBeTrue(
+            $"HumanResources.Domain violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
+    }
+
+    [Fact]
+    public void HumanResources_Application_Should_Not_Depend_On_Infrastructure_Presentation_EfCore_Or_Other_Modules()
+    {
+        var result = Types.InAssembly(typeof(Employee).Assembly)
+            .That()
+            .ResideInNamespace("Sirh.Modules.HumanResources.Application")
+            .ShouldNot()
+            .HaveDependencyOnAny(
+                "Sirh.Modules.HumanResources.Infrastructure",
+                "Sirh.Modules.HumanResources.Presentation",
+                "Sirh.Modules.Identity",
+                "Sirh.Modules.Organization",
+                "Microsoft.EntityFrameworkCore")
+            .GetResult();
+
+        result.IsSuccessful.ShouldBeTrue(
+            $"HumanResources.Application violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
+    }
+
+    [Fact]
+    public void HumanResources_Module_Should_Not_Depend_On_Identity_Or_Organization_Modules()
+    {
+        var result = Types.InAssembly(typeof(Employee).Assembly)
+            .ShouldNot()
+            .HaveDependencyOnAny("Sirh.Modules.Identity", "Sirh.Modules.Organization")
+            .GetResult();
+
+        result.IsSuccessful.ShouldBeTrue(
+            $"HumanResources cross-module coupling violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
     }
 }

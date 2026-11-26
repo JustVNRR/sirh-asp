@@ -45,9 +45,9 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 | **F2.1** | `US-011` | Gérer le référentiel des entreprises (`Company`) | 3 | `feat/F2.1-organization-referentials` | ✅ Done | `ebb7251` |
 | **F2.1** | `US-012` | Gérer le CRUD complet des lieux / établissements (`Location`) | 3 | `feat/F2.1-organization-referentials` | ✅ Done | `ebb7251` |
 | **F2.1** | `US-013` | Gérer les types de contrat et exposer le référentiel des départements | 3 | `feat/F2.1-organization-referentials` | ✅ Done | `ebb7251` |
-| **F3.1** | `US-014` | Créer un collaborateur avec email pro auto et rôles | 5 | `feat/F3.1-employees-lifecycle` | 🚧 In Progress | — |
-| **F3.1** | `US-015` | Rechercher, consulter et mettre à jour une fiche collaborateur | 5 | `feat/F3.1-employees-lifecycle` | 🚧 In Progress | — |
-| **F3.1** | `US-016` | Désactiver et réactiver un collaborateur avec révocation des sessions | 3 | `feat/F3.1-employees-lifecycle` | 🚧 In Progress | — |
+| **F3.1** | `US-014` | Créer un collaborateur avec email pro auto et rôles | 5 | `feat/F3.1-employees-lifecycle` | 👀 In Review | — |
+| **F3.1** | `US-015` | Rechercher, consulter et mettre à jour une fiche collaborateur | 5 | `feat/F3.1-employees-lifecycle` | 👀 In Review | — |
+| **F3.1** | `US-016` | Désactiver et réactiver un collaborateur avec révocation des sessions | 3 | `feat/F3.1-employees-lifecycle` | 👀 In Review | — |
 | **F3.2** | `US-017` | Gérer les contacts d'urgence chiffrés (max 2) | 3 | — | ⬜ To Do | — |
 | **F3.2** | `US-018` | Gérer les affectations et l'historique des postes (`Position`) | 5 | — | ⬜ To Do | — |
 

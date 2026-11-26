@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sirh.BuildingBlocks.Application.Abstractions;
 using Sirh.BuildingBlocks.Infrastructure.Persistence;
+using Sirh.Modules.HumanResources.Infrastructure.Persistence;
 using Sirh.Modules.Identity.Infrastructure.Persistence;
 using Sirh.Modules.Organization.Application.Abstractions;
 using Sirh.Modules.Organization.Infrastructure.Persistence;
@@ -23,6 +24,7 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
 
     private readonly string _inMemoryDbName = $"sirh-it-{Guid.NewGuid():N}";
     private readonly string _orgInMemoryDbName = $"sirh-org-it-{Guid.NewGuid():N}";
+    private readonly string _hrInMemoryDbName = $"sirh-hr-it-{Guid.NewGuid():N}";
     private readonly int _authPermitLimit;
 
     internal InMemoryEmailService EmailService { get; } = new();
@@ -62,6 +64,7 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
                 ["Organization:AutoMigrate"] = "false",
                 ["Organization:SeedOnStartup"] = "true",
                 ["Organization:SeedDemoData"] = "true",
+                ["HumanResources:AutoMigrate"] = "false",
                 ["RateLimiting:AuthPermitLimit"] = _authPermitLimit.ToString(),
                 ["RateLimiting:AuthWindowSeconds"] = "60"
             });
@@ -82,6 +85,14 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
 
             services.AddDbContext<OrganizationDbContext>((sp, options) =>
                 options.UseInMemoryDatabase(_orgInMemoryDbName)
+                    .AddInterceptors(sp.GetRequiredService<AuditableEntityInterceptor>()));
+
+            services.RemoveAll<IDbContextOptionsConfiguration<HumanResourcesDbContext>>();
+            services.RemoveAll<DbContextOptions<HumanResourcesDbContext>>();
+            services.RemoveAll<HumanResourcesDbContext>();
+
+            services.AddDbContext<HumanResourcesDbContext>((sp, options) =>
+                options.UseInMemoryDatabase(_hrInMemoryDbName)
                     .AddInterceptors(sp.GetRequiredService<AuditableEntityInterceptor>()));
 
             services.RemoveAll<IEmailService>();

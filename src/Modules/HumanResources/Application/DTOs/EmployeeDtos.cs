@@ -1,0 +1,100 @@
+namespace Sirh.Modules.HumanResources.Application.DTOs;
+
+public sealed record EmployeeAddressDto(
+    string? Street,
+    string? PostalCode,
+    string? City,
+    string? AdditionalInfo);
+
+public sealed record EmployeeSummaryDto(
+    Guid Id,
+    Guid UserId,
+    Guid CompanyId,
+    Guid? DirectManagerId,
+    string Slug,
+    string Honorific,
+    string FirstName,
+    string LastName,
+    string Email,
+    string? Mobile,
+    IReadOnlyList<string> Departments,
+    IReadOnlyList<string> Roles,
+    bool IsActive,
+    bool CurrentlyInPosition);
+
+public sealed record EmployeeDetailDto(
+    Guid Id,
+    Guid UserId,
+    Guid CompanyId,
+    Guid? DirectManagerId,
+    string Slug,
+    string Honorific,
+    string FirstName,
+    string LastName,
+    DateOnly? BornAt,
+    string? BirthPlace,
+    string? BirthDepartmentCode,
+    string? NationalId,
+    string Email,
+    string? Landline,
+    string? Mobile,
+    string? PersonalEmail,
+    string? PersonalLandline,
+    string? PersonalMobile,
+    EmployeeAddressDto? Address,
+    IReadOnlyList<string> Departments,
+    IReadOnlyList<string> Roles,
+    bool IsActive,
+    bool CurrentlyInPosition,
+    DateTime CreatedAtUtc,
+    DateTime UpdatedAtUtc,
+    string RowVersion);
+
+public sealed record CreateEmployeeRequest(
+    Guid CompanyId,
+    Guid? DirectManagerId,
+    string Honorific,
+    string FirstName,
+    string LastName,
+    string Password,
+    IReadOnlyCollection<string> RoleCodes,
+    DateOnly? BornAt = null,
+    string? BirthPlace = null,
+    string? BirthDepartmentCode = null,
+    string? NationalId = null,
+    string? Landline = null,
+    string? Mobile = null,
+    string? PersonalEmail = null,
+    string? PersonalLandline = null,
+    string? PersonalMobile = null,
+    EmployeeAddressDto? Address = null,
+    IReadOnlyCollection<string>? Departments = null);
+
+public sealed record UpdateEmployeeRequest(
+    Guid CompanyId,
+    Guid? DirectManagerId,
+    string Honorific,
+    string FirstName,
+    string LastName,
+    IReadOnlyCollection<string>? RoleCodes = null,
+    DateOnly? BornAt = null,
+    string? BirthPlace = null,
+    string? BirthDepartmentCode = null,
+    string? NationalId = null,
+    string? Landline = null,
+    string? Mobile = null,
+    string? PersonalEmail = null,
+    string? PersonalLandline = null,
+    string? PersonalMobile = null,
+    EmployeeAddressDto? Address = null,
+    IReadOnlyCollection<string>? Departments = null,
+    string? RowVersion = null);
+
+public sealed record EmployeeQuery(
+    Guid? CompanyId = null,
+    Guid? ManagerId = null,
+    string? Department = null,
+    bool? Active = null,
+    bool? InPosition = null,
+    string? Role = null,
+    string? Search = null);

@@ -2,6 +2,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sirh.BuildingBlocks.Application.Contracts;
 using Sirh.BuildingBlocks.Infrastructure.Persistence;
 using Sirh.Modules.Organization.Application.Abstractions;
 using Sirh.Modules.Organization.Application.Services;
@@ -42,6 +43,7 @@ public static class OrganizationModuleExtensions
         services.AddScoped<ICompanyService, CompanyService>();
         services.AddScoped<ILocationService, LocationService>();
         services.AddScoped<IContractTypeService, ContractTypeService>();
+        services.AddScoped<IOrganizationLookup, OrganizationLookupService>();
         services.AddScoped<OrganizationDbSeeder>();
 
         return services;

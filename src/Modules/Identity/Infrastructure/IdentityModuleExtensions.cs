@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Sirh.BuildingBlocks.Application.Contracts;
 using Sirh.Modules.Identity.Application.Abstractions;
 using Sirh.Modules.Identity.Application.Options;
 using Sirh.Modules.Identity.Application.Services;
@@ -96,6 +97,7 @@ public static class IdentityModuleExtensions
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IPasswordService, PasswordService>();
         services.AddScoped<IRoleManagementService, RoleManagementService>();
+        services.AddScoped<IIdentityUserProvisioningService, IdentityUserProvisioningService>();
         services.AddScoped<IdentityDbSeeder>();
 
         return services;

@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\src\BuildingBlocks\Sirh.BuildingBlocks.Domain\Sirh.BuildingBlocks.Domain.csproj" />
     <ProjectReference Include="..\..\src\BuildingBlocks\Sirh.BuildingBlocks.Application\Sirh.BuildingBlocks.Application.csproj" />
     <ProjectReference Include="..\..\src\BuildingBlocks\Sirh.BuildingBlocks.Infrastructure\Sirh.BuildingBlocks.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Modules\HumanResources\Sirh.Modules.HumanResources.csproj" />
     <ProjectReference Include="..\..\src\Modules\Identity\Sirh.Modules.Identity.csproj" />
     <ProjectReference Include="..\..\src\Modules\Organization\Sirh.Modules.Organization.csproj" />
   </ItemGroup>
