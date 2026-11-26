@@ -48,8 +48,8 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 | **F3.1** | `US-014` | Créer un collaborateur avec email pro auto et rôles | 5 | `feat/F3.1-employees-lifecycle` | ✅ Done | `6a8509c` |
 | **F3.1** | `US-015` | Rechercher, consulter et mettre à jour une fiche collaborateur | 5 | `feat/F3.1-employees-lifecycle` | ✅ Done | `6a8509c` |
 | **F3.1** | `US-016` | Désactiver et réactiver un collaborateur avec révocation des sessions | 3 | `feat/F3.1-employees-lifecycle` | ✅ Done | `6a8509c` |
-| **F3.2** | `US-017` | Gérer les contacts d'urgence chiffrés (max 2) | 3 | `feat/F3.2-emergency-contacts-positions` | 🚧 In Progress | — |
-| **F3.2** | `US-018` | Gérer les affectations et l'historique des postes (`Position`) | 5 | `feat/F3.2-emergency-contacts-positions` | 🚧 In Progress | — |
+| **F3.2** | `US-017` | Gérer les contacts d'urgence chiffrés (max 2) | 3 | `feat/F3.2-emergency-contacts-positions` | 👀 In Review | — |
+| **F3.2** | `US-018` | Gérer les affectations et l'historique des postes (`Position`) | 5 | `feat/F3.2-emergency-contacts-positions` | 👀 In Review | — |
 
 ---
 

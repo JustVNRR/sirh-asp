@@ -1,0 +1,55 @@
+namespace Sirh.Modules.HumanResources.Application.DTOs;
+
+public sealed record PositionDto(
+    Guid Id,
+    string Slug,
+    Guid EmployeeId,
+    Guid? ManagerId,
+    Guid? LocationId,
+    string JobTitle,
+    DateOnly StartAt,
+    DateOnly? EndAt,
+    bool IsCurrent,
+    string? ContractLabel,
+    string? Coefficient,
+    decimal? Rate,
+    string? Supervisor,
+    string? TimeContractType,
+    decimal? TimeContractAmount,
+    string? HierarchicalPosition,
+    IReadOnlyList<string> Departments,
+    DateTime CreatedAtUtc,
+    DateTime UpdatedAtUtc,
+    string RowVersion);
+
+public sealed record CreatePositionRequest(
+    Guid EmployeeId,
+    Guid? ManagerId,
+    Guid? LocationId,
+    string JobTitle,
+    DateOnly StartAt,
+    DateOnly? EndAt = null,
+    string? ContractLabel = null,
+    string? Coefficient = null,
+    decimal? Rate = null,
+    string? Supervisor = null,
+    string? TimeContractType = null,
+    decimal? TimeContractAmount = null,
+    string? HierarchicalPosition = null,
+    IReadOnlyCollection<string>? Departments = null);
+
+public sealed record UpdatePositionRequest(
+    Guid? ManagerId,
+    Guid? LocationId,
+    string JobTitle,
+    DateOnly StartAt,
+    DateOnly? EndAt = null,
+    string? ContractLabel = null,
+    string? Coefficient = null,
+    decimal? Rate = null,
+    string? Supervisor = null,
+    string? TimeContractType = null,
+    decimal? TimeContractAmount = null,
+    string? HierarchicalPosition = null,
+    IReadOnlyCollection<string>? Departments = null,
+    string? RowVersion = null);

@@ -23,6 +23,67 @@ namespace Sirh.Modules.HumanResources.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.EmergencyContact", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FullNameEncrypted")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("HomePhoneEncrypted")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("MobilePhoneEncrypted")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<int>("PriorityOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RelationshipEncrypted")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("WorkPhoneEncrypted")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("emergency_contacts", "hr");
+                });
+
             modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.Employee", b =>
                 {
                     b.Property<Guid>("Id")
@@ -163,6 +224,115 @@ namespace Sirh.Modules.HumanResources.Infrastructure.Persistence.Migrations
                     b.ToTable("employees", "hr");
                 });
 
+            modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.Position", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Coefficient")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ContractLabel")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("DepartmentsCsv")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly?>("EndAt")
+                        .HasColumnType("date");
+
+                    b.Property<string>("HierarchicalPosition")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("JobTitle")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<Guid?>("LocationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ManagerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("Rate")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<DateOnly>("StartAt")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Supervisor")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<decimal?>("TimeContractAmount")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<string>("TimeContractType")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("ManagerId");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
+                    b.ToTable("positions", "hr");
+                });
+
+            modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.EmergencyContact", b =>
+                {
+                    b.HasOne("Sirh.Modules.HumanResources.Domain.Entities.Employee", "Employee")
+                        .WithMany("EmergencyContacts")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.Employee", b =>
                 {
                     b.HasOne("Sirh.Modules.HumanResources.Domain.Entities.Employee", "DirectManager")
@@ -171,6 +341,31 @@ namespace Sirh.Modules.HumanResources.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("DirectManager");
+                });
+
+            modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.Position", b =>
+                {
+                    b.HasOne("Sirh.Modules.HumanResources.Domain.Entities.Employee", "Employee")
+                        .WithMany("Positions")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sirh.Modules.HumanResources.Domain.Entities.Employee", "Manager")
+                        .WithMany()
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Manager");
+                });
+
+            modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.Employee", b =>
+                {
+                    b.Navigation("EmergencyContacts");
+
+                    b.Navigation("Positions");
                 });
 #pragma warning restore 612, 618
         }

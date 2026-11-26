@@ -1,4 +1,5 @@
 using FluentValidation;
+using Sirh.BuildingBlocks.Application.Contracts;
 using Sirh.BuildingBlocks.Application.Pagination;
 using Sirh.BuildingBlocks.Domain.Results;
 using Sirh.Modules.Organization.Application.Abstractions;

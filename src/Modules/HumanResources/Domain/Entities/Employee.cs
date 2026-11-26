@@ -93,6 +93,9 @@ public sealed class Employee : AuditableEntity
     public bool IsActive { get; private set; }
     public bool CurrentlyInPosition { get; private set; }
 
+    public ICollection<EmergencyContact> EmergencyContacts { get; private set; } = [];
+    public ICollection<Position> Positions { get; private set; } = [];
+
     public void Update(
         Guid companyId,
         Guid? directManagerId,
@@ -141,6 +144,8 @@ public sealed class Employee : AuditableEntity
     public void Activate() => IsActive = true;
 
     public void SetCurrentlyInPosition(bool inPosition) => CurrentlyInPosition = inPosition;
+
+    public void SetDirectManager(Guid? directManagerId) => DirectManagerId = directManagerId;
 
     public IReadOnlyList<string> GetDepartments() =>
         string.IsNullOrWhiteSpace(DepartmentsCsv)

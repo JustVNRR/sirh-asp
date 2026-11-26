@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sirh.BuildingBlocks.Application.Abstractions;
+using Sirh.BuildingBlocks.Application.Contracts;
 using Sirh.BuildingBlocks.Infrastructure.Persistence;
 using Sirh.Modules.HumanResources.Infrastructure.Persistence;
 using Sirh.Modules.Identity.Infrastructure.Persistence;
@@ -30,6 +31,7 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
     internal InMemoryEmailService EmailService { get; } = new();
     internal HashSet<Guid> LocationReferences { get; } = [];
     internal HashSet<Guid> ContractTypeReferences { get; } = [];
+    internal HashSet<Guid> PositionReferences { get; } = [];
 
     public ApiWebApplicationFactory() : this(100)
     {
@@ -99,17 +101,21 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
             services.AddSingleton<IEmailService>(EmailService);
             services.AddSingleton<ILocationReferenceChecker>(new StubReferenceChecker(this));
             services.AddSingleton<IContractTypeReferenceChecker>(new StubReferenceChecker(this));
+            services.AddSingleton<IPositionReferenceChecker>(new StubReferenceChecker(this));
         });
     }
 
     private sealed class StubReferenceChecker(ApiWebApplicationFactory factory)
-        : ILocationReferenceChecker, IContractTypeReferenceChecker
+        : ILocationReferenceChecker, IContractTypeReferenceChecker, IPositionReferenceChecker
     {
         public Task<bool> IsLocationReferencedAsync(Guid locationId, CancellationToken cancellationToken = default) =>
             Task.FromResult(factory.LocationReferences.Contains(locationId));
 
         public Task<bool> IsContractTypeReferencedAsync(Guid contractTypeId, CancellationToken cancellationToken = default) =>
             Task.FromResult(factory.ContractTypeReferences.Contains(contractTypeId));
+
+        public Task<bool> IsPositionReferencedAsync(Guid positionId, CancellationToken cancellationToken = default) =>
+            Task.FromResult(factory.PositionReferences.Contains(positionId));
     }
 
     internal sealed class InMemoryEmailService : IEmailService

@@ -12,6 +12,8 @@ public sealed class HumanResourcesDbContext : DbContext
     }
 
     public DbSet<Employee> Employees => Set<Employee>();
+    public DbSet<EmergencyContact> EmergencyContacts => Set<EmergencyContact>();
+    public DbSet<Position> Positions => Set<Position>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -64,6 +66,70 @@ public sealed class HumanResourcesDbContext : DbContext
             b.HasOne(e => e.DirectManager)
                 .WithMany()
                 .HasForeignKey(e => e.DirectManagerId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        builder.Entity<EmergencyContact>(b =>
+        {
+            b.ToTable("emergency_contacts");
+            b.HasKey(c => c.Id);
+
+            b.Property(c => c.FullNameEncrypted).HasMaxLength(512).IsRequired();
+            b.Property(c => c.RelationshipEncrypted).HasMaxLength(512).IsRequired();
+            b.Property(c => c.MobilePhoneEncrypted).HasMaxLength(512);
+            b.Property(c => c.HomePhoneEncrypted).HasMaxLength(512);
+            b.Property(c => c.WorkPhoneEncrypted).HasMaxLength(512);
+            b.Property(c => c.CreatedBy).HasMaxLength(256);
+            b.Property(c => c.UpdatedBy).HasMaxLength(256);
+
+            if (!isInMemory)
+            {
+                b.Property(c => c.RowVersion).IsRowVersion();
+            }
+
+            b.HasIndex(c => c.EmployeeId);
+
+            b.HasOne(c => c.Employee)
+                .WithMany(e => e.EmergencyContacts)
+                .HasForeignKey(c => c.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<Position>(b =>
+        {
+            b.ToTable("positions");
+            b.HasKey(p => p.Id);
+
+            b.Property(p => p.Slug).HasMaxLength(120).IsRequired();
+            b.Property(p => p.JobTitle).HasMaxLength(150).IsRequired();
+            b.Property(p => p.ContractLabel).HasMaxLength(150);
+            b.Property(p => p.Coefficient).HasMaxLength(50);
+            b.Property(p => p.Rate).HasPrecision(18, 2);
+            b.Property(p => p.Supervisor).HasMaxLength(150);
+            b.Property(p => p.TimeContractType).HasMaxLength(20);
+            b.Property(p => p.TimeContractAmount).HasPrecision(10, 2);
+            b.Property(p => p.HierarchicalPosition).HasMaxLength(120);
+            b.Property(p => p.DepartmentsCsv).HasMaxLength(500).IsRequired();
+            b.Property(p => p.CreatedBy).HasMaxLength(256);
+            b.Property(p => p.UpdatedBy).HasMaxLength(256);
+
+            if (!isInMemory)
+            {
+                b.Property(p => p.RowVersion).IsRowVersion();
+            }
+
+            b.HasIndex(p => p.Slug).IsUnique();
+            b.HasIndex(p => p.EmployeeId);
+            b.HasIndex(p => p.LocationId);
+
+            b.HasOne(p => p.Employee)
+                .WithMany(e => e.Positions)
+                .HasForeignKey(p => p.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            b.HasOne(p => p.Manager)
+                .WithMany()
+                .HasForeignKey(p => p.ManagerId)
                 .OnDelete(DeleteBehavior.Restrict);
         });
     }

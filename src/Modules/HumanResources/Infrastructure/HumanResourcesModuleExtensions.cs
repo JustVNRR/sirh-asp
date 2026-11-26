@@ -2,6 +2,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sirh.BuildingBlocks.Application.Contracts;
 using Sirh.BuildingBlocks.Infrastructure.Persistence;
 using Sirh.Modules.HumanResources.Application.Abstractions;
 using Sirh.Modules.HumanResources.Application.Services;
@@ -37,7 +38,12 @@ public static class HumanResourcesModuleExtensions
 
         services.AddValidatorsFromAssemblyContaining<CreateEmployeeRequestValidator>();
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+        services.AddScoped<IEmergencyContactRepository, EmergencyContactRepository>();
+        services.AddScoped<IPositionRepository, PositionRepository>();
         services.AddScoped<IEmployeeService, EmployeeService>();
+        services.AddScoped<IEmergencyContactService, EmergencyContactService>();
+        services.AddScoped<IPositionService, PositionService>();
+        services.AddScoped<ILocationReferenceChecker, PositionLocationReferenceChecker>();
 
         return services;
     }

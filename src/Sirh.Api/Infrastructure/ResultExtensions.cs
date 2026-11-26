@@ -35,6 +35,7 @@ public static class ResultExtensions
             ErrorType.NotFound => StatusCodes.Status404NotFound,
             ErrorType.Conflict => StatusCodes.Status409Conflict,
             ErrorType.Locked => StatusCodes.Status423Locked,
+            ErrorType.UnprocessableEntity => StatusCodes.Status422UnprocessableEntity,
             _ => StatusCodes.Status500InternalServerError
         };
 

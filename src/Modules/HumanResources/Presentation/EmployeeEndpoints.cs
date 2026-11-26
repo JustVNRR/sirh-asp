@@ -123,13 +123,15 @@ public static class EmployeeEndpoints
             .ProducesProblem(StatusCodes.Status403Forbidden)
             .ProducesProblem(StatusCodes.Status404NotFound);
 
+        endpoints.MapEmergencyContactAndPositionEndpoints();
+
         return endpoints;
     }
 
-    private static IResult ToHttpResult<T>(Result<T> result, HttpContext httpContext) =>
+    internal static IResult ToHttpResult<T>(Result<T> result, HttpContext httpContext) =>
         result.IsSuccess ? Results.Ok(result.Value) : ToProblem(result.Error, httpContext);
 
-    private static IResult ToProblem(Error error, HttpContext httpContext)
+    internal static IResult ToProblem(Error error, HttpContext httpContext)
     {
         var statusCode = error.Type switch
         {
@@ -139,6 +141,7 @@ public static class EmployeeEndpoints
             ErrorType.NotFound => StatusCodes.Status404NotFound,
             ErrorType.Conflict => StatusCodes.Status409Conflict,
             ErrorType.Locked => StatusCodes.Status423Locked,
+            ErrorType.UnprocessableEntity => StatusCodes.Status422UnprocessableEntity,
             _ => StatusCodes.Status500InternalServerError
         };
 
