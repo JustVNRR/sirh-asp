@@ -1,0 +1,33 @@
+# Legacy reference repositories (not part of the new .NET 10 codebase)
+legacy-backend/
+legacy-frontend/
+
+# .NET build artifacts
+bin/
+obj/
+out/
+publish/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.DotSettings.user
+.vs/
+.vscode/
+.idea/
+TestResults/
+coverage/
+
+# Runtime & local secrets
+storage/
+logs/
+*.log
+.env
+.env.*
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.local.json
+
+# OS files
+Thumbs.db
+.DS_Store
