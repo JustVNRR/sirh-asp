@@ -17,6 +17,7 @@ public static class CommonDocumentEndpoints
     public static IEndpointRouteBuilder MapInternalLifeEndpoints(this IEndpointRouteBuilder endpoints)
     {
         MapCommonDocuments(endpoints);
+        endpoints.MapCseAndRseEndpoints();
 
         return endpoints;
     }

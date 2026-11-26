@@ -35,8 +35,13 @@ public static class InternalLifeModuleExtensions
         }
 
         services.AddScoped<ICommonDocumentRepository, CommonDocumentRepository>();
+        services.AddScoped<IStaffRepresentativeRepository, StaffRepresentativeRepository>();
+        services.AddScoped<IRseIdeaRepository, RseIdeaRepository>();
         services.AddScoped<ICommonDocumentService, CommonDocumentService>();
+        services.AddScoped<IStaffRepresentativeService, StaffRepresentativeService>();
+        services.AddScoped<IRseIdeaService, RseIdeaService>();
         services.AddScoped<IContractTypeReferenceChecker, CommonDocumentContractTypeReferenceChecker>();
+        services.AddScoped<ILocationReferenceChecker, RseIdeaLocationReferenceChecker>();
 
         return services;
     }
