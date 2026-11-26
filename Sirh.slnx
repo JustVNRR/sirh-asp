@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Sirh.Api/Sirh.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/Sirh.BuildingBlocks.Domain/Sirh.BuildingBlocks.Domain.csproj" />
+    <Project Path="src/BuildingBlocks/Sirh.BuildingBlocks.Application/Sirh.BuildingBlocks.Application.csproj" />
+    <Project Path="src/BuildingBlocks/Sirh.BuildingBlocks.Infrastructure/Sirh.BuildingBlocks.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Sirh.ArchitectureTests/Sirh.ArchitectureTests.csproj" />
+    <Project Path="tests/Sirh.UnitTests/Sirh.UnitTests.csproj" />
+    <Project Path="tests/Sirh.IntegrationTests/Sirh.IntegrationTests.csproj" />
+  </Folder>
+</Solution>

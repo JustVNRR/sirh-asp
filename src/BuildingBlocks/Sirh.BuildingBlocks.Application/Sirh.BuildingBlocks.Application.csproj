@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Sirh.BuildingBlocks.Application</AssemblyName>
+    <RootNamespace>Sirh.BuildingBlocks.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sirh.BuildingBlocks.Domain\Sirh.BuildingBlocks.Domain.csproj" />
+  </ItemGroup>
+</Project>

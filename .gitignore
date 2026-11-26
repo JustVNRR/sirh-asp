@@ -1,6 +1,6 @@
 # Legacy reference repositories (not part of the new .NET 10 codebase)
-legacy-backend/
-legacy-frontend/
+/legacy-backend/
+/legacy-frontend/
 
 # .NET build artifacts
 bin/
@@ -19,8 +19,8 @@ TestResults/
 coverage/
 
 # Runtime & local secrets
-storage/
-logs/
+/storage/
+/logs/
 *.log
 .env
 .env.*

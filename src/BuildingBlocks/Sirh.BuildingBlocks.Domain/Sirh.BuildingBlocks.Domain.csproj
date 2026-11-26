@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Sirh.BuildingBlocks.Domain</AssemblyName>
+    <RootNamespace>Sirh.BuildingBlocks.Domain</RootNamespace>
+  </PropertyGroup>
+</Project>
