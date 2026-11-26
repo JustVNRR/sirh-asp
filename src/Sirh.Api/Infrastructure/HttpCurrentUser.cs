@@ -24,7 +24,8 @@ public sealed class HttpCurrentUser : ICurrentUser
         Principal?.FindFirstValue(ClaimTypes.Email) ?? Principal?.FindFirstValue("email");
 
     public IReadOnlyCollection<string> Roles => Principal?
-        .FindAll(ClaimTypes.Role)
+        .Claims
+        .Where(c => c.Type == ClaimTypes.Role || c.Type == "role")
         .Select(c => c.Value)
         .Distinct(StringComparer.OrdinalIgnoreCase)
         .ToArray() ?? [];

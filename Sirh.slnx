@@ -7,6 +7,9 @@
     <Project Path="src/BuildingBlocks/Sirh.BuildingBlocks.Application/Sirh.BuildingBlocks.Application.csproj" />
     <Project Path="src/BuildingBlocks/Sirh.BuildingBlocks.Infrastructure/Sirh.BuildingBlocks.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/src/Modules/">
+    <Project Path="src/Modules/Identity/Sirh.Modules.Identity.csproj" />
+  </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Sirh.ArchitectureTests/Sirh.ArchitectureTests.csproj" />
     <Project Path="tests/Sirh.UnitTests/Sirh.UnitTests.csproj" />
