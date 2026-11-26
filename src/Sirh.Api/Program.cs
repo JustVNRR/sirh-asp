@@ -13,6 +13,9 @@ using Sirh.BuildingBlocks.Infrastructure;
 using Sirh.Modules.Contracts.Infrastructure;
 using Sirh.Modules.Contracts.Infrastructure.Persistence;
 using Sirh.Modules.Contracts.Presentation;
+using Sirh.Modules.Health.Infrastructure;
+using Sirh.Modules.Health.Infrastructure.Persistence;
+using Sirh.Modules.Health.Presentation;
 using Sirh.Modules.HumanResources.Infrastructure;
 using Sirh.Modules.HumanResources.Infrastructure.Persistence;
 using Sirh.Modules.HumanResources.Presentation;
@@ -39,6 +42,7 @@ builder.Services.AddIdentityModule(builder.Configuration);
 builder.Services.AddOrganizationModule(builder.Configuration);
 builder.Services.AddHumanResourcesModule(builder.Configuration);
 builder.Services.AddContractsModule(builder.Configuration);
+builder.Services.AddHealthModule(builder.Configuration);
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
@@ -150,6 +154,13 @@ if (app.Configuration.GetValue<bool>("Contracts:AutoMigrate"))
     await contractsDb.Database.MigrateAsync();
 }
 
+if (app.Configuration.GetValue<bool>("Health:AutoMigrate"))
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    var healthDb = scope.ServiceProvider.GetRequiredService<HealthDbContext>();
+    await healthDb.Database.MigrateAsync();
+}
+
 app.UseMiddleware<CorrelationIdMiddleware>();
 app.UseExceptionHandler();
 app.UseSerilogRequestLogging();
@@ -199,6 +210,7 @@ app.MapIdentityEndpoints();
 app.MapOrganizationEndpoints();
 app.MapHumanResourcesEndpoints();
 app.MapContractsEndpoints();
+app.MapHealthEndpoints();
 
 app.Run();
 

@@ -19,6 +19,7 @@
     <ProjectReference Include="..\BuildingBlocks\Sirh.BuildingBlocks.Application\Sirh.BuildingBlocks.Application.csproj" />
     <ProjectReference Include="..\BuildingBlocks\Sirh.BuildingBlocks.Infrastructure\Sirh.BuildingBlocks.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Contracts\Sirh.Modules.Contracts.csproj" />
+    <ProjectReference Include="..\Modules\Health\Sirh.Modules.Health.csproj" />
     <ProjectReference Include="..\Modules\HumanResources\Sirh.Modules.HumanResources.csproj" />
     <ProjectReference Include="..\Modules\Identity\Sirh.Modules.Identity.csproj" />
     <ProjectReference Include="..\Modules\Organization\Sirh.Modules.Organization.csproj" />

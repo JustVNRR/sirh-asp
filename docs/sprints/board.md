@@ -70,7 +70,7 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 
 | Feature | US | Titre | Points | Branche | Statut | Commit / PR |
 | :--- | :--- | :--- | :---: | :--- | :--- | :--- |
-| **F6.1** | `US-025` | Planifier, mettre à jour et consulter les visites médicales | 5 | `feat/F6.1-medical-visits` | 🚧 In Progress | — |
+| **F6.1** | `US-025` | Planifier, mettre à jour et consulter les visites médicales | 5 | `feat/F6.1-medical-visits` | 👀 In Review | — |
 | **F6.2** | `US-026` | Exécuter les jobs quotidiens de rappel (visites + RQTH/titres) | 5 | — | ⬜ To Do | — |
 | **F6.2** | `US-027` | Consulter, marquer comme lues et supprimer ses notifications | 3 | — | ⬜ To Do | — |
 

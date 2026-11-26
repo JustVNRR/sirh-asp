@@ -9,6 +9,7 @@
   </Folder>
   <Folder Name="/src/Modules/">
     <Project Path="src/Modules/Contracts/Sirh.Modules.Contracts.csproj" />
+    <Project Path="src/Modules/Health/Sirh.Modules.Health.csproj" />
     <Project Path="src/Modules/HumanResources/Sirh.Modules.HumanResources.csproj" />
     <Project Path="src/Modules/Identity/Sirh.Modules.Identity.csproj" />
     <Project Path="src/Modules/Organization/Sirh.Modules.Organization.csproj" />

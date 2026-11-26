@@ -38,4 +38,8 @@ public interface IHumanResourcesLookup
         Guid managerEmployeeId,
         Guid employeeId,
         CancellationToken cancellationToken = default);
+
+    Task<bool> EmployeeExistsAsync(
+        Guid employeeId,
+        CancellationToken cancellationToken = default);
 }

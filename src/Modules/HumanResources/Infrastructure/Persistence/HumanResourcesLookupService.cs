@@ -79,4 +79,11 @@ public sealed class HumanResourcesLookupService(
             .AsNoTracking()
             .AnyAsync(p => p.EmployeeId == employeeId && p.ManagerId == managerEmployeeId, cancellationToken);
     }
+
+    public Task<bool> EmployeeExistsAsync(
+        Guid employeeId,
+        CancellationToken cancellationToken = default) =>
+        dbContext.Employees
+            .AsNoTracking()
+            .AnyAsync(e => e.Id == employeeId, cancellationToken);
 }
