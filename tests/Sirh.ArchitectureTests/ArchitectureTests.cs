@@ -2,6 +2,7 @@ using NetArchTest.Rules;
 using Shouldly;
 using Sirh.BuildingBlocks.Application.Abstractions;
 using Sirh.BuildingBlocks.Domain.Primitives;
+using Sirh.Modules.Contracts.Domain.Entities;
 using Sirh.Modules.HumanResources.Domain.Entities;
 using Sirh.Modules.Identity.Domain.Entities;
 using Sirh.Modules.Organization.Domain.Entities;
@@ -177,5 +178,60 @@ public sealed class ArchitectureTests
 
         result.IsSuccessful.ShouldBeTrue(
             $"HumanResources cross-module coupling violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
+    }
+
+    [Fact]
+    public void Contracts_Domain_Should_Not_Depend_On_Infrastructure_Presentation_EfCore_Or_Other_Modules()
+    {
+        var result = Types.InAssembly(typeof(Contract).Assembly)
+            .That()
+            .ResideInNamespace("Sirh.Modules.Contracts.Domain")
+            .ShouldNot()
+            .HaveDependencyOnAny(
+                "Sirh.Modules.Contracts.Infrastructure",
+                "Sirh.Modules.Contracts.Presentation",
+                "Sirh.Modules.Identity",
+                "Sirh.Modules.Organization",
+                "Sirh.Modules.HumanResources",
+                "Microsoft.EntityFrameworkCore")
+            .GetResult();
+
+        result.IsSuccessful.ShouldBeTrue(
+            $"Contracts.Domain violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
+    }
+
+    [Fact]
+    public void Contracts_Application_Should_Not_Depend_On_Infrastructure_Presentation_EfCore_Or_Other_Modules()
+    {
+        var result = Types.InAssembly(typeof(Contract).Assembly)
+            .That()
+            .ResideInNamespace("Sirh.Modules.Contracts.Application")
+            .ShouldNot()
+            .HaveDependencyOnAny(
+                "Sirh.Modules.Contracts.Infrastructure",
+                "Sirh.Modules.Contracts.Presentation",
+                "Sirh.Modules.Identity",
+                "Sirh.Modules.Organization",
+                "Sirh.Modules.HumanResources",
+                "Microsoft.EntityFrameworkCore")
+            .GetResult();
+
+        result.IsSuccessful.ShouldBeTrue(
+            $"Contracts.Application violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
+    }
+
+    [Fact]
+    public void Contracts_Module_Should_Not_Depend_On_Identity_Organization_Or_HumanResources_Modules()
+    {
+        var result = Types.InAssembly(typeof(Contract).Assembly)
+            .ShouldNot()
+            .HaveDependencyOnAny(
+                "Sirh.Modules.Identity",
+                "Sirh.Modules.Organization",
+                "Sirh.Modules.HumanResources")
+            .GetResult();
+
+        result.IsSuccessful.ShouldBeTrue(
+            $"Contracts cross-module coupling violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
     }
 }

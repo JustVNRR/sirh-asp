@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sirh.BuildingBlocks.Application.Abstractions;
 using Sirh.BuildingBlocks.Application.Contracts;
 using Sirh.BuildingBlocks.Infrastructure.Persistence;
+using Sirh.Modules.Contracts.Infrastructure.Persistence;
 using Sirh.Modules.HumanResources.Infrastructure.Persistence;
 using Sirh.Modules.Identity.Infrastructure.Persistence;
 using Sirh.Modules.Organization.Application.Abstractions;
@@ -26,8 +27,10 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
     private readonly string _inMemoryDbName = $"sirh-it-{Guid.NewGuid():N}";
     private readonly string _orgInMemoryDbName = $"sirh-org-it-{Guid.NewGuid():N}";
     private readonly string _hrInMemoryDbName = $"sirh-hr-it-{Guid.NewGuid():N}";
+    private readonly string _contractsInMemoryDbName = $"sirh-contracts-it-{Guid.NewGuid():N}";
     private readonly int _authPermitLimit;
 
+    internal string StoragePath => _storagePath;
     internal InMemoryEmailService EmailService { get; } = new();
     internal HashSet<Guid> LocationReferences { get; } = [];
     internal HashSet<Guid> ContractTypeReferences { get; } = [];
@@ -67,6 +70,7 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
                 ["Organization:SeedOnStartup"] = "true",
                 ["Organization:SeedDemoData"] = "true",
                 ["HumanResources:AutoMigrate"] = "false",
+                ["Contracts:AutoMigrate"] = "false",
                 ["RateLimiting:AuthPermitLimit"] = _authPermitLimit.ToString(),
                 ["RateLimiting:AuthWindowSeconds"] = "60"
             });
@@ -95,6 +99,14 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
 
             services.AddDbContext<HumanResourcesDbContext>((sp, options) =>
                 options.UseInMemoryDatabase(_hrInMemoryDbName)
+                    .AddInterceptors(sp.GetRequiredService<AuditableEntityInterceptor>()));
+
+            services.RemoveAll<IDbContextOptionsConfiguration<ContractsDbContext>>();
+            services.RemoveAll<DbContextOptions<ContractsDbContext>>();
+            services.RemoveAll<ContractsDbContext>();
+
+            services.AddDbContext<ContractsDbContext>((sp, options) =>
+                options.UseInMemoryDatabase(_contractsInMemoryDbName)
                     .AddInterceptors(sp.GetRequiredService<AuditableEntityInterceptor>()));
 
             services.RemoveAll<IEmailService>();

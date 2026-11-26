@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Sirh.Api\Sirh.Api.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Contracts\Sirh.Modules.Contracts.csproj" />
     <ProjectReference Include="..\..\src\Modules\HumanResources\Sirh.Modules.HumanResources.csproj" />
     <ProjectReference Include="..\..\src\Modules\Identity\Sirh.Modules.Identity.csproj" />
     <ProjectReference Include="..\..\src\Modules\Organization\Sirh.Modules.Organization.csproj" />

@@ -44,6 +44,7 @@ public static class HumanResourcesModuleExtensions
         services.AddScoped<IEmergencyContactService, EmergencyContactService>();
         services.AddScoped<IPositionService, PositionService>();
         services.AddScoped<ILocationReferenceChecker, PositionLocationReferenceChecker>();
+        services.AddScoped<IHumanResourcesLookup, HumanResourcesLookupService>();
 
         return services;
     }
