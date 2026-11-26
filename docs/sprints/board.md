@@ -42,9 +42,9 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 
 | Feature | US | Titre | Points | Branche | Statut | Commit / PR |
 | :--- | :--- | :--- | :---: | :--- | :--- | :--- |
-| **F2.1** | `US-011` | Gérer le référentiel des entreprises (`Company`) | 3 | `feat/F2.1-organization-referentials` | 🚧 In Progress | — |
-| **F2.1** | `US-012` | Gérer le CRUD complet des lieux / établissements (`Location`) | 3 | `feat/F2.1-organization-referentials` | 🚧 In Progress | — |
-| **F2.1** | `US-013` | Gérer les types de contrat et exposer le référentiel des départements | 3 | `feat/F2.1-organization-referentials` | 🚧 In Progress | — |
+| **F2.1** | `US-011` | Gérer le référentiel des entreprises (`Company`) | 3 | `feat/F2.1-organization-referentials` | 👀 In Review | — |
+| **F2.1** | `US-012` | Gérer le CRUD complet des lieux / établissements (`Location`) | 3 | `feat/F2.1-organization-referentials` | 👀 In Review | — |
+| **F2.1** | `US-013` | Gérer les types de contrat et exposer le référentiel des départements | 3 | `feat/F2.1-organization-referentials` | 👀 In Review | — |
 | **F3.1** | `US-014` | Créer un collaborateur avec email pro auto et rôles | 5 | — | ⬜ To Do | — |
 | **F3.1** | `US-015` | Rechercher, consulter et mettre à jour une fiche collaborateur | 5 | — | ⬜ To Do | — |
 | **F3.1** | `US-016` | Désactiver et réactiver un collaborateur avec révocation des sessions | 3 | — | ⬜ To Do | — |

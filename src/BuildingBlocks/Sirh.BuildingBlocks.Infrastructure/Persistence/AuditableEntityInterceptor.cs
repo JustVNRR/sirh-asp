@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Sirh.BuildingBlocks.Application.Abstractions;
@@ -44,6 +45,10 @@ public sealed class AuditableEntityInterceptor : SaveChangesInterceptor
 
         var now = _dateTimeProvider.UtcNow;
         var actor = _currentUser.Email ?? _currentUser.UserId?.ToString() ?? "system";
+        var isInMemory = string.Equals(
+            context.Database.ProviderName,
+            "Microsoft.EntityFrameworkCore.InMemory",
+            StringComparison.Ordinal);
 
         foreach (var entry in context.ChangeTracker.Entries<AuditableEntity>())
         {
@@ -53,6 +58,10 @@ public sealed class AuditableEntityInterceptor : SaveChangesInterceptor
                 entry.Entity.CreatedBy = actor;
                 entry.Entity.UpdatedAtUtc = now;
                 entry.Entity.UpdatedBy = actor;
+                if (isInMemory && entry.Entity.RowVersion.Length == 0)
+                {
+                    entry.Entity.RowVersion = RandomNumberGenerator.GetBytes(8);
+                }
             }
             else if (entry.State == EntityState.Modified)
             {
@@ -60,6 +69,10 @@ public sealed class AuditableEntityInterceptor : SaveChangesInterceptor
                 entry.Property(e => e.CreatedBy).IsModified = false;
                 entry.Entity.UpdatedAtUtc = now;
                 entry.Entity.UpdatedBy = actor;
+                if (isInMemory)
+                {
+                    entry.Entity.RowVersion = RandomNumberGenerator.GetBytes(8);
+                }
             }
         }
     }

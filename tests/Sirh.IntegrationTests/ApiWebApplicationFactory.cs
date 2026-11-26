@@ -8,7 +8,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sirh.BuildingBlocks.Application.Abstractions;
+using Sirh.BuildingBlocks.Infrastructure.Persistence;
 using Sirh.Modules.Identity.Infrastructure.Persistence;
+using Sirh.Modules.Organization.Application.Abstractions;
+using Sirh.Modules.Organization.Infrastructure.Persistence;
 
 namespace Sirh.IntegrationTests;
 
@@ -19,9 +22,12 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
         $"sirh-api-it-{Guid.NewGuid():N}");
 
     private readonly string _inMemoryDbName = $"sirh-it-{Guid.NewGuid():N}";
+    private readonly string _orgInMemoryDbName = $"sirh-org-it-{Guid.NewGuid():N}";
     private readonly int _authPermitLimit;
 
     internal InMemoryEmailService EmailService { get; } = new();
+    internal HashSet<Guid> LocationReferences { get; } = [];
+    internal HashSet<Guid> ContractTypeReferences { get; } = [];
 
     public ApiWebApplicationFactory() : this(100)
     {
@@ -53,6 +59,9 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
                 ["Identity:AutoMigrate"] = "false",
                 ["Identity:SeedOnStartup"] = "true",
                 ["Identity:SeedDemoUsers"] = "true",
+                ["Organization:AutoMigrate"] = "false",
+                ["Organization:SeedOnStartup"] = "true",
+                ["Organization:SeedDemoData"] = "true",
                 ["RateLimiting:AuthPermitLimit"] = _authPermitLimit.ToString(),
                 ["RateLimiting:AuthWindowSeconds"] = "60"
             });
@@ -67,9 +76,29 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseInMemoryDatabase(_inMemoryDbName));
 
+            services.RemoveAll<IDbContextOptionsConfiguration<OrganizationDbContext>>();
+            services.RemoveAll<DbContextOptions<OrganizationDbContext>>();
+            services.RemoveAll<OrganizationDbContext>();
+
+            services.AddDbContext<OrganizationDbContext>((sp, options) =>
+                options.UseInMemoryDatabase(_orgInMemoryDbName)
+                    .AddInterceptors(sp.GetRequiredService<AuditableEntityInterceptor>()));
+
             services.RemoveAll<IEmailService>();
             services.AddSingleton<IEmailService>(EmailService);
+            services.AddSingleton<ILocationReferenceChecker>(new StubReferenceChecker(this));
+            services.AddSingleton<IContractTypeReferenceChecker>(new StubReferenceChecker(this));
         });
+    }
+
+    private sealed class StubReferenceChecker(ApiWebApplicationFactory factory)
+        : ILocationReferenceChecker, IContractTypeReferenceChecker
+    {
+        public Task<bool> IsLocationReferencedAsync(Guid locationId, CancellationToken cancellationToken = default) =>
+            Task.FromResult(factory.LocationReferences.Contains(locationId));
+
+        public Task<bool> IsContractTypeReferencedAsync(Guid contractTypeId, CancellationToken cancellationToken = default) =>
+            Task.FromResult(factory.ContractTypeReferences.Contains(contractTypeId));
     }
 
     internal sealed class InMemoryEmailService : IEmailService

@@ -13,6 +13,9 @@ using Sirh.BuildingBlocks.Infrastructure;
 using Sirh.Modules.Identity.Infrastructure;
 using Sirh.Modules.Identity.Infrastructure.Persistence;
 using Sirh.Modules.Identity.Presentation;
+using Sirh.Modules.Organization.Infrastructure;
+using Sirh.Modules.Organization.Infrastructure.Persistence;
+using Sirh.Modules.Organization.Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +30,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUser, HttpCurrentUser>();
 builder.Services.AddBuildingBlocksInfrastructure(builder.Configuration);
 builder.Services.AddIdentityModule(builder.Configuration);
+builder.Services.AddOrganizationModule(builder.Configuration);
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
@@ -112,6 +116,18 @@ if (app.Configuration.GetValue<bool>("Identity:SeedOnStartup"))
     await app.Services.SeedIdentityAsync();
 }
 
+if (app.Configuration.GetValue<bool>("Organization:AutoMigrate"))
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    var orgDb = scope.ServiceProvider.GetRequiredService<OrganizationDbContext>();
+    await orgDb.Database.MigrateAsync();
+}
+
+if (app.Configuration.GetValue<bool>("Organization:SeedOnStartup"))
+{
+    await app.Services.SeedOrganizationAsync();
+}
+
 app.UseMiddleware<CorrelationIdMiddleware>();
 app.UseExceptionHandler();
 app.UseSerilogRequestLogging();
@@ -158,6 +174,7 @@ app.MapHealthChecks("/health", new HealthCheckOptions
 }).AllowAnonymous();
 
 app.MapIdentityEndpoints();
+app.MapOrganizationEndpoints();
 
 app.Run();
 

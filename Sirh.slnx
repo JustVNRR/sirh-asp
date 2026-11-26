@@ -9,6 +9,7 @@
   </Folder>
   <Folder Name="/src/Modules/">
     <Project Path="src/Modules/Identity/Sirh.Modules.Identity.csproj" />
+    <Project Path="src/Modules/Organization/Sirh.Modules.Organization.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Sirh.ArchitectureTests/Sirh.ArchitectureTests.csproj" />

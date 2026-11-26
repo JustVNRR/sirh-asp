@@ -3,6 +3,7 @@ using Shouldly;
 using Sirh.BuildingBlocks.Application.Abstractions;
 using Sirh.BuildingBlocks.Domain.Primitives;
 using Sirh.Modules.Identity.Domain.Entities;
+using Sirh.Modules.Organization.Domain.Entities;
 using Xunit;
 
 namespace Sirh.ArchitectureTests;
@@ -77,5 +78,53 @@ public sealed class ArchitectureTests
 
         result.IsSuccessful.ShouldBeTrue(
             $"Identity.Application violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
+    }
+
+    [Fact]
+    public void Organization_Domain_Should_Not_Depend_On_Infrastructure_Presentation_EfCore_Or_Identity()
+    {
+        var result = Types.InAssembly(typeof(Company).Assembly)
+            .That()
+            .ResideInNamespace("Sirh.Modules.Organization.Domain")
+            .ShouldNot()
+            .HaveDependencyOnAny(
+                "Sirh.Modules.Organization.Infrastructure",
+                "Sirh.Modules.Organization.Presentation",
+                "Sirh.Modules.Identity",
+                "Microsoft.EntityFrameworkCore")
+            .GetResult();
+
+        result.IsSuccessful.ShouldBeTrue(
+            $"Organization.Domain violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
+    }
+
+    [Fact]
+    public void Organization_Application_Should_Not_Depend_On_Infrastructure_Presentation_EfCore_Or_Identity()
+    {
+        var result = Types.InAssembly(typeof(Company).Assembly)
+            .That()
+            .ResideInNamespace("Sirh.Modules.Organization.Application")
+            .ShouldNot()
+            .HaveDependencyOnAny(
+                "Sirh.Modules.Organization.Infrastructure",
+                "Sirh.Modules.Organization.Presentation",
+                "Sirh.Modules.Identity",
+                "Microsoft.EntityFrameworkCore")
+            .GetResult();
+
+        result.IsSuccessful.ShouldBeTrue(
+            $"Organization.Application violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
+    }
+
+    [Fact]
+    public void Organization_Module_Should_Not_Depend_On_Identity_Module()
+    {
+        var result = Types.InAssembly(typeof(Company).Assembly)
+            .ShouldNot()
+            .HaveDependencyOn("Sirh.Modules.Identity")
+            .GetResult();
+
+        result.IsSuccessful.ShouldBeTrue(
+            $"Organization -> Identity coupling violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
     }
 }

@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Sirh.Api\Sirh.Api.csproj" />
     <ProjectReference Include="..\..\src\Modules\Identity\Sirh.Modules.Identity.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Organization\Sirh.Modules.Organization.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
