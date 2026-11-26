@@ -6,7 +6,12 @@ Le format repose sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), e
 
 ## [Unreleased]
 
-- *Sprint 1 — Organisation & Collaborateurs (en cours)*
+### Added
+
+- **F2.1 — Module `Organization` & Référentiels** (`US-011`, `US-012`, `US-013`)
+  - Création du module `Sirh.Modules.Organization` (schéma SQL Server `organization`, migration `InitialOrganization`) avec isolation stricte vis-à-vis de `Sirh.Modules.Identity`.
+  - Utilitaires `BuildingBlocks` : `SlugGenerator` (normalisation ASCII/accents) et `SiretValidator` (validation SIRET 14 chiffres Luhn + exception La Poste), plus rotation de `RowVersion` sous EF Core `InMemory`.
+  - Endpoints `/api/v1/companies` (convention collective par défaut `"Syntec"`, contrôle `RowVersion` `409 Conflict`, activation/désactivation), `/api/v1/locations` (slug unique auto-généré, `#RRGGBB`, filtres et protection `409` si référencé), `/api/v1/contract-types` (4 types système `CDI`, `CDD`, `APPRENTISSAGE`, `CONTRAT_PRO` protégés `403` et vérification d'usage `409`) et `GET /api/v1/referentials/departments`.
 
 ## [0.1.0] - 2026-11-26 (Sprint 0 — Socle & Auth)
 

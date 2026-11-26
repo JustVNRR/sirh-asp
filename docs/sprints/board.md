@@ -11,13 +11,13 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 | Sprint | Objectif | Charge | Avancement | Statut |
 | :--- | :--- | :---: | :---: | :--- |
 | **Sprint 0** | Socle & Auth (`US-001` à `US-010`) | 39 pts | 39 / 39 pts (100 %) | ✅ Done |
-| **Sprint 1** | Organisation & Collaborateurs (`US-011` à `US-018`) | 32 pts | 0 / 32 pts (0 %) | 🚧 In Progress |
+| **Sprint 1** | Organisation & Collaborateurs (`US-011` à `US-018`) | 32 pts | 9 / 32 pts (28 %) | 🚧 In Progress |
 | **Sprint 2** | Contrats PDF natifs & Dossier Salarié (`US-019` à `US-024`) | 31 pts | 0 / 31 pts (0 %) | ⬜ To Do |
 | **Sprint 3** | Santé au Travail & Notifications (`US-025` à `US-027`) | 13 pts | 0 / 13 pts (0 %) | ⬜ To Do |
 | **Sprint 4** | Vie Interne — Docs, Kits, CSE, RSE (`US-028` à `US-030`) | 13 pts | 0 / 13 pts (0 %) | ⬜ To Do |
 | **Sprint 5** | QCM d'Intégration Structuré (`US-031` à `US-032`) | 10 pts | 0 / 10 pts (0 %) | ⬜ To Do |
 | **Sprint 6** | Azure Cloud Readiness & Audit Final (`US-033` à `US-034`) | 8 pts | 0 / 8 pts (0 %) | ⬜ To Do |
-| **Total** | **MVP complet + Conformité (34 US)** | **146 pts** | **39 / 146 pts (27 %)** | — |
+| **Total** | **MVP complet + Conformité (34 US)** | **146 pts** | **48 / 146 pts (33 %)** | — |
 
 ---
 
@@ -42,12 +42,12 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 
 | Feature | US | Titre | Points | Branche | Statut | Commit / PR |
 | :--- | :--- | :--- | :---: | :--- | :--- | :--- |
-| **F2.1** | `US-011` | Gérer le référentiel des entreprises (`Company`) | 3 | `feat/F2.1-organization-referentials` | 👀 In Review | — |
-| **F2.1** | `US-012` | Gérer le CRUD complet des lieux / établissements (`Location`) | 3 | `feat/F2.1-organization-referentials` | 👀 In Review | — |
-| **F2.1** | `US-013` | Gérer les types de contrat et exposer le référentiel des départements | 3 | `feat/F2.1-organization-referentials` | 👀 In Review | — |
-| **F3.1** | `US-014` | Créer un collaborateur avec email pro auto et rôles | 5 | — | ⬜ To Do | — |
-| **F3.1** | `US-015` | Rechercher, consulter et mettre à jour une fiche collaborateur | 5 | — | ⬜ To Do | — |
-| **F3.1** | `US-016` | Désactiver et réactiver un collaborateur avec révocation des sessions | 3 | — | ⬜ To Do | — |
+| **F2.1** | `US-011` | Gérer le référentiel des entreprises (`Company`) | 3 | `feat/F2.1-organization-referentials` | ✅ Done | `ebb7251` |
+| **F2.1** | `US-012` | Gérer le CRUD complet des lieux / établissements (`Location`) | 3 | `feat/F2.1-organization-referentials` | ✅ Done | `ebb7251` |
+| **F2.1** | `US-013` | Gérer les types de contrat et exposer le référentiel des départements | 3 | `feat/F2.1-organization-referentials` | ✅ Done | `ebb7251` |
+| **F3.1** | `US-014` | Créer un collaborateur avec email pro auto et rôles | 5 | `feat/F3.1-employees-lifecycle` | 🚧 In Progress | — |
+| **F3.1** | `US-015` | Rechercher, consulter et mettre à jour une fiche collaborateur | 5 | `feat/F3.1-employees-lifecycle` | 🚧 In Progress | — |
+| **F3.1** | `US-016` | Désactiver et réactiver un collaborateur avec révocation des sessions | 3 | `feat/F3.1-employees-lifecycle` | 🚧 In Progress | — |
 | **F3.2** | `US-017` | Gérer les contacts d'urgence chiffrés (max 2) | 3 | — | ⬜ To Do | — |
 | **F3.2** | `US-018` | Gérer les affectations et l'historique des postes (`Position`) | 5 | — | ⬜ To Do | — |
 
