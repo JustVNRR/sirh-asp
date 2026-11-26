@@ -124,6 +124,7 @@ public static class EmployeeEndpoints
             .ProducesProblem(StatusCodes.Status404NotFound);
 
         endpoints.MapEmergencyContactAndPositionEndpoints();
+        endpoints.MapEmployeeDocumentEndpoints();
 
         return endpoints;
     }

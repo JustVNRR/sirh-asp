@@ -95,6 +95,7 @@ public sealed class Employee : AuditableEntity
 
     public ICollection<EmergencyContact> EmergencyContacts { get; private set; } = [];
     public ICollection<Position> Positions { get; private set; } = [];
+    public ICollection<EmployeeDocument> Documents { get; private set; } = [];
 
     public void Update(
         Guid companyId,

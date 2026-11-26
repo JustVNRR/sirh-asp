@@ -18,6 +18,13 @@ public static class HrPermissions
     public const string PositionsReadAll = "positions:read:all";
     public const string PositionsWrite = "positions:write";
 
+    public const string EmployeeDocsReadSelf = "employee-docs:read:self";
+    public const string EmployeeDocsReadTeam = "employee-docs:read:team";
+    public const string EmployeeDocsReadAll = "employee-docs:read:all";
+    public const string EmployeeDocsReadSensitive = "employee-docs:read:sensitive";
+    public const string EmployeeDocsWriteSelf = "employee-docs:write:self";
+    public const string EmployeeDocsWriteAll = "employee-docs:write:all";
+
     public static readonly IReadOnlyList<string> TimeContractTypes =
     [
         "Hours",

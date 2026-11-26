@@ -224,6 +224,79 @@ namespace Sirh.Modules.HumanResources.Infrastructure.Persistence.Migrations
                     b.ToTable("employees", "hr");
                 });
 
+            modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.EmployeeDocument", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("Commentary")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("DocumentType")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly>("FileDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("FileKey")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<long>("FileSizeBytes")
+                        .HasColumnType("bigint");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentType");
+
+                    b.HasIndex("EmployeeId", "Category");
+
+                    b.ToTable("employee_documents", "hr");
+                });
+
             modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.Position", b =>
                 {
                     b.Property<Guid>("Id")
@@ -322,6 +395,57 @@ namespace Sirh.Modules.HumanResources.Infrastructure.Persistence.Migrations
                     b.ToTable("positions", "hr");
                 });
 
+            modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.ResidentPermitDetail", b =>
+                {
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly>("ExpiryDate")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("ExpiryReminder30SentAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ExpiryReminder7SentAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PermitNumber")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("DocumentId");
+
+                    b.HasIndex("ExpiryDate");
+
+                    b.ToTable("resident_permit_details", "hr");
+                });
+
+            modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.RqthDetail", b =>
+                {
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly>("ExpiryDate")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("ExpiryReminder30SentAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ExpiryReminder7SentAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("WorkplaceAccommodation")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.HasKey("DocumentId");
+
+                    b.HasIndex("ExpiryDate");
+
+                    b.ToTable("rqth_details", "hr");
+                });
+
             modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.EmergencyContact", b =>
                 {
                     b.HasOne("Sirh.Modules.HumanResources.Domain.Entities.Employee", "Employee")
@@ -343,6 +467,17 @@ namespace Sirh.Modules.HumanResources.Infrastructure.Persistence.Migrations
                     b.Navigation("DirectManager");
                 });
 
+            modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.EmployeeDocument", b =>
+                {
+                    b.HasOne("Sirh.Modules.HumanResources.Domain.Entities.Employee", "Employee")
+                        .WithMany("Documents")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.Position", b =>
                 {
                     b.HasOne("Sirh.Modules.HumanResources.Domain.Entities.Employee", "Employee")
@@ -361,11 +496,42 @@ namespace Sirh.Modules.HumanResources.Infrastructure.Persistence.Migrations
                     b.Navigation("Manager");
                 });
 
+            modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.ResidentPermitDetail", b =>
+                {
+                    b.HasOne("Sirh.Modules.HumanResources.Domain.Entities.EmployeeDocument", "Document")
+                        .WithOne("ResidentPermitDetail")
+                        .HasForeignKey("Sirh.Modules.HumanResources.Domain.Entities.ResidentPermitDetail", "DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
+                });
+
+            modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.RqthDetail", b =>
+                {
+                    b.HasOne("Sirh.Modules.HumanResources.Domain.Entities.EmployeeDocument", "Document")
+                        .WithOne("RqthDetail")
+                        .HasForeignKey("Sirh.Modules.HumanResources.Domain.Entities.RqthDetail", "DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
+                });
+
             modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.Employee", b =>
                 {
+                    b.Navigation("Documents");
+
                     b.Navigation("EmergencyContacts");
 
                     b.Navigation("Positions");
+                });
+
+            modelBuilder.Entity("Sirh.Modules.HumanResources.Domain.Entities.EmployeeDocument", b =>
+                {
+                    b.Navigation("ResidentPermitDetail");
+
+                    b.Navigation("RqthDetail");
                 });
 #pragma warning restore 612, 618
         }

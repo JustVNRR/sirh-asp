@@ -14,6 +14,9 @@ public sealed class HumanResourcesDbContext : DbContext
     public DbSet<Employee> Employees => Set<Employee>();
     public DbSet<EmergencyContact> EmergencyContacts => Set<EmergencyContact>();
     public DbSet<Position> Positions => Set<Position>();
+    public DbSet<EmployeeDocument> EmployeeDocuments => Set<EmployeeDocument>();
+    public DbSet<RqthDetail> RqthDetails => Set<RqthDetail>();
+    public DbSet<ResidentPermitDetail> ResidentPermitDetails => Set<ResidentPermitDetail>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -131,6 +134,68 @@ public sealed class HumanResourcesDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(p => p.ManagerId)
                 .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        builder.Entity<EmployeeDocument>(b =>
+        {
+            b.ToTable("employee_documents");
+            b.HasKey(d => d.Id);
+
+            b.Property(d => d.Category)
+                .HasConversion<string>()
+                .HasMaxLength(64)
+                .IsRequired();
+            b.Property(d => d.DocumentType)
+                .HasConversion<string>()
+                .HasMaxLength(64)
+                .IsRequired();
+            b.Property(d => d.FileKey).HasMaxLength(512).IsRequired();
+            b.Property(d => d.FileName).HasMaxLength(256).IsRequired();
+            b.Property(d => d.ContentType).HasMaxLength(128).IsRequired();
+            b.Property(d => d.Commentary).HasMaxLength(1000);
+            b.Property(d => d.CreatedBy).HasMaxLength(256);
+            b.Property(d => d.UpdatedBy).HasMaxLength(256);
+
+            if (!isInMemory)
+            {
+                b.Property(d => d.RowVersion).IsRowVersion();
+            }
+
+            b.HasIndex(d => new { d.EmployeeId, d.Category });
+            b.HasIndex(d => d.DocumentType);
+
+            b.HasOne(d => d.Employee)
+                .WithMany(e => e.Documents)
+                .HasForeignKey(d => d.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<RqthDetail>(b =>
+        {
+            b.ToTable("rqth_details");
+            b.HasKey(r => r.DocumentId);
+
+            b.Property(r => r.WorkplaceAccommodation).HasMaxLength(1000);
+            b.HasIndex(r => r.ExpiryDate);
+
+            b.HasOne(r => r.Document)
+                .WithOne(d => d.RqthDetail)
+                .HasForeignKey<RqthDetail>(r => r.DocumentId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<ResidentPermitDetail>(b =>
+        {
+            b.ToTable("resident_permit_details");
+            b.HasKey(p => p.DocumentId);
+
+            b.Property(p => p.PermitNumber).HasMaxLength(100).IsRequired();
+            b.HasIndex(p => p.ExpiryDate);
+
+            b.HasOne(p => p.Document)
+                .WithOne(d => d.ResidentPermitDetail)
+                .HasForeignKey<ResidentPermitDetail>(p => p.DocumentId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

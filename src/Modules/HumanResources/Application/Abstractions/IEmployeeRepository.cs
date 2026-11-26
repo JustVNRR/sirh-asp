@@ -20,6 +20,15 @@ public interface IEmployeeRepository
 
     Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default);
 
+    Task<bool> IsManagerOfAsync(
+        Guid managerEmployeeId,
+        Guid employeeId,
+        CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyCollection<Guid>> GetDirectReportIdsAsync(
+        Guid managerEmployeeId,
+        CancellationToken cancellationToken = default);
+
     Task<bool> ExistsBySlugAsync(string slug, Guid? excludeId = null, CancellationToken cancellationToken = default);
 
     Task<bool> ExistsByEmailAsync(string email, Guid? excludeId = null, CancellationToken cancellationToken = default);

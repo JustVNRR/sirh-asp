@@ -16,6 +16,45 @@ public sealed class EmployeeRepository(HumanResourcesDbContext dbContext) : IEmp
     public Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default) =>
         dbContext.Employees.AnyAsync(e => e.Id == id, cancellationToken);
 
+    public async Task<bool> IsManagerOfAsync(
+        Guid managerEmployeeId,
+        Guid employeeId,
+        CancellationToken cancellationToken = default)
+    {
+        if (managerEmployeeId == Guid.Empty || employeeId == Guid.Empty)
+        {
+            return false;
+        }
+
+        if (await dbContext.Employees.AsNoTracking()
+                .AnyAsync(e => e.Id == employeeId && e.DirectManagerId == managerEmployeeId, cancellationToken))
+        {
+            return true;
+        }
+
+        return await dbContext.Positions.AsNoTracking()
+            .AnyAsync(p => p.EmployeeId == employeeId && p.ManagerId == managerEmployeeId, cancellationToken);
+    }
+
+    public async Task<IReadOnlyCollection<Guid>> GetDirectReportIdsAsync(
+        Guid managerEmployeeId,
+        CancellationToken cancellationToken = default)
+    {
+        var fromEmployee = await dbContext.Employees.AsNoTracking()
+            .Where(e => e.DirectManagerId == managerEmployeeId)
+            .Select(e => e.Id)
+            .ToArrayAsync(cancellationToken);
+
+        var fromPositions = await dbContext.Positions.AsNoTracking()
+            .Where(p => p.ManagerId == managerEmployeeId)
+            .Select(p => p.EmployeeId)
+            .ToArrayAsync(cancellationToken);
+
+        var result = new HashSet<Guid>(fromEmployee);
+        result.UnionWith(fromPositions);
+        return result;
+    }
+
     public Task<bool> ExistsBySlugAsync(string slug, Guid? excludeId = null, CancellationToken cancellationToken = default)
     {
         var normalized = slug.Trim().ToLowerInvariant();

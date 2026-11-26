@@ -40,9 +40,11 @@ public static class HumanResourcesModuleExtensions
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<IEmergencyContactRepository, EmergencyContactRepository>();
         services.AddScoped<IPositionRepository, PositionRepository>();
+        services.AddScoped<IEmployeeDocumentRepository, EmployeeDocumentRepository>();
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IEmergencyContactService, EmergencyContactService>();
         services.AddScoped<IPositionService, PositionService>();
+        services.AddScoped<IEmployeeDocumentService, EmployeeDocumentService>();
         services.AddScoped<ILocationReferenceChecker, PositionLocationReferenceChecker>();
         services.AddScoped<IHumanResourcesLookup, HumanResourcesLookupService>();
 
