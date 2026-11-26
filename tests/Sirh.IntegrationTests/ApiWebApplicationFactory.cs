@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Sirh.BuildingBlocks.Application.Abstractions;
 using Sirh.Modules.Identity.Infrastructure.Persistence;
 
 namespace Sirh.IntegrationTests;
@@ -18,6 +20,8 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
 
     private readonly string _inMemoryDbName = $"sirh-it-{Guid.NewGuid():N}";
     private readonly int _authPermitLimit;
+
+    internal InMemoryEmailService EmailService { get; } = new();
 
     public ApiWebApplicationFactory() : this(100)
     {
@@ -62,7 +66,23 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
 
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseInMemoryDatabase(_inMemoryDbName));
+
+            services.RemoveAll<IEmailService>();
+            services.AddSingleton<IEmailService>(EmailService);
         });
+    }
+
+    internal sealed class InMemoryEmailService : IEmailService
+    {
+        private readonly ConcurrentQueue<EmailMessage> _messages = new();
+
+        public IReadOnlyList<EmailMessage> SentMessages => _messages.ToArray();
+
+        public Task SendAsync(EmailMessage message, CancellationToken cancellationToken = default)
+        {
+            _messages.Enqueue(message);
+            return Task.CompletedTask;
+        }
     }
 
     public new void Dispose()

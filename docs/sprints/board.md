@@ -31,10 +31,10 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 | **F1.1** | `US-004` | Connexion JWT & gestion du verrouillage | 5 | `feat/F1.1-jwt-refresh-auth` | ✅ Done | `91a8e4e` |
 | **F1.1** | `US-005` | Refresh token rotatif avec détection de réutilisation | 5 | `feat/F1.1-jwt-refresh-auth` | ✅ Done | `91a8e4e` |
 | **F1.1** | `US-006` | Déconnexion unitaire et révocation globale (`logout-all`) | 5 | `feat/F1.1-jwt-refresh-auth` | ✅ Done | `91a8e4e` |
-| **F1.2** | `US-007` | Changement de mot de passe authentifié | 3 | `feat/F1.2-F1.3-passwords-profile-rbac` | 🚧 In Progress | — |
-| **F1.2** | `US-008` | Réinitialisation de mot de passe par OTP persisté | 5 | `feat/F1.2-F1.3-passwords-profile-rbac` | 🚧 In Progress | — |
-| **F1.3** | `US-009` | Profil courant (`/api/v1/auth/me`) | 2 | `feat/F1.2-F1.3-passwords-profile-rbac` | 🚧 In Progress | — |
-| **F1.3** | `US-010` | Politiques de permissions RBAC & administration des rôles | 3 | `feat/F1.2-F1.3-passwords-profile-rbac` | 🚧 In Progress | — |
+| **F1.2** | `US-007` | Changement de mot de passe authentifié | 3 | `feat/F1.2-F1.3-passwords-profile-rbac` | 👀 In Review | — |
+| **F1.2** | `US-008` | Réinitialisation de mot de passe par OTP persisté | 5 | `feat/F1.2-F1.3-passwords-profile-rbac` | 👀 In Review | — |
+| **F1.3** | `US-009` | Profil courant (`/api/v1/auth/me`) | 2 | `feat/F1.2-F1.3-passwords-profile-rbac` | 👀 In Review | — |
+| **F1.3** | `US-010` | Politiques de permissions RBAC & administration des rôles | 3 | `feat/F1.2-F1.3-passwords-profile-rbac` | 👀 In Review | — |
 
 ---
 

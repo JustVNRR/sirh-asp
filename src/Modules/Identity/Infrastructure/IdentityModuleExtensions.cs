@@ -12,6 +12,7 @@ using Sirh.Modules.Identity.Application.Abstractions;
 using Sirh.Modules.Identity.Application.Options;
 using Sirh.Modules.Identity.Application.Services;
 using Sirh.Modules.Identity.Application.Validators;
+using Sirh.Modules.Identity.Domain.Constants;
 using Sirh.Modules.Identity.Domain.Entities;
 using Sirh.Modules.Identity.Infrastructure.Persistence;
 using Sirh.Modules.Identity.Infrastructure.Security;
@@ -72,16 +73,29 @@ public static class IdentityModuleExtensions
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer();
 
-        services.AddAuthorizationBuilder()
+        services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+
+        var authorizationBuilder = services.AddAuthorizationBuilder()
             .SetFallbackPolicy(new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .Build());
 
+        foreach (var permission in IdentityPermissions.All)
+        {
+            authorizationBuilder.AddPolicy(permission.Code, policy =>
+                policy.RequireAuthenticatedUser()
+                    .AddRequirements(new PermissionRequirement(permission.Code)));
+        }
+
         services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<IPermissionRepository, PermissionRepository>();
+        services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepository>();
+        services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IPasswordService, PasswordService>();
+        services.AddScoped<IRoleManagementService, RoleManagementService>();
         services.AddScoped<IdentityDbSeeder>();
 
         return services;

@@ -17,6 +17,7 @@ public sealed class IdentityDbContext
     public DbSet<Permission> Permissions => Set<Permission>();
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<PasswordResetToken> PasswordResetTokens => Set<PasswordResetToken>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -88,6 +89,22 @@ public sealed class IdentityDbContext
             b.HasOne(rt => rt.User)
                 .WithMany(u => u.RefreshTokens)
                 .HasForeignKey(rt => rt.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<PasswordResetToken>(b =>
+        {
+            b.ToTable("password_reset_tokens");
+            b.HasKey(t => t.Id);
+
+            b.Property(t => t.OtpHash).HasMaxLength(128).IsRequired();
+            b.Property(t => t.RequestedByIp).HasMaxLength(64);
+
+            b.HasIndex(t => new { t.UserId, t.CreatedAtUtc });
+
+            b.HasOne(t => t.User)
+                .WithMany(u => u.PasswordResetTokens)
+                .HasForeignKey(t => t.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
     }

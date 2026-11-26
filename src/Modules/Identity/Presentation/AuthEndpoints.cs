@@ -92,13 +92,91 @@ public static class AuthEndpoints
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status401Unauthorized);
 
+        group.MapGet("/me", async (
+                ICurrentUser currentUser,
+                IRoleManagementService roleManagementService,
+                HttpContext httpContext,
+                CancellationToken cancellationToken) =>
+            {
+                if (!currentUser.IsAuthenticated || !currentUser.UserId.HasValue)
+                {
+                    return Results.Unauthorized();
+                }
+
+                var result = await roleManagementService.GetCurrentUserProfileAsync(
+                    currentUser.UserId.Value,
+                    cancellationToken);
+                return ToHttpResult(result, httpContext);
+            })
+            .RequireAuthorization()
+            .Produces<CurrentUserProfileResponse>(StatusCodes.Status200OK)
+            .ProducesProblem(StatusCodes.Status401Unauthorized);
+
+        group.MapPost("/password/change", async (
+                ChangePasswordRequest request,
+                ICurrentUser currentUser,
+                IPasswordService passwordService,
+                HttpContext httpContext,
+                CancellationToken cancellationToken) =>
+            {
+                if (!currentUser.IsAuthenticated || !currentUser.UserId.HasValue)
+                {
+                    return Results.Unauthorized();
+                }
+
+                var result = await passwordService.ChangePasswordAsync(
+                    currentUser.UserId.Value,
+                    request,
+                    cancellationToken);
+                return result.IsSuccess ? Results.NoContent() : ToProblem(result.Error, httpContext);
+            })
+            .RequireAuthorization()
+            .RequireRateLimiting(AuthRateLimitPolicy)
+            .Produces(StatusCodes.Status204NoContent)
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .ProducesProblem(StatusCodes.Status401Unauthorized)
+            .ProducesProblem(StatusCodes.Status429TooManyRequests);
+
+        group.MapPost("/password/forgot", async (
+                ForgotPasswordRequest request,
+                IPasswordService passwordService,
+                HttpContext httpContext,
+                CancellationToken cancellationToken) =>
+            {
+                var ip = httpContext.Connection.RemoteIpAddress?.ToString();
+                var result = await passwordService.ForgotPasswordAsync(request, ip, cancellationToken);
+                return result.IsSuccess ? Results.Accepted() : ToProblem(result.Error, httpContext);
+            })
+            .AllowAnonymous()
+            .RequireRateLimiting(AuthRateLimitPolicy)
+            .Produces(StatusCodes.Status202Accepted)
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .ProducesProblem(StatusCodes.Status429TooManyRequests);
+
+        group.MapPost("/password/reset", async (
+                ResetPasswordRequest request,
+                IPasswordService passwordService,
+                HttpContext httpContext,
+                CancellationToken cancellationToken) =>
+            {
+                var result = await passwordService.ResetPasswordAsync(request, cancellationToken);
+                return result.IsSuccess ? Results.NoContent() : ToProblem(result.Error, httpContext);
+            })
+            .AllowAnonymous()
+            .RequireRateLimiting(AuthRateLimitPolicy)
+            .Produces(StatusCodes.Status204NoContent)
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .ProducesProblem(StatusCodes.Status429TooManyRequests);
+
+        endpoints.MapRoleEndpoints();
+
         return endpoints;
     }
 
-    private static IResult ToHttpResult<T>(Result<T> result, HttpContext httpContext) =>
+    internal static IResult ToHttpResult<T>(Result<T> result, HttpContext httpContext) =>
         result.IsSuccess ? Results.Ok(result.Value) : ToProblem(result.Error, httpContext);
 
-    private static IResult ToProblem(Error error, HttpContext httpContext)
+    internal static IResult ToProblem(Error error, HttpContext httpContext)
     {
         var statusCode = error.Type switch
         {

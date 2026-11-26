@@ -1,7 +1,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sirh.BuildingBlocks.Application.Abstractions;
 using Sirh.BuildingBlocks.Application.Storage;
+using Sirh.BuildingBlocks.Infrastructure.Email;
 using Sirh.BuildingBlocks.Infrastructure.Health;
 using Sirh.BuildingBlocks.Infrastructure.Persistence;
 using Sirh.BuildingBlocks.Infrastructure.Security;
@@ -25,6 +27,9 @@ public static class DependencyInjection
         services.Configure<FileStorageOptions>(configuration.GetSection(FileStorageOptions.SectionName));
         services.AddSingleton<IFileValidator, MagicBytesFileValidator>();
         services.AddSingleton<IFileStorageService, LocalFileStorageService>();
+
+        services.Configure<EmailOptions>(configuration.GetSection(EmailOptions.SectionName));
+        services.TryAddSingleton<IEmailService, SmtpEmailService>();
 
         services.AddHealthChecks()
             .AddCheck<SqlServerHealthCheck>("sqlserver")
