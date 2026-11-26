@@ -13,11 +13,11 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 | **Sprint 0** | Socle & Auth (`US-001` à `US-010`) | 39 pts | 39 / 39 pts (100 %) | ✅ Done |
 | **Sprint 1** | Organisation & Collaborateurs (`US-011` à `US-018`) | 32 pts | 32 / 32 pts (100 %) | ✅ Done |
 | **Sprint 2** | Contrats PDF natifs & Dossier Salarié (`US-019` à `US-024`) | 31 pts | 31 / 31 pts (100 %) | ✅ Done |
-| **Sprint 3** | Santé au Travail & Notifications (`US-025` à `US-027`) | 13 pts | 5 / 13 pts (38 %) | 🚧 In Progress |
-| **Sprint 4** | Vie Interne — Docs, Kits, CSE, RSE (`US-028` à `US-030`) | 13 pts | 0 / 13 pts (0 %) | ⬜ To Do |
+| **Sprint 3** | Santé au Travail & Notifications (`US-025` à `US-027`) | 13 pts | 13 / 13 pts (100 %) | ✅ Done |
+| **Sprint 4** | Vie Interne — Docs, Kits, CSE, RSE (`US-028` à `US-030`) | 13 pts | 0 / 13 pts (0 %) | 🚧 In Progress |
 | **Sprint 5** | QCM d'Intégration Structuré (`US-031` à `US-032`) | 10 pts | 0 / 10 pts (0 %) | ⬜ To Do |
 | **Sprint 6** | Azure Cloud Readiness & Audit Final (`US-033` à `US-034`) | 8 pts | 0 / 8 pts (0 %) | ⬜ To Do |
-| **Total** | **MVP complet + Conformité (34 US)** | **146 pts** | **107 / 146 pts (73 %)** | — |
+| **Total** | **MVP complet + Conformité (34 US)** | **146 pts** | **115 / 146 pts (79 %)** | — |
 
 ---
 
@@ -66,19 +66,28 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 
 ---
 
-## Sprint 3 — Santé au Travail & Notifications (13 pts) — 🚧 En cours
+## Sprint 3 — Santé au Travail & Notifications (13 pts) — ✅ Clôturé (`v0.4.0`)
 
 | Feature | US | Titre | Points | Branche | Statut | Commit / PR |
 | :--- | :--- | :--- | :---: | :--- | :--- | :--- |
 | **F6.1** | `US-025` | Planifier, mettre à jour et consulter les visites médicales | 5 | `main` | ✅ Done | `c634302` |
-| **F6.2** | `US-026` | Exécuter les jobs quotidiens de rappel (visites + RQTH/titres) | 5 | `feat/F6.2-reminders-notifications` | 👀 In Review | — |
-| **F6.2** | `US-027` | Consulter, marquer comme lues et supprimer ses notifications | 3 | `feat/F6.2-reminders-notifications` | 👀 In Review | — |
+| **F6.2** | `US-026` | Exécuter les jobs quotidiens de rappel (visites + RQTH/titres) | 5 | `main` | ✅ Done | `87b23a2` |
+| **F6.2** | `US-027` | Consulter, marquer comme lues et supprimer ses notifications | 3 | `main` | ✅ Done | `87b23a2` |
+
+---
+
+## Sprint 4 — Vie Interne — Docs, Kits, CSE, RSE (13 pts) — 🚧 En cours
+
+| Feature | US | Titre | Points | Branche | Statut | Commit / PR |
+| :--- | :--- | :--- | :---: | :--- | :--- | :--- |
+| **F7.1** | `US-028` | Publier, filtrer, archiver et télécharger les documents communs et kits d'accueil | 5 | `feat/F7.1-common-documents` | 🚧 In Progress | — |
+| **F7.2** | `US-029` | Gérer l'annuaire des représentants du personnel (CSE) | 3 | — | ⬜ To Do | — |
+| **F7.2** | `US-030` | Soumettre des idées RSE et piloter leur traitement côté RH | 5 | — | ⬜ To Do | — |
 
 ---
 
 ## Backlog des Sprints suivants (`⬜ To Do`)
 
-- **Sprint 4 — Vie Interne (13 pts)** : `US-028` (5), `US-029` (3), `US-030` (5)
 - **Sprint 5 — QCM d'Intégration Structuré (10 pts)** : `US-031` (5), `US-032` (5)
 - **Sprint 6 — Azure Cloud Readiness & Audit Final (8 pts)** : `US-033` (5), `US-034` (3)
 
@@ -89,3 +98,4 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 - **Sprint 0 (`v0.1.0`)** : [sprint-0-review.md](sprint-0-review.md) — Clôturé le 2026-11-26 (`39 / 39 pts`, `61 / 61 tests`).
 - **Sprint 1 (`v0.2.0`)** : [sprint-1-review.md](sprint-1-review.md) — Clôturé le 2026-11-26 (`32 / 32 pts`, `118 / 118 tests`).
 - **Sprint 2 (`v0.3.0`)** : [sprint-2-review.md](sprint-2-review.md) — Clôturé le 2026-11-26 (`31 / 31 pts`, `138 / 138 tests`).
+- **Sprint 3 (`v0.4.0`)** : [sprint-3-review.md](sprint-3-review.md) — Clôturé le 2026-11-26 (`13 / 13 pts`, `144 / 144 tests`).

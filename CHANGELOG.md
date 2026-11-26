@@ -6,8 +6,18 @@ Le format repose sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), e
 
 ## [Unreleased]
 
-- *Sprint 3 — Santé au Travail & Notifications (en cours)*
-  - **F6.1 (`c634302`) — Module `Health` & Visites Médicales (`US-025`)** : Création du module autonome `Sirh.Modules.Health` (schéma SQL `health`, migration `InitialHealth`), entité `MedicalVisit`, convocation obligatoire + rapport optionnel chiffrés AES-256-GCM avec validation magic bytes, ABAC secret médical (`Self` ou `RH+`), endpoints `/api/v1/medical-visits/*` et 3 tests d'isolation `NetArchTest`.
+- *Sprint 4 — Vie Interne : Docs, Kits, CSE, RSE (en cours)*
+
+## [0.4.0] - 2026-11-26 (Sprint 3 — Santé au Travail & Notifications)
+
+### Added
+
+- **F6.2 (`87b23a2`) — Rappels Automatisés & Centre de Notifications** (`US-026`, `US-027`)
+  - Contrats inter-modules `INotificationLookup` et extension de `IHumanResourcesLookup` (`EmployeeContactDto`, `ExpiringDocumentAlertDto`) raccordant `/api/v1/auth/me` au compteur réel de notifications non lues.
+  - Entité `Notification` (`health.notifications`, migration `AddNotifications`) et endpoints `/api/v1/notifications/*` (`GET /`, `/unread-count`, `PATCH /{id}/read`, `POST /read-all`, `DELETE /{id}`) avec contrôle strict d'appartenance (anti-IDOR `403`).
+  - Job quotidien `DailyHealthRemindersJob` + `DailyHealthRemindersBackgroundService` (04h00 `Europe/Paris`) : rappels à J-5 sur les visites médicales futures uniquement et alertes J-30/J-7 sur RQTH & Titres de séjour vers le collaborateur et les RH (notifications + e-mails, 100 % idempotent).
+- **F6.1 (`c634302`) — Module `Health` & Visites Médicales** (`US-025`)
+  - Création du module autonome `Sirh.Modules.Health` (schéma SQL `health`, migration `InitialHealth`), entité `MedicalVisit`, convocation obligatoire + rapport optionnel chiffrés AES-256-GCM avec validation magic bytes, ABAC secret médical (`Self` ou `RH+`), endpoints `/api/v1/medical-visits/*` et 3 tests d'isolation `NetArchTest`.
 
 ## [0.3.0] - 2026-11-26 (Sprint 2 — Contrats PDF natifs & Dossier Salarié)
 
