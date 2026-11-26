@@ -8,6 +8,12 @@ Le format repose sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), e
 
 ### Added
 
+- **F3.1 — Module `HumanResources` : Cycle de vie des Collaborateurs** (`US-014`, `US-015`, `US-016`)
+  - Contrats inter-modules dans `Sirh.BuildingBlocks.Application` (`IOrganizationLookup`, `IIdentityUserProvisioningService`) avec implémentations découplées dans `Identity` et `Organization` (zéro couplage direct vers `HumanResources`).
+  - Création du module `Sirh.Modules.HumanResources` (schéma SQL Server `hr`, migration `InitialHumanResources`, entité `Employee`).
+  - `POST /api/v1/employees` : génération de slug immuable et d'e-mail professionnel (`<initiale><nom>@<entreprise>.fr` avec gestion des collisions), chiffrement AES-256-GCM de `NationalId`, création du compte utilisateur lié à `EmployeeId` et blocage `403` anti-escalade (`Admin`/`SuperAdmin`).
+  - `GET /api/v1/employees`, `GET /{id}` et `PUT /{id}` : filtrage multi-critères, contrôle ABAC (`Self`, `DirectManager` avec masquage des PII sensibles, `HR`/`Admin`) et concurrence optimiste `RowVersion` (`409 Conflict`).
+  - `POST /api/v1/employees/{id}/deactivate` et `/activate` : désactivation logique avec révocation immédiate de tous les Refresh Tokens et protection anti-escalade.
 - **F2.1 — Module `Organization` & Référentiels** (`US-011`, `US-012`, `US-013`)
   - Création du module `Sirh.Modules.Organization` (schéma SQL Server `organization`, migration `InitialOrganization`) avec isolation stricte vis-à-vis de `Sirh.Modules.Identity`.
   - Utilitaires `BuildingBlocks` : `SlugGenerator` (normalisation ASCII/accents) et `SiretValidator` (validation SIRET 14 chiffres Luhn + exception La Poste), plus rotation de `RowVersion` sous EF Core `InMemory`.
