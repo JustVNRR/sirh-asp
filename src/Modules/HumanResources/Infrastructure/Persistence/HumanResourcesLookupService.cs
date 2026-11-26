@@ -55,4 +55,28 @@ public sealed class HumanResourcesLookupService(
             row.Employee.AddressCity,
             decryptedNationalId);
     }
+
+    public async Task<bool> IsManagerOfEmployeeAsync(
+        Guid managerEmployeeId,
+        Guid employeeId,
+        CancellationToken cancellationToken = default)
+    {
+        if (managerEmployeeId == Guid.Empty || employeeId == Guid.Empty)
+        {
+            return false;
+        }
+
+        var isDirectManager = await dbContext.Employees
+            .AsNoTracking()
+            .AnyAsync(e => e.Id == employeeId && e.DirectManagerId == managerEmployeeId, cancellationToken);
+
+        if (isDirectManager)
+        {
+            return true;
+        }
+
+        return await dbContext.Positions
+            .AsNoTracking()
+            .AnyAsync(p => p.EmployeeId == employeeId && p.ManagerId == managerEmployeeId, cancellationToken);
+    }
 }

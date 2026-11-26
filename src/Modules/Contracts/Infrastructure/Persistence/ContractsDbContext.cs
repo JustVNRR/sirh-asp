@@ -13,6 +13,7 @@ public sealed class ContractsDbContext : DbContext
 
     public DbSet<ContractModel> ContractModels => Set<ContractModel>();
     public DbSet<Contract> Contracts => Set<Contract>();
+    public DbSet<JobSheet> JobSheets => Set<JobSheet>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -75,6 +76,27 @@ public sealed class ContractsDbContext : DbContext
                 .WithMany(m => m.Contracts)
                 .HasForeignKey(c => c.ContractModelId)
                 .OnDelete(DeleteBehavior.SetNull);
+        });
+
+        builder.Entity<JobSheet>(b =>
+        {
+            b.ToTable("job_sheets");
+            b.HasKey(j => j.Id);
+
+            b.Property(j => j.FileKey).HasMaxLength(512).IsRequired();
+            b.Property(j => j.FileName).HasMaxLength(256).IsRequired();
+            b.Property(j => j.ContentType).HasMaxLength(128).IsRequired();
+            b.Property(j => j.Commentary).HasMaxLength(1000);
+            b.Property(j => j.CreatedBy).HasMaxLength(256);
+            b.Property(j => j.UpdatedBy).HasMaxLength(256);
+
+            if (!isInMemory)
+            {
+                b.Property(j => j.RowVersion).IsRowVersion();
+            }
+
+            b.HasIndex(j => j.PositionId).IsUnique();
+            b.HasIndex(j => j.EmployeeId);
         });
     }
 }

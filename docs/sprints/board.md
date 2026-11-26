@@ -59,8 +59,8 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 | :--- | :--- | :--- | :---: | :--- | :--- | :--- |
 | **F4.1** | `US-019` | Gérer les modèles Markdown/Scriban et catalogue des variables | 5 | `main` | ✅ Done | `8fa6173` |
 | **F4.1** | `US-020` | Prévisualiser et générer un contrat PDF natif (QuestPDF) | 8 | `main` | ✅ Done | `8fa6173` |
-| **F4.2** | `US-021` | Importer, suivre la signature, consulter et supprimer un contrat | 5 | `feat/F4.2-contracts-jobsheets` | 🚧 In Progress | — |
-| **F4.2** | `US-022` | Gérer la fiche de poste PDF unique d'un poste (`JobSheet`) | 3 | `feat/F4.2-contracts-jobsheets` | 🚧 In Progress | — |
+| **F4.2** | `US-021` | Importer, suivre la signature, consulter et supprimer un contrat | 5 | `feat/F4.2-contracts-jobsheets` | 👀 In Review | — |
+| **F4.2** | `US-022` | Gérer la fiche de poste PDF unique d'un poste (`JobSheet`) | 3 | `feat/F4.2-contracts-jobsheets` | 👀 In Review | — |
 | **F5.1** | `US-023` | Déposer, filtrer et télécharger les documents du dossier salarié | 5 | — | ⬜ To Do | — |
 | **F5.1** | `US-024` | Gérer les attestations RQTH et Titres de séjour | 5 | — | ⬜ To Do | — |
 

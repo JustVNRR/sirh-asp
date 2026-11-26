@@ -33,4 +33,9 @@ public interface IHumanResourcesLookup
     Task<PositionContractContextDto?> GetPositionContractContextAsync(
         Guid positionId,
         CancellationToken cancellationToken = default);
+
+    Task<bool> IsManagerOfEmployeeAsync(
+        Guid managerEmployeeId,
+        Guid employeeId,
+        CancellationToken cancellationToken = default);
 }

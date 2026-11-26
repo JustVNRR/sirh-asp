@@ -16,6 +16,7 @@ public static class ContractEndpoints
     {
         MapContractModels(endpoints);
         MapContractGeneration(endpoints);
+        endpoints.MapContractManagementAndJobSheetEndpoints();
 
         return endpoints;
     }

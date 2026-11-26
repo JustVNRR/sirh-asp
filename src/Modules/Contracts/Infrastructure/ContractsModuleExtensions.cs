@@ -42,8 +42,11 @@ public static class ContractsModuleExtensions
         services.AddSingleton<IPdfContractRenderer, QuestPdfContractRenderer>();
         services.AddScoped<IContractModelRepository, ContractModelRepository>();
         services.AddScoped<IContractRepository, ContractRepository>();
+        services.AddScoped<IJobSheetRepository, JobSheetRepository>();
         services.AddScoped<IContractModelService, ContractModelService>();
         services.AddScoped<IContractGenerationService, ContractGenerationService>();
+        services.AddScoped<IContractManagementService, ContractManagementService>();
+        services.AddScoped<IJobSheetService, JobSheetService>();
         services.AddScoped<IPositionReferenceChecker, ContractPositionReferenceChecker>();
         services.AddScoped<IContractTypeReferenceChecker, ContractTypeUsageChecker>();
 
