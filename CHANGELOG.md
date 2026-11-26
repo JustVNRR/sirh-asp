@@ -7,6 +7,7 @@ Le format repose sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), e
 ## [Unreleased]
 
 - *Sprint 4 — Vie Interne : Docs, Kits, CSE, RSE (en cours)*
+  - **F7.1 (`e842d86`) — Module `InternalLife`, Documents Communs & Kits d'accueil (`US-028`)** : Création du module autonome `Sirh.Modules.InternalLife` (schéma SQL `internal_life`, migration `InitialInternalLife`), stockage `CommonPublic` non chiffré avec validation magic bytes, filtrage intelligent `contractTypeId` (ciblé + transverse), droits CSE restreints aux catégories CSE (`403` sur accords d'entreprise), garde `IContractTypeReferenceChecker` et 3 tests d'isolation `NetArchTest`.
 
 ## [0.4.0] - 2026-11-26 (Sprint 3 — Santé au Travail & Notifications)
 
