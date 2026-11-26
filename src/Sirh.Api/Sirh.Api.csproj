@@ -22,6 +22,7 @@
     <ProjectReference Include="..\Modules\Health\Sirh.Modules.Health.csproj" />
     <ProjectReference Include="..\Modules\HumanResources\Sirh.Modules.HumanResources.csproj" />
     <ProjectReference Include="..\Modules\Identity\Sirh.Modules.Identity.csproj" />
+    <ProjectReference Include="..\Modules\InternalLife\Sirh.Modules.InternalLife.csproj" />
     <ProjectReference Include="..\Modules\Organization\Sirh.Modules.Organization.csproj" />
   </ItemGroup>
 </Project>

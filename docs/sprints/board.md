@@ -80,7 +80,7 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 
 | Feature | US | Titre | Points | Branche | Statut | Commit / PR |
 | :--- | :--- | :--- | :---: | :--- | :--- | :--- |
-| **F7.1** | `US-028` | Publier, filtrer, archiver et télécharger les documents communs et kits d'accueil | 5 | `feat/F7.1-common-documents` | 🚧 In Progress | — |
+| **F7.1** | `US-028` | Publier, filtrer, archiver et télécharger les documents communs et kits d'accueil | 5 | `feat/F7.1-common-documents` | 👀 In Review | — |
 | **F7.2** | `US-029` | Gérer l'annuaire des représentants du personnel (CSE) | 3 | — | ⬜ To Do | — |
 | **F7.2** | `US-030` | Soumettre des idées RSE et piloter leur traitement côté RH | 5 | — | ⬜ To Do | — |
 

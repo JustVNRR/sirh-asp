@@ -22,6 +22,9 @@ using Sirh.Modules.HumanResources.Presentation;
 using Sirh.Modules.Identity.Infrastructure;
 using Sirh.Modules.Identity.Infrastructure.Persistence;
 using Sirh.Modules.Identity.Presentation;
+using Sirh.Modules.InternalLife.Infrastructure;
+using Sirh.Modules.InternalLife.Infrastructure.Persistence;
+using Sirh.Modules.InternalLife.Presentation;
 using Sirh.Modules.Organization.Infrastructure;
 using Sirh.Modules.Organization.Infrastructure.Persistence;
 using Sirh.Modules.Organization.Presentation;
@@ -43,6 +46,7 @@ builder.Services.AddOrganizationModule(builder.Configuration);
 builder.Services.AddHumanResourcesModule(builder.Configuration);
 builder.Services.AddContractsModule(builder.Configuration);
 builder.Services.AddHealthModule(builder.Configuration);
+builder.Services.AddInternalLifeModule(builder.Configuration);
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
@@ -161,6 +165,13 @@ if (app.Configuration.GetValue<bool>("Health:AutoMigrate"))
     await healthDb.Database.MigrateAsync();
 }
 
+if (app.Configuration.GetValue<bool>("InternalLife:AutoMigrate"))
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    var internalLifeDb = scope.ServiceProvider.GetRequiredService<InternalLifeDbContext>();
+    await internalLifeDb.Database.MigrateAsync();
+}
+
 app.UseMiddleware<CorrelationIdMiddleware>();
 app.UseExceptionHandler();
 app.UseSerilogRequestLogging();
@@ -211,6 +222,7 @@ app.MapOrganizationEndpoints();
 app.MapHumanResourcesEndpoints();
 app.MapContractsEndpoints();
 app.MapHealthEndpoints();
+app.MapInternalLifeEndpoints();
 
 app.Run();
 

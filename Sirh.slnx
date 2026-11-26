@@ -12,6 +12,7 @@
     <Project Path="src/Modules/Health/Sirh.Modules.Health.csproj" />
     <Project Path="src/Modules/HumanResources/Sirh.Modules.HumanResources.csproj" />
     <Project Path="src/Modules/Identity/Sirh.Modules.Identity.csproj" />
+    <Project Path="src/Modules/InternalLife/Sirh.Modules.InternalLife.csproj" />
     <Project Path="src/Modules/Organization/Sirh.Modules.Organization.csproj" />
   </Folder>
   <Folder Name="/tests/">

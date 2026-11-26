@@ -14,6 +14,7 @@ using Sirh.Modules.Contracts.Infrastructure.Persistence;
 using Sirh.Modules.Health.Infrastructure.Persistence;
 using Sirh.Modules.HumanResources.Infrastructure.Persistence;
 using Sirh.Modules.Identity.Infrastructure.Persistence;
+using Sirh.Modules.InternalLife.Infrastructure.Persistence;
 using Sirh.Modules.Organization.Application.Abstractions;
 using Sirh.Modules.Organization.Infrastructure.Persistence;
 
@@ -30,6 +31,7 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
     private readonly string _hrInMemoryDbName = $"sirh-hr-it-{Guid.NewGuid():N}";
     private readonly string _contractsInMemoryDbName = $"sirh-contracts-it-{Guid.NewGuid():N}";
     private readonly string _healthInMemoryDbName = $"sirh-health-it-{Guid.NewGuid():N}";
+    private readonly string _internalLifeInMemoryDbName = $"sirh-internallife-it-{Guid.NewGuid():N}";
     private readonly int _authPermitLimit;
 
     internal string StoragePath => _storagePath;
@@ -75,6 +77,7 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
                 ["Contracts:AutoMigrate"] = "false",
                 ["Health:AutoMigrate"] = "false",
                 ["Health:Reminders:Enabled"] = "false",
+                ["InternalLife:AutoMigrate"] = "false",
                 ["RateLimiting:AuthPermitLimit"] = _authPermitLimit.ToString(),
                 ["RateLimiting:AuthWindowSeconds"] = "60"
             });
@@ -119,6 +122,14 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
 
             services.AddDbContext<HealthDbContext>((sp, options) =>
                 options.UseInMemoryDatabase(_healthInMemoryDbName)
+                    .AddInterceptors(sp.GetRequiredService<AuditableEntityInterceptor>()));
+
+            services.RemoveAll<IDbContextOptionsConfiguration<InternalLifeDbContext>>();
+            services.RemoveAll<DbContextOptions<InternalLifeDbContext>>();
+            services.RemoveAll<InternalLifeDbContext>();
+
+            services.AddDbContext<InternalLifeDbContext>((sp, options) =>
+                options.UseInMemoryDatabase(_internalLifeInMemoryDbName)
                     .AddInterceptors(sp.GetRequiredService<AuditableEntityInterceptor>()));
 
             services.RemoveAll<IEmailService>();

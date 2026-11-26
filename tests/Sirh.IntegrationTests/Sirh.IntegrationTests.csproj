@@ -21,6 +21,7 @@
     <ProjectReference Include="..\..\src\Modules\Health\Sirh.Modules.Health.csproj" />
     <ProjectReference Include="..\..\src\Modules\HumanResources\Sirh.Modules.HumanResources.csproj" />
     <ProjectReference Include="..\..\src\Modules\Identity\Sirh.Modules.Identity.csproj" />
+    <ProjectReference Include="..\..\src\Modules\InternalLife\Sirh.Modules.InternalLife.csproj" />
     <ProjectReference Include="..\..\src\Modules\Organization\Sirh.Modules.Organization.csproj" />
   </ItemGroup>
   <ItemGroup>

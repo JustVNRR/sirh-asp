@@ -6,6 +6,7 @@ using Sirh.Modules.Contracts.Domain.Entities;
 using Sirh.Modules.Health.Domain.Entities;
 using Sirh.Modules.HumanResources.Domain.Entities;
 using Sirh.Modules.Identity.Domain.Entities;
+using Sirh.Modules.InternalLife.Domain.Entities;
 using Sirh.Modules.Organization.Domain.Entities;
 using Xunit;
 
@@ -292,5 +293,66 @@ public sealed class ArchitectureTests
 
         result.IsSuccessful.ShouldBeTrue(
             $"Health cross-module coupling violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
+    }
+
+    [Fact]
+    public void InternalLife_Domain_Should_Not_Depend_On_Infrastructure_Presentation_EfCore_Or_Other_Modules()
+    {
+        var result = Types.InAssembly(typeof(CommonDocument).Assembly)
+            .That()
+            .ResideInNamespace("Sirh.Modules.InternalLife.Domain")
+            .ShouldNot()
+            .HaveDependencyOnAny(
+                "Sirh.Modules.InternalLife.Infrastructure",
+                "Sirh.Modules.InternalLife.Presentation",
+                "Sirh.Modules.Identity",
+                "Sirh.Modules.Organization",
+                "Sirh.Modules.HumanResources",
+                "Sirh.Modules.Contracts",
+                "Sirh.Modules.Health",
+                "Microsoft.EntityFrameworkCore")
+            .GetResult();
+
+        result.IsSuccessful.ShouldBeTrue(
+            $"InternalLife.Domain violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
+    }
+
+    [Fact]
+    public void InternalLife_Application_Should_Not_Depend_On_Infrastructure_Presentation_EfCore_Or_Other_Modules()
+    {
+        var result = Types.InAssembly(typeof(CommonDocument).Assembly)
+            .That()
+            .ResideInNamespace("Sirh.Modules.InternalLife.Application")
+            .ShouldNot()
+            .HaveDependencyOnAny(
+                "Sirh.Modules.InternalLife.Infrastructure",
+                "Sirh.Modules.InternalLife.Presentation",
+                "Sirh.Modules.Identity",
+                "Sirh.Modules.Organization",
+                "Sirh.Modules.HumanResources",
+                "Sirh.Modules.Contracts",
+                "Sirh.Modules.Health",
+                "Microsoft.EntityFrameworkCore")
+            .GetResult();
+
+        result.IsSuccessful.ShouldBeTrue(
+            $"InternalLife.Application violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
+    }
+
+    [Fact]
+    public void InternalLife_Module_Should_Not_Depend_On_Other_Business_Modules()
+    {
+        var result = Types.InAssembly(typeof(CommonDocument).Assembly)
+            .ShouldNot()
+            .HaveDependencyOnAny(
+                "Sirh.Modules.Identity",
+                "Sirh.Modules.Organization",
+                "Sirh.Modules.HumanResources",
+                "Sirh.Modules.Contracts",
+                "Sirh.Modules.Health")
+            .GetResult();
+
+        result.IsSuccessful.ShouldBeTrue(
+            $"InternalLife cross-module coupling violations: {string.Join(", ", result.FailingTypeNames ?? [])}");
     }
 }
