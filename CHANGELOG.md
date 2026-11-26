@@ -6,8 +6,18 @@ Le format repose sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), e
 
 ## [Unreleased]
 
-- *Sprint 4 — Vie Interne : Docs, Kits, CSE, RSE (en cours)*
-  - **F7.1 (`e842d86`) — Module `InternalLife`, Documents Communs & Kits d'accueil (`US-028`)** : Création du module autonome `Sirh.Modules.InternalLife` (schéma SQL `internal_life`, migration `InitialInternalLife`), stockage `CommonPublic` non chiffré avec validation magic bytes, filtrage intelligent `contractTypeId` (ciblé + transverse), droits CSE restreints aux catégories CSE (`403` sur accords d'entreprise), garde `IContractTypeReferenceChecker` et 3 tests d'isolation `NetArchTest`.
+- *Sprint 5 — QCM d'Intégration Structuré (en cours)*
+
+## [0.5.0] - 2026-11-26 (Sprint 4 — Vie Interne : Docs, Kits, CSE, RSE)
+
+### Added
+
+- **F7.2 (`ecd6f25`) — Annuaire des Représentants du Personnel (CSE) & Boîte à idées RSE** (`US-029`, `US-030`)
+  - Entités `StaffRepresentative` (`internal_life.staff_representatives`) et `RseIdea` (`internal_life.rse_ideas`) + migration `AddStaffRepresentativesAndRseIdeas`.
+  - Endpoints `/api/v1/staff-representatives/*` : lecture ouverte (`staff-reps:read`), filtrage entreprise/référent harcèlement, écriture restreinte `CSE`/`RH`/`Admin`, unicité par entreprise et `RowVersion`.
+  - Endpoints `/api/v1/rse-ideas/*` : dépôt avec pièce jointe chiffrée **AES-256-GCM** (`StorageScope.EmployeeSensitive`), ABAC auteur uniquement au statut `Submitted` (`409 Conflict` une fois traitée par RH via `PATCH /status`), et garde `RseIdeaLocationReferenceChecker` (`ILocationReferenceChecker`).
+- **F7.1 (`e842d86`) — Module `InternalLife`, Documents Communs & Kits d'accueil** (`US-028`)
+  - Création du module autonome `Sirh.Modules.InternalLife` (schéma SQL `internal_life`, migration `InitialInternalLife`), stockage `CommonPublic` non chiffré avec validation magic bytes, filtrage intelligent `contractTypeId` (ciblé + transverse), droits CSE restreints aux catégories CSE (`403` sur accords d'entreprise), garde `IContractTypeReferenceChecker` et 3 tests d'isolation `NetArchTest`.
 
 ## [0.4.0] - 2026-11-26 (Sprint 3 — Santé au Travail & Notifications)
 

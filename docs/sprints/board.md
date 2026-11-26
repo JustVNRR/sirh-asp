@@ -14,10 +14,10 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 | **Sprint 1** | Organisation & Collaborateurs (`US-011` à `US-018`) | 32 pts | 32 / 32 pts (100 %) | ✅ Done |
 | **Sprint 2** | Contrats PDF natifs & Dossier Salarié (`US-019` à `US-024`) | 31 pts | 31 / 31 pts (100 %) | ✅ Done |
 | **Sprint 3** | Santé au Travail & Notifications (`US-025` à `US-027`) | 13 pts | 13 / 13 pts (100 %) | ✅ Done |
-| **Sprint 4** | Vie Interne — Docs, Kits, CSE, RSE (`US-028` à `US-030`) | 13 pts | 5 / 13 pts (38 %) | 🚧 In Progress |
-| **Sprint 5** | QCM d'Intégration Structuré (`US-031` à `US-032`) | 10 pts | 0 / 10 pts (0 %) | ⬜ To Do |
+| **Sprint 4** | Vie Interne — Docs, Kits, CSE, RSE (`US-028` à `US-030`) | 13 pts | 13 / 13 pts (100 %) | ✅ Done |
+| **Sprint 5** | QCM d'Intégration Structuré (`US-031` à `US-032`) | 10 pts | 0 / 10 pts (0 %) | 🚧 In Progress |
 | **Sprint 6** | Azure Cloud Readiness & Audit Final (`US-033` à `US-034`) | 8 pts | 0 / 8 pts (0 %) | ⬜ To Do |
-| **Total** | **MVP complet + Conformité (34 US)** | **146 pts** | **120 / 146 pts (82 %)** | — |
+| **Total** | **MVP complet + Conformité (34 US)** | **146 pts** | **128 / 146 pts (88 %)** | — |
 
 ---
 
@@ -76,19 +76,27 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 
 ---
 
-## Sprint 4 — Vie Interne — Docs, Kits, CSE, RSE (13 pts) — 🚧 En cours
+## Sprint 4 — Vie Interne — Docs, Kits, CSE, RSE (13 pts) — ✅ Clôturé (`v0.5.0`)
 
 | Feature | US | Titre | Points | Branche | Statut | Commit / PR |
 | :--- | :--- | :--- | :---: | :--- | :--- | :--- |
 | **F7.1** | `US-028` | Publier, filtrer, archiver et télécharger les documents communs et kits d'accueil | 5 | `main` | ✅ Done | `e842d86` |
-| **F7.2** | `US-029` | Gérer l'annuaire des représentants du personnel (CSE) | 3 | `feat/F7.2-cse-rse` | 👀 In Review | — |
-| **F7.2** | `US-030` | Soumettre des idées RSE et piloter leur traitement côté RH | 5 | `feat/F7.2-cse-rse` | 👀 In Review | — |
+| **F7.2** | `US-029` | Gérer l'annuaire des représentants du personnel (CSE) | 3 | `main` | ✅ Done | `ecd6f25` |
+| **F7.2** | `US-030` | Soumettre des idées RSE et piloter leur traitement côté RH | 5 | `main` | ✅ Done | `ecd6f25` |
+
+---
+
+## Sprint 5 — QCM d'Intégration Structuré (10 pts) — 🚧 En cours
+
+| Feature | US | Titre | Points | Branche | Statut | Commit / PR |
+| :--- | :--- | :--- | :---: | :--- | :--- | :--- |
+| **F8.1** | `US-031` | Créer, éditer et publier un QCM d'intégration côté RH | 5 | `feat/F8.1-onboarding-quizzes` | 🚧 In Progress | — |
+| **F8.1** | `US-032` | Passer un QCM d'intégration, calculer le score et suivre les résultats | 5 | `feat/F8.1-onboarding-quizzes` | 🚧 In Progress | — |
 
 ---
 
 ## Backlog des Sprints suivants (`⬜ To Do`)
 
-- **Sprint 5 — QCM d'Intégration Structuré (10 pts)** : `US-031` (5), `US-032` (5)
 - **Sprint 6 — Azure Cloud Readiness & Audit Final (8 pts)** : `US-033` (5), `US-034` (3)
 
 ---
@@ -99,3 +107,4 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 - **Sprint 1 (`v0.2.0`)** : [sprint-1-review.md](sprint-1-review.md) — Clôturé le 2026-11-26 (`32 / 32 pts`, `118 / 118 tests`).
 - **Sprint 2 (`v0.3.0`)** : [sprint-2-review.md](sprint-2-review.md) — Clôturé le 2026-11-26 (`31 / 31 pts`, `138 / 138 tests`).
 - **Sprint 3 (`v0.4.0`)** : [sprint-3-review.md](sprint-3-review.md) — Clôturé le 2026-11-26 (`13 / 13 pts`, `144 / 144 tests`).
+- **Sprint 4 (`v0.5.0`)** : [sprint-4-review.md](sprint-4-review.md) — Clôturé le 2026-11-26 (`13 / 13 pts`, `150 / 150 tests`).
