@@ -48,7 +48,7 @@ public sealed class Position : AuditableEntity
     public Employee Employee { get; private set; } = null!;
 
     public Guid? ManagerId { get; private set; }
-    public Employee? Manager { get; private set; }
+    public Employee? Manager { get; init; }
 
     public Guid? LocationId { get; private set; }
     public string JobTitle { get; private set; } = string.Empty;
@@ -147,9 +147,12 @@ public sealed class Position : AuditableEntity
         }
 
         var trimmed = value.Trim();
-        return string.Equals(trimmed, "Hours", StringComparison.OrdinalIgnoreCase) ? "Hours"
-            : string.Equals(trimmed, "Days", StringComparison.OrdinalIgnoreCase) ? "Days"
-            : trimmed;
+        if (string.Equals(trimmed, "Hours", StringComparison.OrdinalIgnoreCase))
+        {
+            return "Hours";
+        }
+
+        return string.Equals(trimmed, "Days", StringComparison.OrdinalIgnoreCase) ? "Days" : trimmed;
     }
 
     private static string? NormalizeOptional(string? value) =>

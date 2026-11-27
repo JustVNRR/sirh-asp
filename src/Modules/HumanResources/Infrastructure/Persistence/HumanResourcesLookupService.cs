@@ -184,7 +184,7 @@ public sealed class HumanResourcesLookupService(
                 p.ExpiryReminder7SentAtUtc))
             .ToArrayAsync(cancellationToken);
 
-        return [..rqthAlerts, ..permitAlerts];
+        return [.. rqthAlerts, .. permitAlerts];
     }
 
     public async Task MarkDocumentExpiryReminderSentAsync(

@@ -63,7 +63,7 @@ public sealed class Employee : AuditableEntity
     public Guid UserId { get; private set; }
     public Guid CompanyId { get; private set; }
     public Guid? DirectManagerId { get; private set; }
-    public Employee? DirectManager { get; private set; }
+    public Employee? DirectManager { get; init; }
 
     public string Slug { get; private set; } = string.Empty;
     public string Honorific { get; private set; } = string.Empty;

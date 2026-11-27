@@ -13,10 +13,10 @@ public sealed record PagedResult<T>
         int totalCount,
         int page,
         int pageSize) => new()
-    {
-        Items = items,
-        TotalCount = totalCount,
-        Page = page,
-        PageSize = pageSize
-    };
+        {
+            Items = items,
+            TotalCount = totalCount,
+            Page = page,
+            PageSize = pageSize
+        };
 }

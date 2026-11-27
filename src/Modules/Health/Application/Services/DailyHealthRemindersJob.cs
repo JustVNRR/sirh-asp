@@ -112,8 +112,11 @@ public sealed class DailyHealthRemindersJob(
                 }
 
                 var isPermit = string.Equals(doc.DocumentType, "ResidentPermit", StringComparison.OrdinalIgnoreCase);
+                var referenceSuffix = string.IsNullOrWhiteSpace(doc.ReferenceNumber)
+                    ? string.Empty
+                    : $" n° {doc.ReferenceNumber}";
                 var docLabel = isPermit
-                    ? $"Titre de séjour{(string.IsNullOrWhiteSpace(doc.ReferenceNumber) ? string.Empty : $" n° {doc.ReferenceNumber}")}"
+                    ? $"Titre de séjour{referenceSuffix}"
                     : "Attestation RQTH";
 
                 var subject = $"Alerte échéance ({threshold}j) : {docLabel} expire le {doc.ExpiryDate:dd/MM/yyyy}";

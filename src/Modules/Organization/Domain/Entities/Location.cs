@@ -49,7 +49,7 @@ public sealed class Location : AuditableEntity
     public bool IsPublished { get; private set; }
 
     public Guid? CompanyId { get; private set; }
-    public Company? Company { get; private set; }
+    public Company? Company { get; init; }
 
     public void Update(
         string slug,

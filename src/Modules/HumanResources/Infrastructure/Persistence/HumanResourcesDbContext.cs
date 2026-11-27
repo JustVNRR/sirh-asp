@@ -18,18 +18,18 @@ public sealed class HumanResourcesDbContext : DbContext
     public DbSet<RqthDetail> RqthDetails => Set<RqthDetail>();
     public DbSet<ResidentPermitDetail> ResidentPermitDetails => Set<ResidentPermitDetail>();
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
+        base.OnModelCreating(modelBuilder);
 
-        builder.HasDefaultSchema(Schema);
+        modelBuilder.HasDefaultSchema(Schema);
 
         var isInMemory = string.Equals(
             Database.ProviderName,
             "Microsoft.EntityFrameworkCore.InMemory",
             StringComparison.Ordinal);
 
-        builder.Entity<Employee>(b =>
+        modelBuilder.Entity<Employee>(b =>
         {
             b.ToTable("employees");
             b.HasKey(e => e.Id);
@@ -72,7 +72,7 @@ public sealed class HumanResourcesDbContext : DbContext
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
-        builder.Entity<EmergencyContact>(b =>
+        modelBuilder.Entity<EmergencyContact>(b =>
         {
             b.ToTable("emergency_contacts");
             b.HasKey(c => c.Id);
@@ -98,7 +98,7 @@ public sealed class HumanResourcesDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        builder.Entity<Position>(b =>
+        modelBuilder.Entity<Position>(b =>
         {
             b.ToTable("positions");
             b.HasKey(p => p.Id);
@@ -136,7 +136,7 @@ public sealed class HumanResourcesDbContext : DbContext
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
-        builder.Entity<EmployeeDocument>(b =>
+        modelBuilder.Entity<EmployeeDocument>(b =>
         {
             b.ToTable("employee_documents");
             b.HasKey(d => d.Id);
@@ -170,7 +170,7 @@ public sealed class HumanResourcesDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        builder.Entity<RqthDetail>(b =>
+        modelBuilder.Entity<RqthDetail>(b =>
         {
             b.ToTable("rqth_details");
             b.HasKey(r => r.DocumentId);
@@ -184,7 +184,7 @@ public sealed class HumanResourcesDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        builder.Entity<ResidentPermitDetail>(b =>
+        modelBuilder.Entity<ResidentPermitDetail>(b =>
         {
             b.ToTable("resident_permit_details");
             b.HasKey(p => p.DocumentId);

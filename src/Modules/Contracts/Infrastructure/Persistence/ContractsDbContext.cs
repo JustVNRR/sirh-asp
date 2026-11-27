@@ -15,18 +15,18 @@ public sealed class ContractsDbContext : DbContext
     public DbSet<Contract> Contracts => Set<Contract>();
     public DbSet<JobSheet> JobSheets => Set<JobSheet>();
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
+        base.OnModelCreating(modelBuilder);
 
-        builder.HasDefaultSchema(Schema);
+        modelBuilder.HasDefaultSchema(Schema);
 
         var isInMemory = string.Equals(
             Database.ProviderName,
             "Microsoft.EntityFrameworkCore.InMemory",
             StringComparison.Ordinal);
 
-        builder.Entity<ContractModel>(b =>
+        modelBuilder.Entity<ContractModel>(b =>
         {
             b.ToTable("contract_models");
             b.HasKey(m => m.Id);
@@ -47,7 +47,7 @@ public sealed class ContractsDbContext : DbContext
             b.HasIndex(m => m.ContractTypeId);
         });
 
-        builder.Entity<Contract>(b =>
+        modelBuilder.Entity<Contract>(b =>
         {
             b.ToTable("contracts");
             b.HasKey(c => c.Id);
@@ -78,7 +78,7 @@ public sealed class ContractsDbContext : DbContext
                 .OnDelete(DeleteBehavior.SetNull);
         });
 
-        builder.Entity<JobSheet>(b =>
+        modelBuilder.Entity<JobSheet>(b =>
         {
             b.ToTable("job_sheets");
             b.HasKey(j => j.Id);

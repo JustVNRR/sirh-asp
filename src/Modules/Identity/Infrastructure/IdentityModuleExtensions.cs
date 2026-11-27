@@ -81,11 +81,11 @@ public static class IdentityModuleExtensions
                 .RequireAuthenticatedUser()
                 .Build());
 
-        foreach (var permission in IdentityPermissions.All)
+        foreach (var permissionCode in IdentityPermissions.All.Select(permission => permission.Code))
         {
-            authorizationBuilder.AddPolicy(permission.Code, policy =>
+            authorizationBuilder.AddPolicy(permissionCode, policy =>
                 policy.RequireAuthenticatedUser()
-                    .AddRequirements(new PermissionRequirement(permission.Code)));
+                    .AddRequirements(new PermissionRequirement(permissionCode)));
         }
 
         services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();

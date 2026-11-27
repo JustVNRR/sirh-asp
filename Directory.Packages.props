@@ -35,6 +35,9 @@
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.24.0" />
     <PackageVersion Include="Azure.Identity" Version="1.17.1" />
 
+    <!-- Static Analysis -->
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.7.0.110445" />
+
     <!-- Testing -->
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageVersion Include="xunit" Version="2.9.3" />

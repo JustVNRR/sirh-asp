@@ -14,18 +14,18 @@ public sealed class HealthDbContext : DbContext
     public DbSet<MedicalVisit> MedicalVisits => Set<MedicalVisit>();
     public DbSet<Notification> Notifications => Set<Notification>();
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
+        base.OnModelCreating(modelBuilder);
 
-        builder.HasDefaultSchema(Schema);
+        modelBuilder.HasDefaultSchema(Schema);
 
         var isInMemory = string.Equals(
             Database.ProviderName,
             "Microsoft.EntityFrameworkCore.InMemory",
             StringComparison.Ordinal);
 
-        builder.Entity<MedicalVisit>(b =>
+        modelBuilder.Entity<MedicalVisit>(b =>
         {
             b.ToTable("medical_visits");
             b.HasKey(v => v.Id);
@@ -57,7 +57,7 @@ public sealed class HealthDbContext : DbContext
             b.HasIndex(v => new { v.CarriedOut, v.ReminderSentAtUtc, v.VisitDateTimeUtc });
         });
 
-        builder.Entity<Notification>(b =>
+        modelBuilder.Entity<Notification>(b =>
         {
             b.ToTable("notifications");
             b.HasKey(n => n.Id);

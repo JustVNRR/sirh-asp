@@ -15,18 +15,18 @@ public sealed class OrganizationDbContext : DbContext
     public DbSet<Location> Locations => Set<Location>();
     public DbSet<ContractType> ContractTypes => Set<ContractType>();
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
+        base.OnModelCreating(modelBuilder);
 
-        builder.HasDefaultSchema(Schema);
+        modelBuilder.HasDefaultSchema(Schema);
 
         var isInMemory = string.Equals(
             Database.ProviderName,
             "Microsoft.EntityFrameworkCore.InMemory",
             StringComparison.Ordinal);
 
-        builder.Entity<Company>(b =>
+        modelBuilder.Entity<Company>(b =>
         {
             b.ToTable("companies");
             b.HasKey(c => c.Id);
@@ -57,7 +57,7 @@ public sealed class OrganizationDbContext : DbContext
             b.HasIndex(c => c.Siret).IsUnique();
         });
 
-        builder.Entity<Location>(b =>
+        modelBuilder.Entity<Location>(b =>
         {
             b.ToTable("locations");
             b.HasKey(l => l.Id);
@@ -87,7 +87,7 @@ public sealed class OrganizationDbContext : DbContext
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
-        builder.Entity<ContractType>(b =>
+        modelBuilder.Entity<ContractType>(b =>
         {
             b.ToTable("contract_types");
             b.HasKey(ct => ct.Id);

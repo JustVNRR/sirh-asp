@@ -41,7 +41,7 @@ public sealed class Contract : AuditableEntity
     public Guid EmployeeId { get; private set; }
     public Guid ContractTypeId { get; private set; }
     public Guid? ContractModelId { get; private set; }
-    public ContractModel? ContractModel { get; private set; }
+    public ContractModel? ContractModel { get; init; }
 
     public ContractStatus Status { get; private set; }
     public DateOnly? SignedAt { get; private set; }

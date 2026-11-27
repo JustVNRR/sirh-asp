@@ -6,6 +6,8 @@ namespace Sirh.Api.Infrastructure;
 public sealed class HttpCurrentUser : ICurrentUser
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private string[]? _roles;
+    private string[]? _permissions;
 
     public HttpCurrentUser(IHttpContextAccessor httpContextAccessor)
     {
@@ -23,14 +25,18 @@ public sealed class HttpCurrentUser : ICurrentUser
     public string? Email =>
         Principal?.FindFirstValue(ClaimTypes.Email) ?? Principal?.FindFirstValue("email");
 
-    public IReadOnlyCollection<string> Roles => Principal?
+    public IReadOnlyCollection<string> Roles => _roles ??= ResolveRoles();
+
+    public IReadOnlyCollection<string> Permissions => _permissions ??= ResolvePermissions();
+
+    private string[] ResolveRoles() => Principal?
         .Claims
         .Where(c => c.Type == ClaimTypes.Role || c.Type == "role")
         .Select(c => c.Value)
         .Distinct(StringComparer.OrdinalIgnoreCase)
         .ToArray() ?? [];
 
-    public IReadOnlyCollection<string> Permissions => Principal?
+    private string[] ResolvePermissions() => Principal?
         .FindAll("permission")
         .Select(c => c.Value)
         .Distinct(StringComparer.OrdinalIgnoreCase)

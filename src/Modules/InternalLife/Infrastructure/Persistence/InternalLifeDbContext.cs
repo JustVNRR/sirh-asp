@@ -20,18 +20,18 @@ public sealed class InternalLifeDbContext : DbContext
     public DbSet<QuizAttempt> QuizAttempts => Set<QuizAttempt>();
     public DbSet<QuizAttemptAnswer> QuizAttemptAnswers => Set<QuizAttemptAnswer>();
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
+        base.OnModelCreating(modelBuilder);
 
-        builder.HasDefaultSchema(Schema);
+        modelBuilder.HasDefaultSchema(Schema);
 
         var isInMemory = string.Equals(
             Database.ProviderName,
             "Microsoft.EntityFrameworkCore.InMemory",
             StringComparison.Ordinal);
 
-        builder.Entity<CommonDocument>(b =>
+        modelBuilder.Entity<CommonDocument>(b =>
         {
             b.ToTable("common_documents");
             b.HasKey(d => d.Id);
@@ -58,7 +58,7 @@ public sealed class InternalLifeDbContext : DbContext
             b.HasIndex(d => d.ContractTypeId);
         });
 
-        builder.Entity<StaffRepresentative>(b =>
+        modelBuilder.Entity<StaffRepresentative>(b =>
         {
             b.ToTable("staff_representatives");
             b.HasKey(r => r.Id);
@@ -86,7 +86,7 @@ public sealed class InternalLifeDbContext : DbContext
             b.HasIndex(r => new { r.CompanyId, r.IsHarassmentAdvisor });
         });
 
-        builder.Entity<RseIdea>(b =>
+        modelBuilder.Entity<RseIdea>(b =>
         {
             b.ToTable("rse_ideas");
             b.HasKey(i => i.Id);
@@ -113,7 +113,7 @@ public sealed class InternalLifeDbContext : DbContext
             b.HasIndex(i => new { i.LocationId, i.Status });
         });
 
-        builder.Entity<OnboardingQuiz>(b =>
+        modelBuilder.Entity<OnboardingQuiz>(b =>
         {
             b.ToTable("onboarding_quizzes");
             b.HasKey(q => q.Id);
@@ -131,7 +131,7 @@ public sealed class InternalLifeDbContext : DbContext
             b.HasIndex(q => new { q.CompanyId, q.IsPublished });
         });
 
-        builder.Entity<QuizQuestion>(b =>
+        modelBuilder.Entity<QuizQuestion>(b =>
         {
             b.ToTable("quiz_questions");
             b.HasKey(q => q.Id);
@@ -151,7 +151,7 @@ public sealed class InternalLifeDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        builder.Entity<QuizChoice>(b =>
+        modelBuilder.Entity<QuizChoice>(b =>
         {
             b.ToTable("quiz_choices");
             b.HasKey(c => c.Id);
@@ -166,7 +166,7 @@ public sealed class InternalLifeDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        builder.Entity<QuizAttempt>(b =>
+        modelBuilder.Entity<QuizAttempt>(b =>
         {
             b.ToTable("quiz_attempts");
             b.HasKey(a => a.Id);
@@ -191,7 +191,7 @@ public sealed class InternalLifeDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        builder.Entity<QuizAttemptAnswer>(b =>
+        modelBuilder.Entity<QuizAttemptAnswer>(b =>
         {
             b.ToTable("quiz_attempt_answers");
             b.HasKey(a => a.Id);
