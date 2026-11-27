@@ -20,8 +20,7 @@ public sealed class SmtpEmailService(
         if (!settings.Enabled)
         {
             logger.LogInformation(
-                "Email delivery is disabled. Skipping email to {Recipient} with subject {Subject}.",
-                message.To,
+                "Email delivery is disabled. Skipping email with subject {Subject}.",
                 message.Subject);
             return;
         }
@@ -63,10 +62,9 @@ public sealed class SmtpEmailService(
         await client.SendMailAsync(mailMessage, cancellationToken);
 
         logger.LogInformation(
-            "Email sent via SMTP ({Host}:{Port}) to {Recipient} with subject {Subject}.",
+            "Email sent via SMTP ({Host}:{Port}) with subject {Subject}.",
             settings.Host,
             settings.Port,
-            message.To,
             message.Subject);
     }
 }

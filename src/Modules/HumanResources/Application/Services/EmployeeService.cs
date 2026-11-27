@@ -204,9 +204,8 @@ public sealed class EmployeeService(
         await employeeRepository.SaveChangesAsync(cancellationToken);
 
         logger.LogInformation(
-            "Created employee {EmployeeId} ({Email}) in company {CompanyId}.",
+            "Created employee {EmployeeId} in company {CompanyId}.",
             employee.Id,
-            employee.Email,
             employee.CompanyId);
 
         return ToDetailDto(employee, provisionedResult.Value.RoleCodes, includeSensitivePii: true);

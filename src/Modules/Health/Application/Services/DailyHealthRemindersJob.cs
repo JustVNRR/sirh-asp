@@ -29,10 +29,10 @@ public sealed class DailyHealthRemindersJob(
         var todayUtc = dateTimeProvider.TodayUtc;
         var notificationsToCreate = new List<Notification>();
 
-        var medicalVisitsSent = 0;
+        var visitRemindersCount = 0;
         var alerts30Sent = 0;
         var alerts7Sent = 0;
-        var emailsSent = 0;
+        var dispatchedMessagesCount = 0;
 
         // 1. Future medical visits in the next 5 days (never past visits)
         var dueVisits = await visitRepository.GetVisitsDueForReminderAsync(
@@ -71,12 +71,12 @@ public sealed class DailyHealthRemindersJob(
                 if (await TrySendEmailAsync(contact.Email, subject, content, cancellationToken))
                 {
                     notification.MarkEmailSent();
-                    emailsSent++;
+                    dispatchedMessagesCount++;
                 }
 
                 notificationsToCreate.Add(notification);
                 visit.MarkReminderSent(nowUtc);
-                medicalVisitsSent++;
+                visitRemindersCount++;
             }
         }
 
@@ -151,7 +151,7 @@ public sealed class DailyHealthRemindersJob(
                     if (await TrySendEmailAsync(recipient.Email, subject, content, cancellationToken))
                     {
                         notification.MarkEmailSent();
-                        emailsSent++;
+                        dispatchedMessagesCount++;
                     }
 
                     notificationsToCreate.Add(notification);
@@ -180,25 +180,25 @@ public sealed class DailyHealthRemindersJob(
             await notificationRepository.AddRangeAsync(notificationsToCreate, cancellationToken);
         }
 
-        if (notificationsToCreate.Count > 0 || medicalVisitsSent > 0)
+        if (notificationsToCreate.Count > 0 || visitRemindersCount > 0)
         {
             await notificationRepository.SaveChangesAsync(cancellationToken);
         }
 
         logger.LogInformation(
-            "Daily health reminders completed: {MedicalVisitsSent} visits, {Alerts30Sent} 30d docs, {Alerts7Sent} 7d docs, {NotificationsCount} notifications, {EmailsSent} emails.",
-            medicalVisitsSent,
+            "Daily health reminders completed: {VisitRemindersCount} visits, {Alerts30Sent} 30d docs, {Alerts7Sent} 7d docs, {NotificationsCount} notifications, {DispatchedMessagesCount} messages.",
+            visitRemindersCount,
             alerts30Sent,
             alerts7Sent,
             notificationsToCreate.Count,
-            emailsSent);
+            dispatchedMessagesCount);
 
         return new ReminderRunSummary(
-            medicalVisitsSent,
+            visitRemindersCount,
             alerts30Sent,
             alerts7Sent,
             notificationsToCreate.Count,
-            emailsSent);
+            dispatchedMessagesCount);
     }
 
     private async Task<bool> TrySendEmailAsync(
@@ -226,7 +226,7 @@ public sealed class DailyHealthRemindersJob(
         }
         catch (Exception ex)
         {
-            logger.LogWarning(ex, "Failed to send reminder email to {Email}.", recipientEmail);
+            logger.LogWarning(ex, "Failed to send reminder notification message.");
             return false;
         }
     }

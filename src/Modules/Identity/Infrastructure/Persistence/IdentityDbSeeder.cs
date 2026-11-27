@@ -160,7 +160,7 @@ public sealed class IdentityDbSeeder
                 .ToListAsync(cancellationToken);
 
             await _userManager.AddToRolesAsync(user, roleNames);
-            _logger.LogInformation("Seeded demo user {Email} with roles {Roles}", email, string.Join(", ", roleNames));
+            _logger.LogInformation("Seeded demo user {UserId} with roles {Roles}", user.Id, string.Join(", ", roleNames));
         }
     }
 }
