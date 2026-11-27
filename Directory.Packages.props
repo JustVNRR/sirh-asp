@@ -24,8 +24,8 @@
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
 
     <!-- Validation -->
-    <PackageVersion Include="FluentValidation" Version="11.11.0" />
-    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
+    <PackageVersion Include="FluentValidation" Version="12.2.0" />
+    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.2.0" />
 
     <!-- Document Generation -->
     <PackageVersion Include="Scriban" Version="7.6.1" />
