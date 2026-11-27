@@ -1,5 +1,4 @@
 @baseUrl = https://localhost:54235
-@token = {{loginAdmin.response.body.$.accessToken}}
 
 ### 0. Health Check (Anonymous)
 GET {{baseUrl}}/health
@@ -16,32 +15,32 @@ Content-Type: application/json
 
 ### 2. Current User Profile (/auth/me)
 GET {{baseUrl}}/api/v1/auth/me
-Authorization: Bearer {{token}}
+Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}
 
 ### 3. Organization Referentials
 GET {{baseUrl}}/api/v1/companies
-Authorization: Bearer {{token}}
+Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}
 
 ###
 GET {{baseUrl}}/api/v1/locations
-Authorization: Bearer {{token}}
+Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}
 
 ###
 GET {{baseUrl}}/api/v1/contract-types
-Authorization: Bearer {{token}}
+Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}
 
 ###
 GET {{baseUrl}}/api/v1/referentials/departments
-Authorization: Bearer {{token}}
+Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}
 
 ### 4. Employees (HumanResources)
 GET {{baseUrl}}/api/v1/employees?page=1&pageSize=20
-Authorization: Bearer {{token}}
+Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}
 
 ###
 # Example: Create a new employee (replace companyId with an ID returned by GET /api/v1/companies)
 POST {{baseUrl}}/api/v1/employees
-Authorization: Bearer {{token}}
+Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}
 Content-Type: application/json
 
 {
@@ -57,35 +56,35 @@ Content-Type: application/json
 
 ### 5. Contracts & Models
 GET {{baseUrl}}/api/v1/contract-models
-Authorization: Bearer {{token}}
+Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}
 
 ###
 GET {{baseUrl}}/api/v1/contracts
-Authorization: Bearer {{token}}
+Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}
 
 ### 6. Health & Notifications
 GET {{baseUrl}}/api/v1/medical-visits
-Authorization: Bearer {{token}}
+Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}
 
 ###
 GET {{baseUrl}}/api/v1/notifications
-Authorization: Bearer {{token}}
+Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}
 
 ### 7. Internal Life (Docs, CSE, RSE, Onboarding Quizzes)
 GET {{baseUrl}}/api/v1/common-documents
-Authorization: Bearer {{token}}
+Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}
 
 ###
 GET {{baseUrl}}/api/v1/staff-representatives
-Authorization: Bearer {{token}}
+Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}
 
 ###
 GET {{baseUrl}}/api/v1/rse-ideas
-Authorization: Bearer {{token}}
+Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}
 
 ###
 GET {{baseUrl}}/api/v1/onboarding-quizzes
-Authorization: Bearer {{token}}
+Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}
 
 ### Optional quick logins for Manager / Standard Employee testing
 # @name loginManager

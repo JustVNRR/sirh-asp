@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Shouldly;
 using Xunit;
 
@@ -7,10 +8,12 @@ namespace Sirh.IntegrationTests;
 
 public sealed class OpenApiEndpointTests : IClassFixture<ApiWebApplicationFactory>
 {
+    private readonly ApiWebApplicationFactory _factory;
     private readonly HttpClient _client;
 
     public OpenApiEndpointTests(ApiWebApplicationFactory factory)
     {
+        _factory = factory;
         _client = factory.CreateClient();
     }
 
@@ -37,5 +40,19 @@ public sealed class OpenApiEndpointTests : IClassFixture<ApiWebApplicationFactor
         securityArray.EnumerateArray()
             .Any(item => item.TryGetProperty("Bearer", out _))
             .ShouldBeTrue();
+    }
+
+    [Fact]
+    public async Task Root_Endpoint_In_Development_Should_Redirect_To_Scalar()
+    {
+        using var noRedirectClient = _factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false
+        });
+
+        var response = await noRedirectClient.GetAsync("/");
+
+        response.StatusCode.ShouldBe(HttpStatusCode.Redirect);
+        response.Headers.Location?.OriginalString.ShouldBe("/scalar/v1");
     }
 }

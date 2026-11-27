@@ -201,9 +201,14 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference(options =>
     {
         options.WithTitle("SIRH API v1")
-            .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+            .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient)
+            .SortTagsAlphabetically()
+            .SortOperationsByMethod();
         options.PersistentAuthentication = true;
     }).AllowAnonymous();
+    app.MapGet("/", () => Results.Redirect("/scalar/v1"))
+        .AllowAnonymous()
+        .ExcludeFromDescription();
 }
 
 app.MapHealthChecks("/health", new HealthCheckOptions

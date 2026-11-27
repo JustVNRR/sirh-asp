@@ -126,6 +126,11 @@ public sealed class SecurityAuditEndpointsTests
         var routeEndpoints = endpointDataSource.Endpoints.OfType<RouteEndpoint>().ToList();
         routeEndpoints.ShouldNotBeEmpty();
 
+        var allowedAnonymousExactRoutes = new[]
+        {
+            "/" // Development-only redirect to /scalar/v1
+        };
+
         var allowedAnonymousPrefixes = new[]
         {
             "/health",
@@ -144,9 +149,11 @@ public sealed class SecurityAuditEndpointsTests
 
             if (hasAllowAnonymous)
             {
-                allowedAnonymousPrefixes.Any(prefix =>
-                        routePattern.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
-                    .ShouldBeTrue($"Unexpected [AllowAnonymous] endpoint: '{routePattern}'.");
+                var isAllowed = allowedAnonymousExactRoutes.Contains(routePattern, StringComparer.OrdinalIgnoreCase)
+                    || allowedAnonymousPrefixes.Any(prefix =>
+                        routePattern.StartsWith(prefix, StringComparison.OrdinalIgnoreCase));
+
+                isAllowed.ShouldBeTrue($"Unexpected [AllowAnonymous] endpoint: '{routePattern}'.");
             }
             else
             {
