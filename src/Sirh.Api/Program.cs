@@ -173,6 +173,7 @@ if (app.Configuration.GetValue<bool>("InternalLife:AutoMigrate"))
 }
 
 app.UseMiddleware<CorrelationIdMiddleware>();
+app.UseMiddleware<SecurityHeadersMiddleware>();
 app.UseExceptionHandler();
 app.UseSerilogRequestLogging();
 

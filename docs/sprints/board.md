@@ -99,8 +99,8 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 
 | Feature | US | Titre | Points | Branche | Statut | Commit / PR |
 | :--- | :--- | :--- | :---: | :--- | :--- | :--- |
-| **F9.1** | `US-033` | Implémenter le provider `AzureBlobFileStorageService` et le tester avec Azurite | 5 | `feat/F9.1-azure-blob-security-audit` | 🚧 In Progress | — |
-| **F9.1** | `US-034` | Valider la couverture d'autorisation globale (tests anti-IDOR exhaustifs & headers sécurité) | 3 | `feat/F9.1-azure-blob-security-audit` | 🚧 In Progress | — |
+| **F9.1** | `US-033` | Implémenter le provider `AzureBlobFileStorageService` et le tester avec Azurite | 5 | `feat/F9.1-azure-blob-security-audit` | 👀 In Review | — |
+| **F9.1** | `US-034` | Valider la couverture d'autorisation globale (tests anti-IDOR exhaustifs & headers sécurité) | 3 | `feat/F9.1-azure-blob-security-audit` | 👀 In Review | — |
 
 ---
 
