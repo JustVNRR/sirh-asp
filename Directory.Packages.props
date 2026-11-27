@@ -33,7 +33,7 @@
 
     <!-- Cloud Storage -->
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.24.0" />
-    <PackageVersion Include="Azure.Identity" Version="1.17.1" />
+    <PackageVersion Include="Azure.Identity" Version="1.21.0" />
 
     <!-- Static Analysis -->
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.7.0.110445" />
