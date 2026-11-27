@@ -1,5 +1,10 @@
 # SIRH — .NET 10 Modular Monolith HR API
 
+[![CI](https://github.com/JustVNRR/sirh-asp/actions/workflows/ci.yml/badge.svg)](https://github.com/JustVNRR/sirh-asp/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/JustVNRR/sirh-asp/actions/workflows/codeql.yml/badge.svg)](https://github.com/JustVNRR/sirh-asp/actions/workflows/codeql.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![.NET 10](https://img.shields.io/badge/.NET-10.0-512BD4)](global.json)
+
 A clean, production-ready **.NET 10 Modular Monolith** REST API for Human Resources Management (SIRH), backed by SQL Server, EF Core 10, application-level AES-256-GCM encryption, native PDF generation (`Scriban` + `QuestPDF`), and switchable local or Azure Blob Storage.
 
 ---
@@ -37,8 +42,8 @@ The solution follows **Clean Architecture** and **Modular Monolith** principles 
 ### 1. Clone and create your local development config
 
 ```bash
-git clone <repository-url>
-cd sirh
+git clone https://github.com/JustVNRR/sirh-asp.git
+cd sirh-asp
 cp src/Sirh.Api/appsettings.Development.example.json src/Sirh.Api/appsettings.Development.json
 ```
 
@@ -141,18 +146,20 @@ File storage is configured under the `Storage` section in `appsettings.json` / `
 
 ---
 
-## Testing & Verification
+## Testing & Code Quality
 
 The test suites run against EF Core InMemory databases and SDK doubles, so no external Docker container is required to execute tests:
 
 ```bash
-dotnet build Sirh.slnx
-dotnet test Sirh.slnx
+dotnet format whitespace Sirh.slnx --verify-no-changes
+dotnet build Sirh.slnx --configuration Release
+dotnet test Sirh.slnx --no-build --configuration Release
 ```
 
 - `tests/Sirh.ArchitectureTests` — `NetArchTest` rules enforcing module isolation and Clean Architecture layer dependencies
 - `tests/Sirh.UnitTests` — Domain logic, validators, Scriban/QuestPDF rendering, AES-256-GCM crypto, magic bytes, and `AzureBlobFileStorageService` unit tests
-- `tests/Sirh.IntegrationTests` — End-to-end HTTP integration tests across all 6 modules plus `401`/`403` anti-IDOR and security header audits
+- `tests/Sirh.IntegrationTests` — End-to-end HTTP integration tests across all 6 modules, OpenAPI security scheme validation, and `401`/`403` anti-IDOR / security header audits
+- **Static Analysis & CI/CD** — `SonarAnalyzer.CSharp` + Roslyn `AnalysisLevel=latest` (`TreatWarningsAsErrors=true`), `.editorconfig` formatting checks, GitHub Actions CI + NuGet vulnerability audit, **CodeQL** C# SAST, and weekly **Dependabot** updates.
 
 ---
 
@@ -193,4 +200,10 @@ Before deploying to non-development environments, supply secrets via environment
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md) for version history and unreleased changes.
+See [CHANGELOG.md](CHANGELOG.md) for release notes and version history.
+
+---
+
+## License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.

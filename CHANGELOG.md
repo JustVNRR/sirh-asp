@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-27
+
 ### Added
 
 - **Azure Blob Storage Provider (`b9b0889`)**
@@ -15,9 +17,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **HTTP Security Hardening & Authorization Audit (`b9b0889`)**
   - Added `SecurityHeadersMiddleware` setting `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: no-referrer`, `Permissions-Policy`, `X-Permitted-Cross-Domain-Policies: none`, `Cross-Origin-Resource-Policy: same-origin`, and strict `Content-Security-Policy` (excluding `/scalar` and `/openapi`).
   - Added exhaustive integration audit tests (`SecurityAuditEndpointsTests`) verifying `FallbackPolicy` (`DenyAnonymousAuthorizationRequirement`), `EndpointDataSource` `[AllowAnonymous]` whitelist, `401 Unauthorized` across 33 protected endpoints, and `403 Forbidden` anti-IDOR / anti-privilege-escalation across all 6 modules.
-- **Repository & OpenAPI Documentation**
-  - Added OpenAPI `BearerSecuritySchemeTransformer` exposing a global JWT `Bearer` authentication scheme in `/openapi/v1.json` and Scalar UI (`OpenApiEndpointTests`).
-  - Added root `README.md` (in English) with architecture overview, quick-start instructions after cloning, API testing guides (Scalar UI, Postman OpenAPI import, `.http` files), demo accounts, Azurite configuration, and test commands.
+- **Repository, OpenAPI & Quality Automation**
+  - Added OpenAPI `BearerSecuritySchemeTransformer` (`186f7b5`) exposing a global JWT `Bearer` authentication scheme in `/openapi/v1.json` and Scalar UI (`OpenApiEndpointTests`).
+  - Added root `README.md` (in English) with CI/CodeQL/MIT badges, architecture overview, post-clone quick start, API testing guides (Scalar UI, Postman OpenAPI import, `.http` files), demo accounts, Azurite configuration, and test commands.
+  - Added MIT `LICENSE`, `.editorconfig`, `SonarAnalyzer.CSharp` (`TreatWarningsAsErrors=true`), enhanced GitHub Actions CI (`dotnet format`, Release build/test, NuGet vulnerability audit), **CodeQL** C# SAST workflow, and **Dependabot** configuration.
 
 ### Changed
 
