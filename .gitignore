@@ -2,6 +2,9 @@
 /legacy-backend/
 /legacy-frontend/
 
+# Internal project docs & sprint tracking (kept locally only)
+/docs/
+
 # .NET build artifacts
 bin/
 obj/
