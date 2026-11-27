@@ -29,7 +29,7 @@
 
     <!-- Document Generation -->
     <PackageVersion Include="Scriban" Version="7.6.1" />
-    <PackageVersion Include="QuestPDF" Version="2025.1.6" />
+    <PackageVersion Include="QuestPDF" Version="2026.9.2" />
 
     <!-- Cloud Storage -->
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.24.0" />
