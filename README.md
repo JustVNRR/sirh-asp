@@ -77,6 +77,39 @@ In `Development` (with the example config), EF Core migrations and seed data run
 
 ---
 
+## Testing the API (Scalar UI, Postman, `.http`)
+
+In .NET 10, `Microsoft.AspNetCore.OpenApi` + **Scalar UI** replaces legacy `Swashbuckle` / Swagger UI out of the box.
+
+### Option 1 — Scalar UI (Built-in Interactive Docs)
+1. Start Docker (`docker compose up -d`) and the API (`dotnet run --project src/Sirh.Api`).
+2. Open **`https://localhost:54235/scalar/v1`** (or `http://localhost:54236/scalar/v1`) in your browser.
+3. Browse endpoints grouped by module/tag and click **Test Request** to run calls directly.
+
+### Option 2 — Postman, Bruno, or Insomnia (OpenAPI Auto-Import)
+No manual collection is required:
+1. Ensure the API is running in `Development`.
+2. In Postman (or Bruno / Insomnia), choose **Import** and enter the OpenAPI specification URL:
+   - `http://localhost:54236/openapi/v1.json` (or `https://localhost:54235/openapi/v1.json`)
+3. All endpoints, request schemas, and the global `Bearer` JWT security scheme are imported automatically.
+4. Set **Authorization → Type: Bearer Token** at the collection root once to reuse your JWT across requests.
+
+### Option 3 — Native `.http` Files (Visual Studio / Rider / VS Code)
+You can also invoke endpoints directly from `.http` files in Visual Studio 2022+, JetBrains Rider, or VS Code (*REST Client* extension).
+
+### Authenticating Protected Requests (JWT Workflow)
+1. Call `POST /api/v1/auth/login` with a seeded account:
+   ```json
+   {
+     "email": "admin.rh@nova-conseil.fr",
+     "password": "SirhDemo123!"
+   }
+   ```
+2. Copy the `accessToken` value from the response.
+3. Paste it into Scalar's global **Authentication → Bearer** field (or Postman's collection Bearer token / `Authorization: Bearer <accessToken>` header).
+
+---
+
 ## Storage Providers (`Local` vs. `AzureBlob` / Azurite)
 
 File storage is configured under the `Storage` section in `appsettings.json` / `appsettings.Development.json`:
