@@ -6,7 +6,16 @@ Le format repose sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), e
 
 ## [Unreleased]
 
-- *Sprint 5 — QCM d'Intégration Structuré (en cours)*
+- *Sprint 6 — Azure Cloud Readiness & Audit Final (en cours)*
+
+## [0.6.0] - 2026-11-27 (Sprint 5 — QCM d'Intégration Structuré)
+
+### Added
+
+- **F8.1 (`f7f1018`) — QCM d'Intégration Structuré & Suivi des Résultats** (`US-031`, `US-032`)
+  - Entités `OnboardingQuiz`, `QuizQuestion`, `QuizChoice`, `QuizAttempt`, `QuizAttemptAnswer` (`internal_life.onboarding_quizzes`, `quiz_questions`, `quiz_choices`, `quiz_attempts`, `quiz_attempt_answers`) et migration EF Core `AddOnboardingQuizzes`.
+  - Calculateur de score `QuizScoringCalculator` dans le Domaine (`TotalQuestions`, `CorrectAnswers`, `ScorePercent`, `IsPassed` calculés à la soumission selon `PassingScorePercent`).
+  - Endpoints `/api/v1/onboarding-quizzes/*` : CRUD & publication RH (`POST /`, `PUT /{id}`, `POST /{id}/publish`, `400` si une question n'a pas au moins 2 choix ou au moins 1 bonne réponse), démarrage de tentative salarié (`POST /{id}/attempts`, masquage strict de `IsCorrect`), soumission atomique (`POST /attempts/{attemptId}/submit`, verrouillage `409 Conflict` contre toute re-soumission), consultation des résultats (`GET /attempts/{attemptId}`, `GET /attempts/me`, `GET /{id}/results` pour RH/Managers avec accès restreint ABAC) et filtrage entreprise/type de contrat via `IHumanResourcesLookup.GetEmployeeCompanyIdAsync`.
 
 ## [0.5.0] - 2026-11-26 (Sprint 4 — Vie Interne : Docs, Kits, CSE, RSE)
 

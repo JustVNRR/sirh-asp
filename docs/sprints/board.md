@@ -15,9 +15,9 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 | **Sprint 2** | Contrats PDF natifs & Dossier Salarié (`US-019` à `US-024`) | 31 pts | 31 / 31 pts (100 %) | ✅ Done |
 | **Sprint 3** | Santé au Travail & Notifications (`US-025` à `US-027`) | 13 pts | 13 / 13 pts (100 %) | ✅ Done |
 | **Sprint 4** | Vie Interne — Docs, Kits, CSE, RSE (`US-028` à `US-030`) | 13 pts | 13 / 13 pts (100 %) | ✅ Done |
-| **Sprint 5** | QCM d'Intégration Structuré (`US-031` à `US-032`) | 10 pts | 0 / 10 pts (0 %) | 🚧 In Progress |
-| **Sprint 6** | Azure Cloud Readiness & Audit Final (`US-033` à `US-034`) | 8 pts | 0 / 8 pts (0 %) | ⬜ To Do |
-| **Total** | **MVP complet + Conformité (34 US)** | **146 pts** | **128 / 146 pts (88 %)** | — |
+| **Sprint 5** | QCM d'Intégration Structuré (`US-031` à `US-032`) | 10 pts | 10 / 10 pts (100 %) | ✅ Done |
+| **Sprint 6** | Azure Cloud Readiness & Audit Final (`US-033` à `US-034`) | 8 pts | 0 / 8 pts (0 %) | 🚧 In Progress |
+| **Total** | **MVP complet + Conformité (34 US)** | **146 pts** | **138 / 146 pts (95 %)** | — |
 
 ---
 
@@ -86,18 +86,21 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 
 ---
 
-## Sprint 5 — QCM d'Intégration Structuré (10 pts) — 🚧 En cours
+## Sprint 5 — QCM d'Intégration Structuré (10 pts) — ✅ Clôturé (`v0.6.0`)
 
 | Feature | US | Titre | Points | Branche | Statut | Commit / PR |
 | :--- | :--- | :--- | :---: | :--- | :--- | :--- |
-| **F8.1** | `US-031` | Créer, éditer et publier un QCM d'intégration côté RH | 5 | `feat/F8.1-onboarding-quizzes` | 👀 In Review | — |
-| **F8.1** | `US-032` | Passer un QCM d'intégration, calculer le score et suivre les résultats | 5 | `feat/F8.1-onboarding-quizzes` | 👀 In Review | — |
+| **F8.1** | `US-031` | Créer, éditer et publier un QCM d'intégration côté RH | 5 | `main` | ✅ Done | `f7f1018` |
+| **F8.1** | `US-032` | Passer un QCM d'intégration, calculer le score et suivre les résultats | 5 | `main` | ✅ Done | `f7f1018` |
 
 ---
 
-## Backlog des Sprints suivants (`⬜ To Do`)
+## Sprint 6 — Azure Cloud Readiness & Audit Final (8 pts) — 🚧 En cours
 
-- **Sprint 6 — Azure Cloud Readiness & Audit Final (8 pts)** : `US-033` (5), `US-034` (3)
+| Feature | US | Titre | Points | Branche | Statut | Commit / PR |
+| :--- | :--- | :--- | :---: | :--- | :--- | :--- |
+| **F9.1** | `US-033` | Implémenter le provider `AzureBlobFileStorageService` et le tester avec Azurite | 5 | `feat/F9.1-azure-blob-security-audit` | 🚧 In Progress | — |
+| **F9.1** | `US-034` | Valider la couverture d'autorisation globale (tests anti-IDOR exhaustifs & headers sécurité) | 3 | `feat/F9.1-azure-blob-security-audit` | 🚧 In Progress | — |
 
 ---
 
@@ -108,3 +111,4 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 - **Sprint 2 (`v0.3.0`)** : [sprint-2-review.md](sprint-2-review.md) — Clôturé le 2026-11-26 (`31 / 31 pts`, `138 / 138 tests`).
 - **Sprint 3 (`v0.4.0`)** : [sprint-3-review.md](sprint-3-review.md) — Clôturé le 2026-11-26 (`13 / 13 pts`, `144 / 144 tests`).
 - **Sprint 4 (`v0.5.0`)** : [sprint-4-review.md](sprint-4-review.md) — Clôturé le 2026-11-26 (`13 / 13 pts`, `150 / 150 tests`).
+- **Sprint 5 (`v0.6.0`)** : [sprint-5-review.md](sprint-5-review.md) — Clôturé le 2026-11-27 (`10 / 10 pts`, `154 / 154 tests`).
