@@ -90,8 +90,8 @@ Ce document assure le suivi vivant de l'avancement des User Stories (US), des Fe
 
 | Feature | US | Titre | Points | Branche | Statut | Commit / PR |
 | :--- | :--- | :--- | :---: | :--- | :--- | :--- |
-| **F8.1** | `US-031` | Créer, éditer et publier un QCM d'intégration côté RH | 5 | `feat/F8.1-onboarding-quizzes` | 🚧 In Progress | — |
-| **F8.1** | `US-032` | Passer un QCM d'intégration, calculer le score et suivre les résultats | 5 | `feat/F8.1-onboarding-quizzes` | 🚧 In Progress | — |
+| **F8.1** | `US-031` | Créer, éditer et publier un QCM d'intégration côté RH | 5 | `feat/F8.1-onboarding-quizzes` | 👀 In Review | — |
+| **F8.1** | `US-032` | Passer un QCM d'intégration, calculer le score et suivre les résultats | 5 | `feat/F8.1-onboarding-quizzes` | 👀 In Review | — |
 
 ---
 

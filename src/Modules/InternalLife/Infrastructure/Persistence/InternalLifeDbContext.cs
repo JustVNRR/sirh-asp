@@ -14,6 +14,11 @@ public sealed class InternalLifeDbContext : DbContext
     public DbSet<CommonDocument> CommonDocuments => Set<CommonDocument>();
     public DbSet<StaffRepresentative> StaffRepresentatives => Set<StaffRepresentative>();
     public DbSet<RseIdea> RseIdeas => Set<RseIdea>();
+    public DbSet<OnboardingQuiz> OnboardingQuizzes => Set<OnboardingQuiz>();
+    public DbSet<QuizQuestion> QuizQuestions => Set<QuizQuestion>();
+    public DbSet<QuizChoice> QuizChoices => Set<QuizChoice>();
+    public DbSet<QuizAttempt> QuizAttempts => Set<QuizAttempt>();
+    public DbSet<QuizAttemptAnswer> QuizAttemptAnswers => Set<QuizAttemptAnswer>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -106,6 +111,99 @@ public sealed class InternalLifeDbContext : DbContext
 
             b.HasIndex(i => new { i.AuthorEmployeeId, i.Status });
             b.HasIndex(i => new { i.LocationId, i.Status });
+        });
+
+        builder.Entity<OnboardingQuiz>(b =>
+        {
+            b.ToTable("onboarding_quizzes");
+            b.HasKey(q => q.Id);
+
+            b.Property(q => q.Title).HasMaxLength(200).IsRequired();
+            b.Property(q => q.Description).HasMaxLength(2000);
+            b.Property(q => q.CreatedBy).HasMaxLength(256);
+            b.Property(q => q.UpdatedBy).HasMaxLength(256);
+
+            if (!isInMemory)
+            {
+                b.Property(q => q.RowVersion).IsRowVersion();
+            }
+
+            b.HasIndex(q => new { q.CompanyId, q.IsPublished });
+        });
+
+        builder.Entity<QuizQuestion>(b =>
+        {
+            b.ToTable("quiz_questions");
+            b.HasKey(q => q.Id);
+
+            b.Property(q => q.QuestionText).HasMaxLength(1000).IsRequired();
+            b.Property(q => q.QuestionType)
+                .HasConversion<string>()
+                .HasMaxLength(32)
+                .IsRequired();
+            b.Property(q => q.Explanation).HasMaxLength(2000);
+
+            b.HasIndex(q => new { q.QuizId, q.OrderIndex });
+
+            b.HasOne(q => q.Quiz)
+                .WithMany(z => z.Questions)
+                .HasForeignKey(q => q.QuizId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<QuizChoice>(b =>
+        {
+            b.ToTable("quiz_choices");
+            b.HasKey(c => c.Id);
+
+            b.Property(c => c.ChoiceText).HasMaxLength(500).IsRequired();
+
+            b.HasIndex(c => new { c.QuestionId, c.OrderIndex });
+
+            b.HasOne(c => c.Question)
+                .WithMany(q => q.Choices)
+                .HasForeignKey(c => c.QuestionId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<QuizAttempt>(b =>
+        {
+            b.ToTable("quiz_attempts");
+            b.HasKey(a => a.Id);
+
+            b.Property(a => a.Status)
+                .HasConversion<string>()
+                .HasMaxLength(32)
+                .IsRequired();
+            b.Property(a => a.CreatedBy).HasMaxLength(256);
+            b.Property(a => a.UpdatedBy).HasMaxLength(256);
+
+            if (!isInMemory)
+            {
+                b.Property(a => a.RowVersion).IsRowVersion();
+            }
+
+            b.HasIndex(a => new { a.QuizId, a.EmployeeId });
+
+            b.HasOne(a => a.Quiz)
+                .WithMany(q => q.Attempts)
+                .HasForeignKey(a => a.QuizId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<QuizAttemptAnswer>(b =>
+        {
+            b.ToTable("quiz_attempt_answers");
+            b.HasKey(a => a.Id);
+
+            b.Property(a => a.SelectedChoiceIdsJson).HasMaxLength(2000).IsRequired();
+
+            b.HasIndex(a => new { a.AttemptId, a.QuestionId });
+
+            b.HasOne(a => a.Attempt)
+                .WithMany(t => t.Answers)
+                .HasForeignKey(a => a.AttemptId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

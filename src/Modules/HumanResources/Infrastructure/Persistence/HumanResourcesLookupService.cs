@@ -213,4 +213,13 @@ public sealed class HumanResourcesLookupService(
             }
         }
     }
+
+    public Task<Guid?> GetEmployeeCompanyIdAsync(
+        Guid employeeId,
+        CancellationToken cancellationToken = default) =>
+        dbContext.Employees
+            .AsNoTracking()
+            .Where(e => e.Id == employeeId)
+            .Select(e => (Guid?)e.CompanyId)
+            .FirstOrDefaultAsync(cancellationToken);
 }

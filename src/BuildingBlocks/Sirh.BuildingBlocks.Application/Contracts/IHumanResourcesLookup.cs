@@ -82,4 +82,8 @@ public interface IHumanResourcesLookup
         int thresholdDays,
         DateTime sentAtUtc,
         CancellationToken cancellationToken = default);
+
+    Task<Guid?> GetEmployeeCompanyIdAsync(
+        Guid employeeId,
+        CancellationToken cancellationToken = default);
 }

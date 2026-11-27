@@ -18,6 +18,7 @@ public static class CommonDocumentEndpoints
     {
         MapCommonDocuments(endpoints);
         endpoints.MapCseAndRseEndpoints();
+        endpoints.MapOnboardingQuizEndpoints();
 
         return endpoints;
     }
