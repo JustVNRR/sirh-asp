@@ -32,7 +32,7 @@
     <PackageVersion Include="QuestPDF" Version="2025.1.6" />
 
     <!-- Cloud Storage -->
-    <PackageVersion Include="Azure.Storage.Blobs" Version="12.24.0" />
+    <PackageVersion Include="Azure.Storage.Blobs" Version="12.30.2" />
     <PackageVersion Include="Azure.Identity" Version="1.17.1" />
 
     <!-- Static Analysis -->
