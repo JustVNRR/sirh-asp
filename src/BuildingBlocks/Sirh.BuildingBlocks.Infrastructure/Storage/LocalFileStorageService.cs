@@ -181,12 +181,9 @@ public sealed class LocalFileStorageService : IFileStorageService
         }
 
         var segments = subFolder.Split(['/', '\\'], StringSplitOptions.RemoveEmptyEntries);
-        foreach (var segment in segments)
+        if (segments.Any(static segment => segment is "." or ".." || segment.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0))
         {
-            if (segment is "." or ".." || segment.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
-            {
-                throw new UnauthorizedAccessException($"Invalid storage subfolder '{subFolder}'.");
-            }
+            throw new UnauthorizedAccessException($"Invalid storage subfolder '{subFolder}'.");
         }
 
         return string.Join('/', segments);

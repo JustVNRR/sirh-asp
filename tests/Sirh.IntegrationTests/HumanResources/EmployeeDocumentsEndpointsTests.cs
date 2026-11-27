@@ -267,7 +267,7 @@ public sealed class EmployeeDocumentsEndpointsTests
             ApiJsonOptions);
         rqthFetched.ShouldNotBeNull();
         rqthFetched.RqthDetails.ShouldNotBeNull();
-        rqthFetched.RqthDetails!.ExpiryDate.ShouldBe(new DateOnly(2027, 6, 30));
+        rqthFetched.RqthDetails.ExpiryDate.ShouldBe(new DateOnly(2027, 6, 30));
         rqthFetched.RqthDetails.WorkplaceAccommodation.ShouldBe("Poste assis-debout ergonomique");
         rqthFetched.ResidentPermitDetails.ShouldBeNull();
 
@@ -288,7 +288,7 @@ public sealed class EmployeeDocumentsEndpointsTests
             ApiJsonOptions);
         permitFetched.ShouldNotBeNull();
         permitFetched.ResidentPermitDetails.ShouldNotBeNull();
-        permitFetched.ResidentPermitDetails!.PermitNumber.ShouldBe("99AA12345");
+        permitFetched.ResidentPermitDetails.PermitNumber.ShouldBe("99AA12345");
         permitFetched.ResidentPermitDetails.ExpiryDate.ShouldBe(new DateOnly(2028, 1, 15));
 
         var updateResp = await adminClient.PutAsJsonAsync(

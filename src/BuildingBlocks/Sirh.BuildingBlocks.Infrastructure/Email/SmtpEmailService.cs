@@ -46,11 +46,13 @@ public sealed class SmtpEmailService(
                     MediaTypeNames.Text.Plain));
         }
 
+#pragma warning disable S5332 // TLS is enabled by configuration via Email:UseSsl; plaintext SMTP is used only with local Mailpit in Development.
         using var client = new SmtpClient(settings.Host, settings.Port)
         {
             EnableSsl = settings.UseSsl,
             DeliveryMethod = SmtpDeliveryMethod.Network
         };
+#pragma warning restore S5332
 
         if (!string.IsNullOrWhiteSpace(settings.Username))
         {

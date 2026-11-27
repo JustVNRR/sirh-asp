@@ -29,14 +29,12 @@ public static class QuizScoringCalculator
         var orderedQuestions = questions.OrderBy(q => q.OrderIndex).ToArray();
         var validQuestionIds = orderedQuestions.Select(q => q.Id).ToHashSet();
 
-        foreach (var submittedQuestionId in submittedAnswersByQuestionId.Keys)
+        if (submittedAnswersByQuestionId.Keys.Where(id => !validQuestionIds.Contains(id)).Take(1).ToArray()
+            is [var invalidQuestionId])
         {
-            if (!validQuestionIds.Contains(submittedQuestionId))
-            {
-                return Error.Validation(
-                    "Quizzes.InvalidQuestionReference",
-                    $"Question '{submittedQuestionId}' does not belong to this quiz.");
-            }
+            return Error.Validation(
+                "Quizzes.InvalidQuestionReference",
+                $"Question '{invalidQuestionId}' does not belong to this quiz.");
         }
 
         var outcomes = new List<EvaluatedQuestionOutcome>(orderedQuestions.Length);
@@ -49,14 +47,11 @@ public static class QuizScoringCalculator
                 ? rawSelected.Distinct().ToArray()
                 : [];
 
-            foreach (var choiceId in selectedList)
+            if (selectedList.Where(id => !validChoiceIds.Contains(id)).Take(1).ToArray() is [var invalidChoiceId])
             {
-                if (!validChoiceIds.Contains(choiceId))
-                {
-                    return Error.Validation(
-                        "Quizzes.InvalidChoiceReference",
-                        $"Choice '{choiceId}' does not belong to question '{question.Id}'.");
-                }
+                return Error.Validation(
+                    "Quizzes.InvalidChoiceReference",
+                    $"Choice '{invalidChoiceId}' does not belong to question '{question.Id}'.");
             }
 
             if (question.QuestionType == QuizQuestionType.SingleChoice && selectedList.Length > 1)

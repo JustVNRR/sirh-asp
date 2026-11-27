@@ -306,7 +306,7 @@ public sealed class SecurityAuditEndpointsTests
     private static string GetHeader(HttpResponseMessage response, string headerName)
     {
         response.Headers.TryGetValues(headerName, out var values).ShouldBeTrue($"Missing header '{headerName}'.");
-        return string.Join(", ", values!);
+        return string.Join(", ", values);
     }
 
     private static MultipartFormDataContent BuildPdfMultipart(params (string Key, string Value)[] fields)
