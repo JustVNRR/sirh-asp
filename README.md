@@ -74,11 +74,13 @@ In `Development` (with the example config), EF Core migrations and seed data run
 
 ### Seeded Demo Accounts (`Development`)
 
-| Email | Role(s) | Password |
-| :--- | :--- | :--- |
-| `admin.rh@nova-conseil.fr` | `RH`, `Admin` | `SirhDemo123!` |
-| `manager.rh@nova-conseil.fr` | `Manager` | `SirhDemo123!` |
-| `employe.rh@nova-conseil.fr` | `Employe` | `SirhDemo123!` |
+When `Identity:SeedDemoUsers`, `Organization:SeedDemoData`, and `HumanResources:SeedDemoData` are enabled (default in `appsettings.Development.example.json`), startup seeds the demo company (**Nova Conseil** / **Siège Paris**), the three Identity accounts below, and their linked **HumanResources** employee profiles + active positions + reporting hierarchy (`Camille Dubois` → `Julien Moreau` → `Marie Laurent`):
+
+| Email | Role(s) | Employee Profile | Password |
+| :--- | :--- | :--- | :--- |
+| `admin.rh@nova-conseil.fr` | `RH`, `Admin` | Marie Laurent (HR Director) | `SirhDemo123!` |
+| `manager.rh@nova-conseil.fr` | `Manager` | Julien Moreau (Engineering Manager) | `SirhDemo123!` |
+| `employe.rh@nova-conseil.fr` | `Employe` | Camille Dubois (.NET Software Engineer) | `SirhDemo123!` |
 
 ---
 
@@ -89,18 +91,24 @@ In .NET 10, `Microsoft.AspNetCore.OpenApi` + **Scalar UI** replaces legacy `Swas
 ### Option 1 — Scalar UI (Built-in Interactive Docs)
 1. Start Docker (`docker compose up -d`) and the API (`dotnet run --project src/Sirh.Api`).
 2. Open **`https://localhost:54235/scalar/v1`** (or `http://localhost:54236/scalar/v1`) in your browser.
-3. Browse endpoints grouped by module/tag and click **Test Request** to run calls directly.
+3. Call `POST /api/v1/auth/login` once, copy `accessToken`, and paste it once into Scalar's global **Authentication → Bearer** section (`PersistentAuthentication = true` keeps it across page reloads).
+4. All subsequent **Test Request** calls automatically include `Authorization: Bearer <token>`.
 
-### Option 2 — Postman, Bruno, or Insomnia (OpenAPI Auto-Import)
+### Option 2 — Postman, Bruno, or Insomnia (OpenAPI Auto-Import + Auto-Token)
 No manual collection is required:
 1. Ensure the API is running in `Development`.
 2. In Postman (or Bruno / Insomnia), choose **Import** and enter the OpenAPI specification URL:
    - `http://localhost:54236/openapi/v1.json` (or `https://localhost:54235/openapi/v1.json`)
 3. All endpoints, request schemas, and the global `Bearer` JWT security scheme are imported automatically.
-4. Set **Authorization → Type: Bearer Token** at the collection root once to reuse your JWT across requests.
+4. Set **Authorization → Type: Bearer Token** (`{{accessToken}}`) at the collection root, and add a **Post-response** script on `POST /api/v1/auth/login` so every login refreshes the collection token automatically:
+   ```javascript
+   pm.collectionVariables.set("accessToken", pm.response.json().accessToken);
+   ```
 
-### Option 3 — Native `.http` Files (Visual Studio / Rider / VS Code)
-You can also invoke endpoints directly from `.http` files in Visual Studio 2022+, JetBrains Rider, or VS Code (*REST Client* extension).
+### Option 3 — Native `.http` File (`src/Sirh.Api/sirh.http` — Zero Copy-Paste)
+A ready-to-use HTTP file is included at [`src/Sirh.Api/sirh.http`](src/Sirh.Api/sirh.http) for Visual Studio 2022+, JetBrains Rider, and VS Code (*REST Client*):
+1. Click **Send Request** on `# @name loginAdmin`.
+2. Every request in the file automatically injects `Authorization: Bearer {{loginAdmin.response.body.$.accessToken}}` without copying anything manually.
 
 ### Authenticating Protected Requests (JWT Workflow)
 1. Call `POST /api/v1/auth/login` with a seeded account:

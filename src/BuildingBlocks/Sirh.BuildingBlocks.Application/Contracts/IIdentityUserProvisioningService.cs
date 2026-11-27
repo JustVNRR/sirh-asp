@@ -44,4 +44,13 @@ public interface IIdentityUserProvisioningService
     Task<IReadOnlyCollection<Guid>> GetUserIdsByRoleAsync(
         string roleInput,
         CancellationToken cancellationToken = default);
+
+    Task<Guid?> GetUserIdByEmailAsync(
+        string email,
+        CancellationToken cancellationToken = default);
+
+    Task LinkEmployeeAsync(
+        Guid userId,
+        Guid employeeId,
+        CancellationToken cancellationToken = default);
 }

@@ -47,7 +47,17 @@ public static class HumanResourcesModuleExtensions
         services.AddScoped<IEmployeeDocumentService, EmployeeDocumentService>();
         services.AddScoped<ILocationReferenceChecker, PositionLocationReferenceChecker>();
         services.AddScoped<IHumanResourcesLookup, HumanResourcesLookupService>();
+        services.AddScoped<HumanResourcesDbSeeder>();
 
         return services;
+    }
+
+    public static async Task SeedHumanResourcesAsync(
+        this IServiceProvider serviceProvider,
+        CancellationToken cancellationToken = default)
+    {
+        await using var scope = serviceProvider.CreateAsyncScope();
+        var seeder = scope.ServiceProvider.GetRequiredService<HumanResourcesDbSeeder>();
+        await seeder.SeedAsync(cancellationToken);
     }
 }

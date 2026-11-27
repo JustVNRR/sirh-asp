@@ -50,4 +50,18 @@ public sealed class OrganizationLookupService(OrganizationDbContext dbContext) :
         dbContext.ContractTypes
             .AsNoTracking()
             .AnyAsync(ct => ct.Id == contractTypeId, cancellationToken);
+
+    public Task<Guid?> GetCompanyIdBySlugAsync(string slug, CancellationToken cancellationToken = default) =>
+        dbContext.Companies
+            .AsNoTracking()
+            .Where(c => c.Slug == slug)
+            .Select(c => (Guid?)c.Id)
+            .FirstOrDefaultAsync(cancellationToken);
+
+    public Task<Guid?> GetLocationIdBySlugAsync(string slug, CancellationToken cancellationToken = default) =>
+        dbContext.Locations
+            .AsNoTracking()
+            .Where(l => l.Slug == slug)
+            .Select(l => (Guid?)l.Id)
+            .FirstOrDefaultAsync(cancellationToken);
 }

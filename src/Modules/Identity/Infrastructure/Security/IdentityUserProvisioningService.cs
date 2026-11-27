@@ -292,6 +292,36 @@ public sealed class IdentityUserProvisioningService(
             .ToArrayAsync(cancellationToken);
     }
 
+    public async Task<Guid?> GetUserIdByEmailAsync(
+        string email,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            return null;
+        }
+
+        var user = await userManager.FindByEmailAsync(email.Trim());
+        return user?.Id;
+    }
+
+    public async Task LinkEmployeeAsync(
+        Guid userId,
+        Guid employeeId,
+        CancellationToken cancellationToken = default)
+    {
+        var user = await userManager.FindByIdAsync(userId.ToString());
+        if (user is null || user.EmployeeId == employeeId)
+        {
+            return;
+        }
+
+        user.EmployeeId = employeeId;
+        user.UpdatedAtUtc = dateTimeProvider.UtcNow;
+        await userManager.UpdateAsync(user);
+        await userManager.UpdateSecurityStampAsync(user);
+    }
+
     private async Task<Result<IReadOnlyList<ApplicationRole>>> ResolveRolesByCodesAsync(
         IReadOnlyCollection<string> roleCodes,
         CancellationToken cancellationToken)

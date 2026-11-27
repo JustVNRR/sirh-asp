@@ -28,4 +28,8 @@ public interface IOrganizationLookup
     Task<string?> GetLocationNameByIdAsync(Guid locationId, CancellationToken cancellationToken = default);
 
     Task<bool> ContractTypeExistsAsync(Guid contractTypeId, CancellationToken cancellationToken = default);
+
+    Task<Guid?> GetCompanyIdBySlugAsync(string slug, CancellationToken cancellationToken = default);
+
+    Task<Guid?> GetLocationIdBySlugAsync(string slug, CancellationToken cancellationToken = default);
 }

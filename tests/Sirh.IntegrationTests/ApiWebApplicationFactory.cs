@@ -74,6 +74,7 @@ public sealed class ApiWebApplicationFactory : WebApplicationFactory<Program>, I
                 ["Organization:SeedOnStartup"] = "true",
                 ["Organization:SeedDemoData"] = "true",
                 ["HumanResources:AutoMigrate"] = "false",
+                ["HumanResources:SeedDemoData"] = "false",
                 ["Contracts:AutoMigrate"] = "false",
                 ["Health:AutoMigrate"] = "false",
                 ["Health:Reminders:Enabled"] = "false",

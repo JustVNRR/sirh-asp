@@ -1,0 +1,108 @@
+@baseUrl = https://localhost:54235
+@token = {{loginAdmin.response.body.$.accessToken}}
+
+### 0. Health Check (Anonymous)
+GET {{baseUrl}}/health
+
+### 1. Login as HR Admin (captures accessToken automatically for all requests below)
+# @name loginAdmin
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin.rh@nova-conseil.fr",
+  "password": "SirhDemo123!"
+}
+
+### 2. Current User Profile (/auth/me)
+GET {{baseUrl}}/api/v1/auth/me
+Authorization: Bearer {{token}}
+
+### 3. Organization Referentials
+GET {{baseUrl}}/api/v1/companies
+Authorization: Bearer {{token}}
+
+###
+GET {{baseUrl}}/api/v1/locations
+Authorization: Bearer {{token}}
+
+###
+GET {{baseUrl}}/api/v1/contract-types
+Authorization: Bearer {{token}}
+
+###
+GET {{baseUrl}}/api/v1/referentials/departments
+Authorization: Bearer {{token}}
+
+### 4. Employees (HumanResources)
+GET {{baseUrl}}/api/v1/employees?page=1&pageSize=20
+Authorization: Bearer {{token}}
+
+###
+# Example: Create a new employee (replace companyId with an ID returned by GET /api/v1/companies)
+POST {{baseUrl}}/api/v1/employees
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "companyId": "00000000-0000-0000-0000-000000000000",
+  "directManagerId": null,
+  "honorific": "M",
+  "firstName": "Lucas",
+  "lastName": "Martin",
+  "initialPassword": "NewEmployee123!",
+  "roleCodes": [ "EMPLOYEE" ],
+  "departments": [ "DEPT_IT" ]
+}
+
+### 5. Contracts & Models
+GET {{baseUrl}}/api/v1/contract-models
+Authorization: Bearer {{token}}
+
+###
+GET {{baseUrl}}/api/v1/contracts
+Authorization: Bearer {{token}}
+
+### 6. Health & Notifications
+GET {{baseUrl}}/api/v1/medical-visits
+Authorization: Bearer {{token}}
+
+###
+GET {{baseUrl}}/api/v1/notifications
+Authorization: Bearer {{token}}
+
+### 7. Internal Life (Docs, CSE, RSE, Onboarding Quizzes)
+GET {{baseUrl}}/api/v1/common-documents
+Authorization: Bearer {{token}}
+
+###
+GET {{baseUrl}}/api/v1/staff-representatives
+Authorization: Bearer {{token}}
+
+###
+GET {{baseUrl}}/api/v1/rse-ideas
+Authorization: Bearer {{token}}
+
+###
+GET {{baseUrl}}/api/v1/onboarding-quizzes
+Authorization: Bearer {{token}}
+
+### Optional quick logins for Manager / Standard Employee testing
+# @name loginManager
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "manager.rh@nova-conseil.fr",
+  "password": "SirhDemo123!"
+}
+
+###
+# @name loginEmployee
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "employe.rh@nova-conseil.fr",
+  "password": "SirhDemo123!"
+}

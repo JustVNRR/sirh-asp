@@ -154,6 +154,11 @@ if (app.Configuration.GetValue<bool>("HumanResources:AutoMigrate"))
     await hrDb.Database.MigrateAsync();
 }
 
+if (app.Configuration.GetValue<bool>("HumanResources:SeedDemoData"))
+{
+    await app.Services.SeedHumanResourcesAsync();
+}
+
 if (app.Configuration.GetValue<bool>("Contracts:AutoMigrate"))
 {
     await using var scope = app.Services.CreateAsyncScope();
@@ -197,6 +202,7 @@ if (app.Environment.IsDevelopment())
     {
         options.WithTitle("SIRH API v1")
             .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+        options.PersistentAuthentication = true;
     }).AllowAnonymous();
 }
 
